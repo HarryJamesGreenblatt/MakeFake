@@ -22,7 +22,7 @@ SUPERCLASS
 
 
 SUBCLASSES
-    FakeAthleticCompany( 
+    FakeAthleticClub( 
         name,
         category,
         employee_size,
@@ -39,7 +39,7 @@ PROCESS
 
         #2 Defining The  FakeCompany  Class
         
-        #3 Defining The  FakeAthleticCompany  Class
+        #3 Defining The  FakeAthleticClub  Class
 
 
 DEPENDENCIES
@@ -605,7 +605,7 @@ class FakeAthleticClub( FakeCompany ):
             
 
         PARENT:
-            makefake_companies.FakeAthleticCompany
+            makefake_companies.FakeAthleticClub
         '''
 
         # 3.b.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced by  
@@ -617,7 +617,7 @@ class FakeAthleticClub( FakeCompany ):
             category        =   self.Category,       # (superclass)  
             employee_size   =   self.EmployeeSize,   # MakeFakePayroll Method 
             city            =   self.City,           # is invoked using  
-            state           =   self.State,          # the  FakeAthleticCompany 
+            state           =   self.State,          # the  FakeAthleticClub 
             zip_code        =   self.ZipCode,        # (subclass) constructor 
             departments     =   self.Departments     # parameters
         ).MakeFakePayroll()                          #
@@ -677,7 +677,7 @@ class FakeAthleticClub( FakeCompany ):
 
 
         DESCRIPTION
-            Utililizes the  FakeAthleticCompany.MakeFakePayroll() Method\n
+            Utililizes the  FakeAthleticClub.MakeFakePayroll() Method\n
             Overload,  which modifies a  copy  of the  supclass method's\n
             resultant dictionary of lists  in a way that more closely\n 
             simulates a dataset that specifically ressembles an Athletic Club. 
@@ -719,7 +719,7 @@ class FakeAthleticClub( FakeCompany ):
             
 
         PARENT:
-            makefake_companies.FakeAthleticCompany
+            makefake_companies.FakeAthleticClub
         '''
 
         # 3.c.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
@@ -730,7 +730,7 @@ class FakeAthleticClub( FakeCompany ):
             name            =   self.Name,               # (superclass)  
             category        =   self.Category,           # MakeFakePayroll Method 
             employee_size   =   self.EmployeeSize,       # is invoked using  
-            city            =   self.City,               # the  FakeAthleticCompany 
+            city            =   self.City,               # the  FakeAthleticClub 
             state           =   self.State,              # (subclass) constructor 
             zip_code        =   self.ZipCode,            # parameters
             departments     =   self.Departments         #
