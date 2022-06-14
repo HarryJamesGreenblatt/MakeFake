@@ -1,6 +1,6 @@
 '''
 NAME
-    make_fake_companies.py
+    makefake_companies.py
 
 
 PURPOSE
@@ -134,7 +134,7 @@ class FakeCompany:
 
 
     PARENT MODULE
-        make_fake_companies.py
+        makefake_companies.py
     '''
 
     # 2.a) Constructor and Overloads
@@ -264,7 +264,7 @@ class FakeCompany:
             
 
         PARENT:
-            make_fake_companies.FakeCompany
+            makefake_companies.FakeCompany
         '''
 
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
@@ -517,7 +517,7 @@ class FakeAthleticClub( FakeCompany ):
 
 
     PARENT MODULE
-        make_fake_companies.py
+        makefake_companies.py
     '''
 
     # 3.a) Overload Of The FakeCompany  Constructor  
@@ -605,7 +605,7 @@ class FakeAthleticClub( FakeCompany ):
             
 
         PARENT:
-            make_fake_companies.FakeAthleticCompany
+            makefake_companies.FakeAthleticCompany
         '''
 
         # 3.b.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced by  
@@ -719,7 +719,7 @@ class FakeAthleticClub( FakeCompany ):
             
 
         PARENT:
-            make_fake_companies.FakeAthleticCompany
+            makefake_companies.FakeAthleticCompany
         '''
 
         # 3.c.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
