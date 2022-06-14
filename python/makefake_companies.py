@@ -4,9 +4,9 @@ NAME
 
 
 PURPOSE
-    Loads neccessary  external  modules   and  classes, and provides  internal  class  definitions\n
-    for the  FakeCompany  superclass, and each of the  subclass  Fakecompany  "categories" which inherit\n 
-    from it.    
+    Loads neccessary  external  modules   and  classes, and provides  internal  class\n
+    definitions for the  FakeCompany  superclass, and each of the  subclass  Fakecompany\n  
+    "categories" which inherit from it.    
 
 
 SUPERCLASS
