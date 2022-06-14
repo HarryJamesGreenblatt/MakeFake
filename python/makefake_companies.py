@@ -10,7 +10,28 @@ PURPOSE
 
 
 SUPERCLASS
-    FakeCompany( name, category, employee_size, city, state, zip_code, departments ) 
+    FakeCompany( 
+        name,
+        category,
+        employee_size,
+        city,
+        state,
+        zip_code,
+        departments 
+    )
+
+
+SUBCLASSES
+    FakeAthleticCompany( 
+        name,
+        category,
+        employee_size,
+        member_size,
+        city,
+        state,
+        zip_code,
+        departments 
+    )
 
 
 PROCESS
@@ -760,7 +781,7 @@ class FakeAthleticClub( FakeCompany ):
                                                          # for each of the  
             for _ in range(self.MemberSize)              # 'MemberSize' many rows
         ]                                                # 
-        #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
         # 3.c.i.4)   Export the  Fake Members,  which is now a   dict of lists.     
         #|||||||||||||||||||||#|||||||||||||||||||||||||||||||||||||||||||||||||#
