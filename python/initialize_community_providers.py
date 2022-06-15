@@ -9,8 +9,8 @@ PURPOSE
     an associated  Import-FakeProviders.ps1  utility script.
 
 
-FUNCTIONS
-    parse_all_faker_providers()
+FUNCTION
+    Defines  parse_all_faker_providers()
 
 
 DEPENDENCIES

@@ -10,8 +10,8 @@ PURPOSE
     'Community Providers'.
 
 
-FUNCTIONS
-    load_all_providers()
+FUNCTION
+    Defines load_all_providers()
 
 
 DEPENDENCIES
