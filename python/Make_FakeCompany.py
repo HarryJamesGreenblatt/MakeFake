@@ -329,12 +329,22 @@ class FakeCompany:
                 "provider_source":fake,                  # using the   
                 "provider_attribute":"email",            # traditional  
                 "column_name":"Email"                    #   method()  
-            },                                           # rather than   
-            {                                            # being invoked  
-                "provider_source":fake,                  # using the   
-                "provider_attribute":"date",             # traditional  
-                "column_name":"Date Of Birth"            #   method()      
-            },                                           # syntax  
+            },                                           # 
+            {                                            # 
+                "provider_source":fake,                  # 
+                "provider_attribute":"user_name",        # 
+                "column_name":"Username"                 # 
+            },                                           # 
+            {                                            # 
+                "provider_source":fake,                  # 
+                "provider_attribute":"password",         #  
+                "column_name":"Password"                 # 
+            },                                           # 
+            {                                            # 
+                "provider_source":fake,                  # 
+                "provider_attribute":"date",             # 
+                "column_name":"Date Of Birth"            # 
+            },                                           # 
             {                                            # 
                 "provider_source":fake,                  # 
                 "provider_attribute":"ssn",              # 
@@ -472,6 +482,20 @@ class FakeCompany:
                 fake_employees["Last Name"]          # Address, 
             )                                        # for each of the                                    
                                                      # 'employee_size' many rows 
+        ]                                            #
+                                                     # 
+        fake_employees["Username"]   =  [            # Replace the default       
+                                                     # Username with a list   
+                                                     # produced via a   
+            record[1].lower()                        # comprehension that  
+            +                                        # concatenates each 
+            record[0][0].lower()                     # Employee Record's 
+                                                     # Last Name with the   
+            for record in zip(                       # first letter of the 
+                fake_employees["First Name"],        # record's First name,
+                fake_employees["Last Name"]          # for each of the                                      
+            )                                        # 'employee_size' many rows  
+                                                     # 
         ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
         # 2.c.i.5)   Export the  Fake Employees,  which is now a   dict of lists.     
@@ -578,7 +602,7 @@ class FakeCompany:
                                                          #
         )                                                #         
                                                          #      
-        fake_customers["Credit Provider"] = [            # Add a  Membership Date    
+        fake_customers["Credit Card Provider"] = [       # Add a  Membership Date    
                                                          # 2018 and the 'current       
             phony.Payment().credit_card_network()        # year', for each of the          
                                                          # 'CustomerSize' many rows  
