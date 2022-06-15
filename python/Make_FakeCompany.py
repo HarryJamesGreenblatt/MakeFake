@@ -15,12 +15,16 @@ FUNCTIONS
 
 
 DEPENDENCIES
-    initialize_fake_data_providers.py\n
+    Project File:
+        initialize_fake_data_providers.py\n
+
+    Standard Library Module:
+        re
 '''
 
-# 1) Storage Of The Data Providers As Global Variables Named  fake  And  phony 
+# 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
-import initialize_fake_data_providers                          # Brings in all neccessary modules and  
+import initialize_fake_data_providers, re, collections         # Brings in all neccessary modules and  
                                                                # classes: 
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
 phony = initialize_fake_data_providers.load_all_providers()[1] # --> the full  mimesis  module
@@ -28,7 +32,7 @@ phony = initialize_fake_data_providers.load_all_providers()[1] # --> the full  m
 
 
 
-# 2) Defining The FakeCompany Class
+# 2) Defines The  FakeCompany  Class
 #####################################################################################################
 class FakeCompany:
     '''
@@ -46,13 +50,16 @@ class FakeCompany:
             i.  __init__(),
             ii. __repr__()
 
-        #2.b  State Methods
+        #2.b  State Methods: Getters
             i.   GetCity(),
             ii.  GetState(),
             iii. GetZipCode()
 
-        #2.c A Method To Generate A Fake, Randomized "Payroll" Dictionary
-            i.  MakeFakePayroll()   
+        #2.c A Method To Generate A Fake, Randomized "Employees" Dictionary
+            i.  MakeFakeEmployees()
+
+        #2.d A Method To Generate A Fake, Randomized "Customers" Dictionary
+            i.  MakeFakeCustomers()   
 
 
     ATTRIBUTE PARAMETERS
@@ -63,22 +70,26 @@ class FakeCompany:
                            DEFAULT VALUE:  random fake company type\n
 
         employee_size  -   Defines the number of records to be produced
-                           for Payroll or Personnel oreiented reports\n
+                           for Employees or Personnel oreiented reports\n
                            DEFAULT VALUE:  random  integer  between  10  and  500\n
+        
+        customer_size   -   Defines the number of records to be produced
+                            or Customer or Service oreiented reports\n
+                            DEFAULT VALUE:  random  integer  between  2  and  500\n
 
-        city           -   Defines the  US City  where the Company is located\n
-                           DEFAULT VALUE:  random  fake  or  existing  US City\n
+        city            -   Defines the  US City  where the Company is located\n
+                            DEFAULT VALUE:  random  fake  or  existing  US City\n
 
-        state          -   Defines the  2-letter US State Abbreviation  where the Company is 
-                           located\n
-                           DEFAULT VALUE:  random  existing   2-letter US State Abbreviation\n 
+        state           -   Defines the  2-letter US State Abbreviation  where the Company is 
+                            located\n
+                            DEFAULT VALUE:  random  existing   2-letter US State Abbreviation\n 
    
-        zip_code       -   Defines the  US Zip Code  where the Company is located\n
-                           DEFAULT VALUE:  random  fake  or  existing  US Zip Code\n
+        zip_code        -    Defines the  US Zip Code  where the Company is located\n
+                             DEFAULT VALUE:  random  fake  or  existing  US Zip Code\n
 
-        departments    -   Defines the list of possible departments to which employees at this 
-                           Company might belong\n
-                           DEFAULT VALUE:  Management, Accounting, Sales, Marketing, Security, IT\n  
+        departments     -   Defines the list of possible departments to which employees at this 
+                            Company might belong\n
+                            DEFAULT VALUE:  Management, Accounting, Sales, Marketing, Security, IT\n  
 
     
     EXAMPLE OUTPUT
@@ -89,7 +100,7 @@ class FakeCompany:
         State: MT\n
         Zip Code: 36398\n
         Departments: ['Management', 'Accounting', 'Sales', 'Marketing', 'Security', 'IT']\n
-        Payroll: dict_keys([
+        Employees: dict_keys([
             'Employee ID',
             'First Name',
             'Last Name',
@@ -106,7 +117,7 @@ class FakeCompany:
 
 
     PARENT MODULE
-        MakeFake_companies.py
+        Make_FakeCompany.py
     '''
 
     # 2.a) Constructor and Overloads
@@ -114,23 +125,26 @@ class FakeCompany:
     def __init__(                                            # Contrsuctor                 
     self,                                                    # whose params are                
     name          =  fake.company(),                         # all optional.                 
-    category      =  phony.Finance().company_type(),         #                   
-    employee_size =  phony.Numeric().integer_number(10,500), # Failure to  
-    city          =  fake.city(),                            # provide these 
-    state         =  fake.state_abbr(),                      # in the caller 
-    zip_code      =  fake.zipcode(),                         # results in the  
-    departments   =  [                                       # generation of  
-        "Management",                                        # a set of random  
-        "Accounting",                                        # values for each, 
-        "Sales",                                             # except for  
-        "Marketing",                                         # "departments", 
-        "Security",                                          # which is set to 
-        "IT"                                                 # a static list 
+    category      =  phony.Finance().company_type(),         #
+    employee_size =  phony.Numeric().integer_number(10,500), # Failure to
+    customer_size =  phony.Numeric().integer_number(2, 500), # provide these     
+    city          =  fake.city(),                            # in the caller  
+    state         =  fake.state_abbr(),                      # results in the   
+    zip_code      =  fake.zipcode(),                         # generation of   
+    departments   =  [                                       # a set of random   
+        "Management",                                        # values for each,  
+        "Accounting",                                        # except for   
+        "Sales",                                             # "departments",  
+        "Marketing",                                         # which is set to  
+        "Security",                                          # a static list  
+        "IT"                                                 # 
     ]                                                        # 
     ):                                                       # Once the   
         self.Name         =  name                            # state
         self.Category     =  category                        # param is 
+        self.Domain       =  self.SetDomain()                #
         self.EmployeeSize =  employee_size                   # accessible, 
+        self.CustomerSize =  customer_size                   # accessible, 
         self.City         =  city                            # clobber
         self.State        =  state                           # the zip_code
         self.ZipCode      =  fake.zipcode_in_state(state)    # param with an  
@@ -141,46 +155,85 @@ class FakeCompany:
         return(                                              # Overload of the
             f"Name: {self.Name}\n" +                         # class's string 
             f"Category: {self.Category}\n" +                 # method  
+            f"Domain: {self.SetDomain()}\n" +                # method  
             f"Number of Employees: {self.EmployeeSize}\n" +  # 
             f"City:  {self.City}\n" +                        # Customizes the 
             f"State: {self.State}\n" +                       # output this 
             f"Zip Code: {self.ZipCode}\n" +                  # object produces 
             f"Departments: {self.Departments}\n" +           # when used with 
-            f"Payroll: {self.MakeFakePayroll().keys()}\n"    # print()
+            f"Employees: {self.MakeFakeEmployees().keys()}\n"# print()
         )                                                    # 
     ############################################################################
         
 
     # 2.b) State Methods
     ############################################################################
+    #                   2.b.i)   Getters
+    #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
     def GetCity(self):           # retrieves the current value of the object's
         return self.City         #              City  attribute
-    #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
+                                 #
     def GetState(self):          # retrieves the current value of the object's 
         return self.State        #              State  attribute
-    #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
+                                 #
     def GetZipCode(self):        # retrieves the current value of the object's 
         return self.ZipCode      #             ZipCode  attribute
+    #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
+
+
+    #                  2.b.ii)  Setters
+    #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||
+    def SetDomain(self):                             #
+                                                     # List the common top-level  
+        domains = [                                  # domains to provide a    
+            'com',                                   # basis for random  
+            'net',                                   # selection. 
+            'org'                                    # The company name will 
+        ]                                            # represent the domain name  
+                                                     # and a randomly selected 
+        org_name          =  self.Name               # top-level domain will be 
+        top_level_domain  =  phony.Choice()(domains) # provided.
+                                                     # 
+        pattern = f'{org_name}.{top_level_domain}'   # This will represent a
+                                                     # pattern to be porcessed
+        Domain = re.sub(                             # by compounding string                                
+            '.+@',                                   # replacement operations 
+            '',                                      # via regular expression 
+            phony.Person().email([                   # sustitutions.
+                re.sub(                              # 
+                    '--',                            # The regex expression
+                    '-',                             # will replace empty
+                    re.sub(                          # whitespaces or commas 
+                        ',| ',                       # between words 
+                        '-',                         # with a hyphon, and then 
+                        pattern                      # go on to filter out  
+                    )                                # any occurences of 
+                )                                    # double hyphons that 
+            ])                                       # may result in edge 
+        )                                            # cases
+                                                     #
+        return   Domain                              #
+    #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||
     ############################################################################
 
 
-    # 2.c) A Method To Generate A Fake, Randomized "Payroll" Dictionary
+    # 2.c) A Method To Generate A Fake, Randomized "Employees" Dictionary
     ############################################################################
-    def MakeFakePayroll(self, has_custom_size = False, custom_size = 0):                                  
+    def MakeFakeEmployees(self, has_custom_size = False, custom_size = 0):                                  
         '''
         NAME
-            MakeFakePayroll
+            MakeFakeEmployees
 
 
         SYNOPSIS
             Creates a  dictionary  of  lists  consisting of randomly\n 
             generated  fake data,  modeled to resemble a simplified\n 
-            Company Payroll.
+            Company Employees.
 
 
         DESCRIPTION
             Generates a "Base" list of fake data as an initial "profile"\n
-            for data modeled to resemble a basic Payroll sheet.\n
+            for data modeled to resemble a basic Employees sheet.\n
 
             While this process establishes a good foundation for such a model,\n
             the "Base" used provides some data elements which are handled\n 
@@ -205,21 +258,21 @@ class FakeCompany:
 
             #2.c.i.2 
                 Establish a  list of dicts  respresenting a "Base"\n 
-                collection of data to be used as "Payroll Attributes".\n 
+                collection of data to be used as "Employees Attributes".\n 
 
             #2.c.i.3 
                 Initialize a  dict of lists  whose  keys  represent\n  
-                Column Names for these "Payroll Attributes", and whose\n 
+                Column Names for these "Employees Attributes", and whose\n 
                 values represent fake employee "records" for as many rows\n 
                 specified by the object's EmployeeSize attribute.\n
 
             #2.c.i.4 
                 Replace certain "Base" attributes with more capable\n 
                 counterparts, along with additional column attributes,\n
-                to complete the Payroll attribute profile.\n
+                to complete the Employees attribute profile.\n
                  
             #2.c.i.5 
-                Export the  Fake Payroll,  which is now a   dict of lists.    
+                Export the  Fake Employees,  which is now a   dict of lists.    
 
 
         INPUTS
@@ -231,7 +284,7 @@ class FakeCompany:
 
         
         OUTPUT
-            a  <dict>  whose  keys  correspond to the  Payroll's  Column Names\n
+            a  <dict>  whose  keys  correspond to the  Employees's  Column Names\n
             amd whose  values  correspond to "rows" or "records" of  Employees
             
 
@@ -244,17 +297,17 @@ class FakeCompany:
         #            bound either to the specified  custom_size,  or to the
         #            object's inherited  EmployeeSize  attribute. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        employee_size = (                                # if MakeFakePayroll is
-                                                         # called with the
+        employee_size = (                                # if MakeFakeEmployees 
+                                                         # is called with the
             self.EmployeeSize   if not has_custom_size   # has_custom_size flag,
             else                custom_size              # a custom_size is used
                                                          # to determine how many
         )                                                # records to generate
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
         # 2.c.i.2)   Establish a  list of dicts  respresenting a "Base"
-        #            collection of data to be used as "Payroll Attributes".
+        #            collection of data to be used as "Employees Attributes".
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        fake_payroll_base = [                            # 
+        fake_employees_base = [                          # 
             {                                            # 
                 "provider_source":fake,                  # 
                 "provider_attribute":"iana_id",          # 
@@ -268,13 +321,24 @@ class FakeCompany:
             {                                            # enabling each 
                 "provider_source":fake,                  # to be passed 
                 "provider_attribute":"last_name",        # iteratively 
-                "column_name":"Last Name"},              # as strings,
-            {                                            # rather than 
-                "provider_source":fake,                  # being invoked
-                "provider_attribute":"date",             # using the 
-                "column_name":"Date Of Birth"            # traditional
-            },                                           #   method()
-            {                                            # syntax
+                "column_name":"Last Name"                # as strings,
+            },                                           # rather than   
+            {                                            # being invoked  
+                "provider_source":fake,                  # using the   
+                "provider_attribute":"email",            # traditional  
+                "column_name":"Email"                    #   method()  
+            },                                           # rather than   
+            {                                            # being invoked  
+                "provider_source":fake,                  # using the   
+                "provider_attribute":"date",             # traditional  
+                "column_name":"Date Of Birth"            #   method()      
+            },                                           # syntax  
+            {                                            # 
+                "provider_source":fake,                  # 
+                "provider_attribute":"ssn",              # 
+                "column_name":"SSN"                      # 
+            },                                           # 
+            {                                            # 
                 "provider_source":fake,                  # 
                 "provider_attribute":"phone_number",     # 
                 "column_name":"Phone Number"             # 
@@ -302,30 +366,30 @@ class FakeCompany:
         ]                                                #
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
         # 2.c.i.3) Initialize a  dict of lists  whose keys represent  column 
-        #          names for "Payroll" attributes, and whose values represent   
+        #          names for "Employees" attributes, and whose values represent   
         #          fake employee "records"  for as many rows specified by the 
         #          object's EmployeeSize attribute.
         #||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||#
-        fake_payroll = {                                       # Using dict 
+        fake_employees = collections.OrderedDict({             # Using dict 
                                                                # comprehension,
-            fake_payroll_base[i]["column_name"] :              # each  pair 
+            fake_employees_base[i]["column_name"] :            # each  pair 
             [                                                  # in the 
-                getattr(                                       # payroll base
-                    fake_payroll_base[i]["provider_source"],   # dict is used 
-                    fake_payroll_base[i]["provider_attribute"] # to iteratively
+                getattr(                                       # Employees base
+                    fake_employees_base[i]["provider_source"], # dict is used 
+                    fake_employees_base[i]["provider_attribute"]# to iteratively
                 )()                                            # store
                 for _ in range( employee_size )                # 'EmployeeSize' 
             ]                                                  # many rows
                                                                # of fake data
-            for i in range( len(fake_payroll_base) )           # keyed on what 
+            for i in range( len(fake_employees_base) )         # keyed on what 
                                                                # the column's 
-        }                                                      # name should be
+        })                                                     # name should be
         #||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||#
         # 2.c.i.4) Replace certain "Base" attributes with more capable  
         #          counterparts,along with additional column attributes, to 
-        #          complete the Payroll attribute profile.
+        #          complete the Employees attribute profile.
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        fake_payroll["Phone Number"]  =  [           # Replace the Phone Number 
+        fake_employees["Phone Number"]  =  [         # Replace the Phone Number 
                                                      # fake data method from  
             phony.Person().telephone()               # from  fake's  to  phony's 
                                                      # for each of the   
@@ -333,7 +397,7 @@ class FakeCompany:
                                                      # 
         ]                                            #
                                                      # 
-        fake_payroll["City"]          =  [           # Replace the  City      
+        fake_employees["City"]          =  [         # Replace the  City      
                                                      # fake data method from       
             phony.Choice()([                         # from  fake's  to a      
                 self.City,                           # randomly selected  choice   
@@ -344,7 +408,7 @@ class FakeCompany:
             for _ in range( employee_size )          # 'employee_size' many rows  
         ]                                            # 
                                                      # 
-        fake_payroll["Zip Code"]      =  [           # Replace the  Zip Code         
+        fake_employees["Zip Code"]      =  [         # Replace the  Zip Code         
                                                      # fake data method from           
             phony.Choice()([                         # from  fake's  to a        
                 self.ZipCode,                        # randomly selected  choice     
@@ -355,7 +419,7 @@ class FakeCompany:
             for _ in range( employee_size )          # for each of the    
         ]                                            # 'employee_size' many rows   
                                                      #
-        fake_payroll["Date Of Birth"]  =  [          # Add a  Date Of Birth 
+        fake_employees["Date Of Birth"]  =  [        # Add a  Date Of Birth 
                                                      # column using  phony's
             phony.Datetime().date(                   # fake data method for
                 1959,                                # a providing random 
@@ -366,7 +430,7 @@ class FakeCompany:
                                                      #
         ]                                            # 
                                                      # 
-        fake_payroll["Hire Date"]    =  [            # Add a  Hire Date   
+        fake_employees["Hire Date"]    =  [          # Add a  Hire Date   
                                                      # column using  phony's    
             phony.Datetime().formatted_date()        # method for random fake    
                                                      # dates ranging between           
@@ -374,25 +438,184 @@ class FakeCompany:
                                                      # year', for each of the         
         ]                                            # 'employee_size' many rows   
                                                      # 
-        fake_payroll["Salary"]       =  [            # Add a  Salary  column   
+        fake_employees["Salary"]       =  [          # Add a  Salary  column   
                                                      # using  phony's fake data   
-            phony.Finance().price(50000, 125000)     # method for random price    
+            phony.Finance().price( 50000, 125000 )   # method for random price    
                                                      # values, ranging         
             for _ in range( employee_size )          # from $50000 through    
                                                      # $125000, for each of the    
         ]                                            # 'employee_size' many rows    
                                                      # 
-        fake_payroll["Department"]   =  [            # Add a  Department  
+        fake_employees["Department"]   =  [          # Add a  Department  
                                                      # column using a
             phony.Choice()(self.Departments)         # randomly selected    
                                                      # choice from the
             for _ in range( employee_size )          # object's 'Departments'
                                                      # attribute, for each of
         ]                                            # 'employee_size' many rows
+                                                     #
+        fake_employees["Email"]   =  [               # Replace the default       
+                                                     # Email with a list   
+                                                     # produced via a   
+            record[0].lower()                        # comprehension that  
+            +                                        # concatenates each 
+            '.'                                      # Employee Record's 
+            +                                        # First and Last Name,  
+            record[1].lower()                        # deliminates them with a    
+            +                                        # '.', and appends the   
+            f'@{self.Domain}'                        # result with the object's 
+                                                     # Domain Attribute,thereby    
+            for record in zip(                       # simulating a  
+                fake_employees["First Name"],        # Domain-joined Email  
+                fake_employees["Last Name"]          # Address, 
+            )                                        # for each of the                                    
+                                                     # 'employee_size' many rows 
+        ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        # 2.c.i.5)   Export the  Fake Payroll,  which is now a   dict of lists.     
+        # 2.c.i.5)   Export the  Fake Employees,  which is now a   dict of lists.     
         #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
-        return fake_payroll   # so it can be used as input to a Pandas DataFrame                                        
+        return fake_employees # so it can be used as input to a Pandas DataFrame                                        
         #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
     ############################################################################
+
+
+    # 2.d) A Method To Generate A Fake, Randomized "Customers" Dictionary
+    ############################################################################
+    def MakeFakeCustomers(self):
+        '''
+        NAME
+            MakeFakeCustomers
+
+
+        SYNOPSIS
+            Creates a  dictionary of lists  consisting of randomly\n 
+            generated  fake data,  specifically modeled to resemble a\n
+            collection of  "Customer" Clients  belonging to a company\n 
+            specializing in  Fitness  and  Nutrition  Services.
+
+
+        DESCRIPTION
+            Utililizes the  FakeAthleticClub.MakeFakeEmployees() Method\n
+            Overload,  which modifies a  copy  of the  supclass method's\n
+            resultant dictionary of lists  in a way that more closely\n 
+            simulates a dataset that specifically ressembles an Athletic Club. 
+
+            Once the  copy  of the  Payroll Dictionary  has been adapted to\n
+            the specificity of the "Athletic Club" profile, the  copy\n
+            is then re-modified in a process where the FakeAthleticClub's\n
+            adjusted attriubutes are filtered to simulate a data context\n
+            resembling  Athletic Club Clients,  a.k.a. "Customers",  rather\n
+            than  Athletic Club Employees. 
+
+
+        PROCESS
+            #2.d.i.1 
+                Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
+                the superclass's  MakeFakeEmployees  Method  to simplify code\n
+                refactoring efforts.      
+
+            #2.d.i.2 
+                Filter out any  Coulumn Attributes which are not consistant\n
+                with a  Athletic Company Customers  Data Context.  
+            
+            #2.d.i.3)   
+                Add  additional columns  to the  Customer Data Context\n 
+                representing  a  Customer's  ID,  Membership Date,  and\n  
+                Membership Plan.
+
+            #2.d.i.4) 
+                Export the  Fake Customers,  which is now a   dict of lists.    
+
+
+        INPUTS
+            None
+
+        
+        OUTPUT
+            a  <dict>  whose  keys  correspond to  Column Attribute Names\n
+            amd whose  values  correspond to "rows" or "records" of  Customers.
+        '''
+
+        # 2.d.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
+        #            by the superclass's  MakeFakeEmployees  Method  to simplify 
+        #            code refactoring efforts. 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+        fake_customers = self.MakeFakeEmployees(         # the has_custom_size  
+            has_custom_size =   True,                    # switch indicates  
+            custom_size     =   self.CustomerSize        # the dict's length will 
+        )                                                # match the  CustomerSize
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+
+        # 2.d.i.2)   Filter out any  Coulumn Attributes which are not consistant 
+        #            with a  Athletic Company Customers  Data Context. 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+        del fake_customers['Salary']                     # Club Customers would 
+        del fake_customers['Department']                 # not likely have 
+        del fake_customers['Hire Date']                  # Salary, Department,
+        del fake_customers['Date Of Birth']              # Hire Date, Date Of
+        del fake_customers['Employee ID']                # Birth, Employee ID
+        del fake_customers['SSN']                        # or SSN  Attributes
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+
+        # 2.d.i.3)   Add additional Columns Attributes to the Customer Data Context 
+        #            representing  a  Customer's  ID,  Membership Date,  and  
+        #            Membership Plan.
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+        fake_customers['Customer ID']  =  [              # Add a  Customer ID  
+                                                         # column using  fake's
+            fake.iana_id()[:4]                           # data method for      
+                                                         # random id numbers, 
+            for _ in range(self.CustomerSize)            # limiting the number of
+                                                         # digits to 4,  for each 
+        ]                                                # of 'CustomerSize'rows   
+                                                         # 
+        fake_customers.move_to_end(                      # Shift the Customer
+                                                         # ID to the beginning of  
+            'Customer ID',                               # ordrered dictionary 
+            last=False                                   # 
+                                                         #
+        )                                                #         
+                                                         #      
+        fake_customers["Credit Provider"] = [            # Add a  Membership Date    
+                                                         # 2018 and the 'current       
+            phony.Payment().credit_card_network()        # year', for each of the          
+                                                         # 'CustomerSize' many rows  
+            for _ in range(self.CustomerSize)            # 
+                                                         # 
+        ]                                                #
+                                                         #
+        fake_customers["Credit Card Number"] = [         # Add a  Membership Date    
+                                                         # 2018 and the 'current       
+            phony.Payment().credit_card_number()         # year', for each of the          
+                                                         # 'CustomerSize' many rows  
+            for _ in range(self.CustomerSize)            # 
+                                                         # 
+        ]                                                #
+                                                         #
+        fake_customers["CVV"] = [                        # Add a  Membership Date    
+                                                         # 2018 and the 'current       
+            phony.Payment().cvv()                        # year', for each of the          
+                                                         # 'CustomerSize' many rows  
+            for _ in range(self.CustomerSize)            # 
+                                                         # 
+        ]                                                #
+                                                         #
+        fake_customers['Email'] =  [                     # Modify the  Email    
+                                                         # to be randomly  
+            phony.Person().email([                       # selcted from popular 
+                'gmail.com',                             # email domains, so that 
+                'yahoo.com',                             # it doesn't correspond     
+                'outlook.com'                            # to the object's Domain,   
+            ])                                           # for each of the      
+                                                         # 'CustomerSize' many rows    
+            for _ in range(self.CustomerSize)            # 
+        ]                                                # 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+
+        # 2.d.i.4)   Export the  Fake Customers,  which is now a   dict of lists.     
+        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+        return fake_customers # for use as input in a Pandas DataFrame
+        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+    #############################################################################
+
 #####################################################################################################
