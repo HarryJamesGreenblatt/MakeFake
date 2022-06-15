@@ -168,7 +168,8 @@ class FakeCompany:
 
     # 2.b) State Methods
     ############################################################################
-    #                   2.b.i)   Getters
+
+    # 2.b.i)   Getters
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
     def GetCity(self):           # retrieves the current value of the object's
         return self.City         #              City  attribute
@@ -181,7 +182,7 @@ class FakeCompany:
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
 
 
-    #                  2.b.ii)  Setters
+    # 2.b.ii)  Setters
     #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||
     def SetDomain(self):                             #
                                                      # List the common top-level  
@@ -210,10 +211,11 @@ class FakeCompany:
                     )                                # any occurences of 
                 )                                    # double hyphons that 
             ])                                       # may result in edge 
-        )                                            # cases
+        )                                            # cases.
                                                      #
-        return   Domain                              #
+        return   Domain                              # 
     #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||
+
     ############################################################################
 
 
