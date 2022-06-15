@@ -55,11 +55,11 @@ class FakeCompany:
             ii.  GetState(),
             iii. GetZipCode()
 
-        #2.c A Method To Generate A Fake, Randomized "Employees" Dictionary
-            i.  MakeFakeEmployees()
+        #2.c  A Method To Generate A Fake, Randomized "Employees" Dictionary
+            MakeFakeEmployees()
 
-        #2.d A Method To Generate A Fake, Randomized "Customers" Dictionary
-            i.  MakeFakeCustomers()   
+        #2.d  A Method To Generate A Fake, Randomized "Customers" Dictionary
+            MakeFakeCustomers()   
 
 
     ATTRIBUTE PARAMETERS
@@ -122,34 +122,42 @@ class FakeCompany:
 
     # 2.a) Constructor and Overloads
     ############################################################################
-    def __init__(                                            # Contrsuctor                 
-    self,                                                    # whose params are                
-    name          =  fake.company(),                         # all optional.                 
-    category      =  phony.Finance().company_type(),         #
-    employee_size =  phony.Numeric().integer_number(10,500), # Failure to
-    customer_size =  phony.Numeric().integer_number(2, 500), # provide these     
-    city          =  fake.city(),                            # in the caller  
-    state         =  fake.state_abbr(),                      # results in the   
-    zip_code      =  fake.zipcode(),                         # generation of   
-    departments   =  [                                       # a set of random   
-        "Management",                                        # values for each,  
-        "Accounting",                                        # except for   
-        "Sales",                                             # "departments",  
-        "Marketing",                                         # which is set to  
-        "Security",                                          # a static list  
-        "IT"                                                 # 
-    ]                                                        # 
-    ):                                                       # Once the   
-        self.Name         =  name                            # state
-        self.Category     =  category                        # param is 
-        self.Domain       =  self.SetDomain()                #
-        self.EmployeeSize =  employee_size                   # accessible, 
-        self.CustomerSize =  customer_size                   # accessible, 
-        self.City         =  city                            # clobber
-        self.State        =  state                           # the zip_code
-        self.ZipCode      =  fake.zipcode_in_state(state)    # param with an  
-        self.Departments  =  departments                     # improvement. 
-    #||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||| 
+    
+    # 2.a.i)   Constructor
+    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
+    def __init__(                                             # Contrsuctor                 
+    self,                                                     # whose params are                
+    name           =  fake.company(),                         # all optional.                 
+    category       =  phony.Finance().company_type(),         #
+    employee_size  =  phony.Numeric().integer_number(1,1000), # Failure to
+    customer_size  =  phony.Numeric().integer_number(1,1000), # provide these     
+    inventory_size =  phony.Numeric().integer_number(1,1000), #     
+    city           =  fake.city(),                            # in the caller  
+    state          =  fake.state_abbr(),                      # results in the   
+    zip_code       =  fake.zipcode(),                         # generation of   
+    departments    =  [                                       # a set of random   
+        "Management",                                         # values for each,  
+        "Accounting",                                         # except for   
+        "Sales",                                              # "departments",  
+        "Marketing",                                          # which is set to  
+        "Security",                                           # a static list  
+        "IT"                                                  # 
+    ]                                                         # 
+    ):                                                        # 
+        self.Name          =  name                            # 
+        self.Category      =  category                        # 
+        self.Domain        =  self.SetDomain()                # Once the     
+        self.EmployeeSize  =  employee_size                   # state 
+        self.CustomerSize  =  customer_size                   # param is   
+        self.InventorySize =  inventory_size                  # accessible,
+        self.City          =  city                            # replace
+        self.State         =  state                           # the zip_code
+        self.ZipCode       =  fake.zipcode_in_state(state)    # param with an  
+        self.Departments   =  departments                     # improvement. 
+    #||||||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||
+     
+    # 2.a.ii)  String Methpd Overload 
+    #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
     def __repr__(self):                                      #
                                                              #
         return(                                              # Overload of the
@@ -253,27 +261,27 @@ class FakeCompany:
 
 
         PROCESS
-            #2.c.i.1 
+            #2.c.i) 
                 Initialize a local employee_size,  which can be optionally\n 
                 bound either to a specified  Custom Size,  or to the\n
                 object's inherited  EmployeeSize Attribute.\n 
 
-            #2.c.i.2 
+            #2.c.ii) 
                 Establish a  list of dicts  respresenting a "Base"\n 
                 collection of data to be used as "Employees Attributes".\n 
 
-            #2.c.i.3 
+            #2.c.iii) 
                 Initialize a  dict of lists  whose  keys  represent\n  
                 Column Names for these "Employees Attributes", and whose\n 
                 values represent fake employee "records" for as many rows\n 
                 specified by the object's EmployeeSize attribute.\n
 
-            #2.c.i.4 
+            #2.c.iv) 
                 Replace certain "Base" attributes with more capable\n 
                 counterparts, along with additional column attributes,\n
                 to complete the Employees attribute profile.\n
                  
-            #2.c.i.5 
+            #2.c.v)
                 Export the  Fake Employees,  which is now a   dict of lists.    
 
 
@@ -293,9 +301,7 @@ class FakeCompany:
         PARENT:
             Make_FakeCompany.FakeCompany
         '''
-
-        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        # 2.c.i.1)   Initialize a local  employee_size,  which can be optionally 
+        # 2.c.i)   Initialize a local  employee_size,  which can be optionally 
         #            bound either to the specified  custom_size,  or to the
         #            object's inherited  EmployeeSize  attribute. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
@@ -306,7 +312,8 @@ class FakeCompany:
                                                          # to determine how many
         )                                                # records to generate
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        # 2.c.i.2)   Establish a  list of dicts  respresenting a "Base"
+
+        # 2.c.ii)   Establish a  list of dicts  respresenting a "Base"
         #            collection of data to be used as "Employees Attributes".
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
         fake_employees_base = [                          # 
@@ -376,8 +383,8 @@ class FakeCompany:
                 "column_name":"Zip Code"                 #
             }                                            #
         ]                                                #
-        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        # 2.c.i.3) Initialize a  dict of lists  whose keys represent  column 
+
+        # 2.c.iii) Initialize a  dict of lists  whose keys represent  column 
         #          names for "Employees" attributes, and whose values represent   
         #          fake employee "records"  for as many rows specified by the 
         #          object's EmployeeSize attribute.
@@ -397,7 +404,8 @@ class FakeCompany:
                                                                # the column's 
         })                                                     # name should be
         #||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||#
-        # 2.c.i.4) Replace certain "Base" attributes with more capable  
+
+        # 2.c.iv)  Replace certain "Base" attributes with more capable  
         #          counterparts,along with additional column attributes, to 
         #          complete the Employees attribute profile.
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
@@ -498,7 +506,8 @@ class FakeCompany:
                                                      # 
         ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        # 2.c.i.5)   Export the  Fake Employees,  which is now a   dict of lists.     
+
+        # 2.c.v)    Export the  Fake Employees,  which is now a   dict of lists.     
         #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
         return fake_employees # so it can be used as input to a Pandas DataFrame                                        
         #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
@@ -507,7 +516,7 @@ class FakeCompany:
 
     # 2.d) A Method To Generate A Fake, Randomized "Customers" Dictionary
     ############################################################################
-    def MakeFakeCustomers(self):
+    def MakeFakeCustomers(self, has_custom_size = False, custom_size = 0):
         '''
         NAME
             MakeFakeCustomers
@@ -516,63 +525,73 @@ class FakeCompany:
         SYNOPSIS
             Creates a  dictionary of lists  consisting of randomly\n 
             generated  fake data,  specifically modeled to resemble a\n
-            collection of  "Customer" Clients  belonging to a company\n 
-            specializing in  Fitness  and  Nutrition  Services.
+            collection of  "Customer" Clients.
 
 
         DESCRIPTION
-            Utililizes the  FakeAthleticClub.MakeFakeEmployees() Method\n
-            Overload,  which modifies a  copy  of the  supclass method's\n
-            resultant dictionary of lists  in a way that more closely\n 
-            simulates a dataset that specifically ressembles an Athletic Club. 
+            Utililizes a  MakeFakeEmployees() Method  Overload\n
+            which modifies a  copy  of the  supclass method's\n
+            resultant  ordered dict of lists  in a way that more closely\n 
+            simulates a dataset that specifically ressembles a Customer Data. 
 
-            Once the  copy  of the  Payroll Dictionary  has been adapted to\n
-            the specificity of the "Athletic Club" profile, the  copy\n
-            is then re-modified in a process where the FakeAthleticClub's\n
-            adjusted attriubutes are filtered to simulate a data context\n
-            resembling  Athletic Club Clients,  a.k.a. "Customers",  rather\n
-            than  Athletic Club Employees. 
+            Once the  copy  of the  Payroll Dictionary  is then adapted to\n 
+            simulate a data context  resembling "Customers",  rather than 
+            "Employees". 
 
 
         PROCESS
-            #2.d.i.1 
+            #2.d.i) 
                 Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
                 the superclass's  MakeFakeEmployees  Method  to simplify code\n
                 refactoring efforts.      
 
-            #2.d.i.2 
+            #2.d.ii) 
                 Filter out any  Coulumn Attributes which are not consistant\n
                 with a  Athletic Company Customers  Data Context.  
             
-            #2.d.i.3)   
+            #2.d.iii)   
                 Add  additional columns  to the  Customer Data Context\n 
                 representing  a  Customer's  ID,  Membership Date,  and\n  
                 Membership Plan.
 
-            #2.d.i.4) 
+            #2.d.iv) 
                 Export the  Fake Customers,  which is now a   dict of lists.    
 
 
         INPUTS
-            None
-
+            <bool>  has_custom_size  -   Indicates if a custom value is to be used\n
+                                         DEFAULT VALUE:  False\n
+            
+            <int>   custom_size      -   Sets the value of the optional Custom Size\n
+                                         DEFAULT VALUE:  0\n
         
         OUTPUT
             a  <dict>  whose  keys  correspond to  Column Attribute Names\n
             amd whose  values  correspond to "rows" or "records" of  Customers.
         '''
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+        # 2.d.i.1)   Initialize a local  customer_size,  which can be optionally 
+        #            bound either to the specified  custom_size,  or to the
+        #            object's inherited  CustomerSize  attribute. 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+        customer_size = (                                # if MakeFakeCustomers 
+                                                         # is called with the
+            self.CustomerSize   if not has_custom_size   # has_custom_size flag,
+            else                custom_size              # a custom_size is used
+                                                         # to determine how many
+        )                                                # records to generate
 
-        # 2.d.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
+        # 2.d.i.2)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
         #            by the superclass's  MakeFakeEmployees  Method  to simplify 
         #            code refactoring efforts. 
-        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
-        fake_customers = self.MakeFakeEmployees(         # the has_custom_size  
-            has_custom_size =   True,                    # switch indicates  
-            custom_size     =   self.CustomerSize        # the dict's length will 
-        )                                                # match the  CustomerSize
-        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+        #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
+        fake_customers  = self.MakeFakeEmployees(     # the has_custom_size  
+            has_custom_size = True,                   # switch indicates  
+            custom_size     = customer_size           # the dict's length will 
+        )                                             # match the  CustomerSize
+        #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
-        # 2.d.i.2)   Filter out any  Coulumn Attributes which are not consistant 
+        # 2.d.i.3)   Filter out any  Coulumn Attributes which are not consistant 
         #            with a  Athletic Company Customers  Data Context. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
         del fake_customers['Salary']                     # Club Customers would 
@@ -583,7 +602,7 @@ class FakeCompany:
         del fake_customers['SSN']                        # or SSN  Attributes
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.d.i.3)   Add additional Columns Attributes to the Customer Data Context 
+        # 2.d.i.4)   Add additional Columns Attributes to the Customer Data Context 
         #            representing  a  Customer's  ID,  Membership Date,  and  
         #            Membership Plan.
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
@@ -591,7 +610,7 @@ class FakeCompany:
                                                          # column using  fake's
             fake.iana_id()[:4]                           # data method for      
                                                          # random id numbers, 
-            for _ in range(self.CustomerSize)            # limiting the number of
+            for _ in range(customer_size)                # limiting the number of
                                                          # digits to 4,  for each 
         ]                                                # of 'CustomerSize'rows   
                                                          # 
@@ -602,19 +621,19 @@ class FakeCompany:
                                                          #
         )                                                #         
                                                          #      
-        fake_customers["Credit Card Provider"] = [       # Add a  Membership Date    
+        fake_customers["Card Provider"] = [              # Add a  Membership Date    
                                                          # 2018 and the 'current       
             phony.Payment().credit_card_network()        # year', for each of the          
                                                          # 'CustomerSize' many rows  
-            for _ in range(self.CustomerSize)            # 
+            for _ in range(customer_size)                # 
                                                          # 
         ]                                                #
                                                          #
-        fake_customers["Credit Card Number"] = [         # Add a  Membership Date    
+        fake_customers["Card Number"] = [                # Add a  Membership Date    
                                                          # 2018 and the 'current       
             phony.Payment().credit_card_number()         # year', for each of the          
                                                          # 'CustomerSize' many rows  
-            for _ in range(self.CustomerSize)            # 
+            for _ in range(customer_size)                # 
                                                          # 
         ]                                                #
                                                          #
@@ -622,7 +641,16 @@ class FakeCompany:
                                                          # 2018 and the 'current       
             phony.Payment().cvv()                        # year', for each of the          
                                                          # 'CustomerSize' many rows  
-            for _ in range(self.CustomerSize)            # 
+            for _ in range(customer_size)                # 
+                                                         # 
+        ]                                                #
+                                                         #
+        fake_customers["Expiration Date"] = [            # Add a  Membership Date    
+                                                         # 2018 and the 'current       
+            phony.Payment().credit_card_expiration_date( # year', for each of the          
+                22, 28                                   #
+            )                                            # 'CustomerSize' many rows  
+            for _ in range(customer_size)                # 
                                                          # 
         ]                                                #
                                                          #
@@ -634,13 +662,119 @@ class FakeCompany:
                 'outlook.com'                            # to the object's Domain,   
             ])                                           # for each of the      
                                                          # 'CustomerSize' many rows    
-            for _ in range(self.CustomerSize)            # 
+            for _ in range(customer_size)                # 
+        ]                                                # 
+                                                         #
+        fake_customers['Password'] =  [                  # Replace the default       
+                                                         # Password with a    
+                                                         #   
+            phony.Choice()                               #
+            ([                                           #
+                fake.user_name(),                        #
+                phony.Person().username(),               #
+                phony.Person().password()                #
+            ])                                           #
+                                                         # 'employee_size' many   
+            for _ in range(customer_size)                #  rows
+                                                         # 
         ]                                                # 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.d.i.4)   Export the  Fake Customers,  which is now a   dict of lists.     
+        # 2.d.i.5)   Export the  Fake Customers,  which is now a   dict of lists.     
         #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return fake_customers # for use as input in a Pandas DataFrame
+        return fake_customers            # for use as input in a Pandas DataFrame
+        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+    #############################################################################
+    
+    
+    # 2.e) A Method To Generate A Fake, Randomized "Inventory" Dictionary
+    ############################################################################
+    def MakeFakeInventory(self, has_custom_size = False, custom_size = 0):
+        '''
+        NAME
+            MakeFakeInventory
+
+
+        SYNOPSIS
+            Creates a  dictionary of lists  consisting of randomly\n 
+            generated  fake data,  specifically modeled to resemble an\n
+            "Inventory" of  products.
+
+
+        DESCRIPTION
+
+
+
+        PROCESS
+            #2.e.i) 
+                Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
+                the superclass's  MakeFakeEmployees  Method  to simplify code\n
+                refactoring efforts.      
+
+            #2.e.ii) 
+                Filter out any  Coulumn Attributes which are not consistant\n
+                with a  Athletic Company Inventory  Data Context.  
+            
+            #2.e.iii) 
+                Export the  Fake Inventory,  which is now a   dict of lists.    
+
+
+        INPUTS
+            <bool>  has_custom_size  -   Indicates if a custom value is to be used\n
+                                         DEFAULT VALUE:  False\n
+            
+            <int>   custom_size      -   Sets the value of the optional Custom Size\n
+                                         DEFAULT VALUE:  0\n
+        
+        OUTPUT
+            a  <dict>  whose  keys  correspond to  Column Attribute Names\n
+            amd whose  values  correspond to "rows" or "records" of  Inventory.
+        '''
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+        # 2.e.i)   Initialize a local  customer_size,  which can be optionally 
+        #            bound either to the specified  custom_size,  or to the
+        #            object's inherited  CustomerSize  attribute. 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+        inventory_size = (                               # if MakeFakeCustomers 
+                                                         # is called with the
+            self.InventorySize  if not has_custom_size   # has_custom_size flag,
+            else                custom_size              # a custom_size is used
+                                                         # to determine how many
+        )                                                # records to generate
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+
+
+        # 2.e.ii)   Initialize a local  customer_size,  which can be optionally 
+        #            bound either to the specified  custom_size,  or to the
+        #            object's inherited  CustomerSize  attribute. 
+        #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
+        fake_inventory = collections.OrderedDict({   #
+            'Stock Number':[                         #
+                fake.iban()                          #
+                for _ in range(inventory_size)       #
+            ],                                       #
+            'Make':[                                 #
+                fake.machine_make()                  #
+                for _ in range(inventory_size)       #
+            ],                                       #
+            'Model':[                                #
+                fake.machine_model()                 #
+                for _ in range(inventory_size)       #
+            ],                                       #
+            'Category':[                             #
+                fake.machine_category()              #
+                for _ in range(inventory_size)       #
+            ],                                       #
+            'Year':[                                 #
+                fake.machine_year()                  #
+                for _ in range(inventory_size)       #
+            ]                                        #
+        })                                           #
+        #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
+
+        # 2.e.iii)   Export the  Fake Inventory,  which is now a   dict of lists.     
+        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+        return fake_inventory            # for use as input in a Pandas DataFrame
         #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
     #############################################################################
 
