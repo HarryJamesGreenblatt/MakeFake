@@ -133,7 +133,7 @@ class FakeCompany:
     employee_size  =  phony.Numeric().integer_number(1,1000), # Failure to
     customer_size  =  phony.Numeric().integer_number(1,1000), # provide these     
     inventory_size =  phony.Numeric().integer_number(1,1000), #     
-    city           =  fake.city(),                            # in the caller  
+    city           =  None,                                   # in the caller  
     state          =  fake.state_abbr(),                      # results in the   
     zip_code       =  fake.zipcode(),                         # generation of   
     departments    =  [                                       # a set of random   
@@ -151,11 +151,11 @@ class FakeCompany:
         self.EmployeeSize  =  employee_size                   # state 
         self.CustomerSize  =  customer_size                   # param is   
         self.InventorySize =  inventory_size                  # accessible,
-        self.City          =  city                            # replace
-        self.State         =  state                           # the zip_code
-        self.ZipCode       =  fake.zipcode_in_state(state)    # param with an  
-        self.Departments   =  departments                     # improvement. 
-    #||||||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||
+        self.City          =  city                            # replace the 
+        self.State         =  state                           # zip_code  param
+        self.ZipCode       =  fake.zipcode_in_state(state)    # with one of  
+        self.Departments   =  departments                     # phony's methods. 
+    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||| #|||||||||||||||||
      
     # 2.a.ii)  String Methpd Overload 
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
