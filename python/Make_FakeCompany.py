@@ -297,11 +297,12 @@ class FakeCompany:
 
         
         OUTPUT
-            <Tuple>
-                A  pandas  <DataFrame>  object
+            <Dict>
+                'As_DataFrame'   -  pandas  <DataFrame>  object
 
-                An  <OrderedDict>  whose  keys  correspond to the  Employees's  Column Names\n
-                amd whose  values  correspond to "rows" or "records" of  Employees
+                'As_OrdredDict'  -  <OrderedDict>  whose  keys  correspond to\n
+                                    the  Employees's  Column Names  and whose  values\n 
+                                    correspond to "rows" or "records" of  Employees
 
 
         PARENT:
@@ -578,11 +579,12 @@ class FakeCompany:
                                          DEFAULT VALUE:  0\n
         
         OUTPUT
-            <Tuple>
-                A  pandas  <DataFrame>  object
+            <Dict>
+                'As_DataFrame'  -   pandas  <DataFrame>  object
 
-                A  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
-                amd whose  values  correspond to "rows" or "records" of  Customers.
+                'As_OrdredDict' -  <OrderedDict>  whose  keys  correspond to\n
+                                   Column Attribute Names  and whose  values\n 
+                                   correspond to "rows" or "records" of  Customers.
 
 
         PARENT:
@@ -607,8 +609,7 @@ class FakeCompany:
         fake_customers  =  self.MakeFakeEmployees(    # the has_custom_size  
             has_custom_size = True,                   # switch indicates  
             custom_size     = customer_size           # the dict's length will
-        )['As_OrderedDict']                              #
-        # )                                             # match the  CustomerSize
+        )['As_OrderedDict']                           #  match the  CustomerSize
         #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
         # 2.d.iii)   Filter out any  Coulumn Attributes which are not consistant 
@@ -759,11 +760,12 @@ class FakeCompany:
                                         DEFAULT VALUE:  0\n
         
         OUTPUT
-            <Tuple>
-                A  pandas  <DataFrame>  object
+            <dict>
+                'As_DataFrame'   -   pandas  <DataFrame>  object
 
-                An  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
-                amd whose  values  correspond to "rows" or "records" of  Inventory.
+                'As_OrdredDict'  -  <OrderedDict>  whose  keys  correspond to\n
+                                    Column Attribute Names  and whose  values\n 
+                                    correspond to "rows" or "records" of  Inventory.
 
 
         PARENT:
