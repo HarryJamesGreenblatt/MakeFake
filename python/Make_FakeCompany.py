@@ -171,34 +171,41 @@ class FakeCompany:
             f"City:  {self.City}\n" +                        # Customizes the 
             f"State: {self.State}\n" +                       # output this 
             f"Zip Code: {self.ZipCode}\n" +                  # object produces 
-            f"Departments: {self.Departments}\n" +           # when used with 
                                                              #
-            "Employee Attributes: ["                         #
+            "Departments: [\n"                               #
             +                                                #
-            ', '.join(                                       #
-                f"'{ea}'" for ea in self.MakeFakeEmployees(  #
+            '\n'.join(                                       #
+                f"   '{ea}', " for ea in self.Departments    #
+            )                                                #
+            +                                                #
+            "\n]\n" +                                        #
+                                                             #
+            "Employee Attributes: [\n"                       #
+            +                                                #
+            '\n'.join(                                       #
+                f"   '{ea}', " for ea in self.MakeFakeEmployees(#
                 )['As_OrderedDict'].keys()                   #
             )                                                #
             +                                                #
-            "]\n" +                                          #
+            "\n]\n" +                                        #
                                                              #
-            "Customer Attributes: ["                         #
+            "Customer Attributes: [\n"                       #
             +                                                #
-            ', '.join(                                       #
-                f"'{ea}'" for ea in self.MakeFakeCustomers(  #
+            '\n'.join(                                       #
+                f"   '{ea}', " for ea in self.MakeFakeCustomers(#
                 )['As_OrderedDict'].keys()                   #
             )                                                #
             +                                                #
-            "]\n" +                                          #
+            "\n]\n" +                                        #
                                                              #
-            "Inventory Attributes: ["                        #
+            "Inventory Attributes: [\n"                      #
             +                                                #
-            ', '.join(                                       #
-                f"'{ea}'" for ea in self.MakeFakeInventory(  #
+            '\n '.join(                                      #
+                f"   '{ea}', " for ea in self.MakeFakeInventory(#
                 )['As_OrderedDict'].keys()                   #
             )                                                #
             +                                                #
-            "]\n"                                            #
+            "\n]\n"                                          #
                                                              #
         )                                                    # 
     ############################################################################
