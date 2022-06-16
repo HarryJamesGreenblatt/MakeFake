@@ -135,9 +135,9 @@ class FakeCompany:
     employee_size  =  phony.Numeric().integer_number(1,1000), # Failure to
     customer_size  =  phony.Numeric().integer_number(1,1000), # provide these     
     inventory_size =  phony.Numeric().integer_number(1,1000), #     
-    city           =  None,                                   # in the caller  
+    city           =  fake.city(),                            # in the caller  
     state          =  fake.state_abbr(),                      # results in the   
-    zip_code       =  fake.zipcode(),                         # generation of   
+    zip_code       =  None,                                   # generation of   
     departments    =  [                                       # a set of random   
         "Management",                                         # values for each,  
         "Accounting",                                         # except for   
@@ -172,7 +172,34 @@ class FakeCompany:
             f"State: {self.State}\n" +                       # output this 
             f"Zip Code: {self.ZipCode}\n" +                  # object produces 
             f"Departments: {self.Departments}\n" +           # when used with 
-            f"Employees: {self.MakeFakeEmployees().keys()}\n"# print()
+                                                             #
+            "Employee Attributes: ["                         #
+            +                                                #
+            ', '.join(                                       #
+                f"'{ea}'" for ea in self.MakeFakeEmployees(  #
+                )['As_OrderedDict'].keys()                   #
+            )                                                #
+            +                                                #
+            "]\n" +                                          #
+                                                             #
+            "Customer Attributes: ["                         #
+            +                                                #
+            ', '.join(                                       #
+                f"'{ea}'" for ea in self.MakeFakeCustomers(  #
+                )['As_OrderedDict'].keys()                   #
+            )                                                #
+            +                                                #
+            "]\n" +                                          #
+                                                             #
+            "Inventory Attributes: ["                        #
+            +                                                #
+            ', '.join(                                       #
+                f"'{ea}'" for ea in self.MakeFakeInventory(  #
+                )['As_OrderedDict'].keys()                   #
+            )                                                #
+            +                                                #
+            "]\n"                                            #
+                                                             #
         )                                                    # 
     ############################################################################
         
@@ -790,7 +817,7 @@ class FakeCompany:
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
         fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
                                                      # OrderedDict consisting of:  
-            'Stock Number':[                         #  
+            'Stock ID':[                             #  
                 fake.iban()                          # A random "Stock Number"       
                 for _ in range(inventory_size)       # for each of the      
             ],                                       # inventory_size  many rows   
