@@ -17,6 +17,15 @@ FUNCTION
 DEPENDENCIES
     Third Party Modules:\n
         faker\n
+        faker_airtravel\n
+        faker_credit_score\n
+        faker_microservice\n
+        faker_music\n
+        faker_vehicle\n
+        mdgen\n
+        faker_web\n
+        faker_wifi_essid\n
+        faker_biology\n
         mimesis   
 '''
 
@@ -60,13 +69,13 @@ def load_all_providers():
 
     
     OUTPUT
-        Tuple: 
+        <tuple>: 
             load_all_providers()[0]  --  fake  - <faker.proxy.Faker> 
             load_all_providers()[1]  --  phony - <module> 
 
 
     PARENT MODULE
-        initialize_faker.py
+        Make_FakeCompany.FakeCompany
     '''
     
     # 1.A Instantiate The mimesis module

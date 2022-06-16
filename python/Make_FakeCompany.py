@@ -27,6 +27,7 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
+from numbers import Number
 import initialize_fake_data_providers, re, collections, pandas # Brings in all neccessary modules and 
                                                                # classes: 
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
@@ -157,58 +158,62 @@ class FakeCompany:
         self.State         =  state                           # zip_code  param
         self.ZipCode       =  fake.zipcode_in_state(state)    # with one of  
         self.Departments   =  departments                     # phony's methods. 
-    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||| #|||||||||||||||||
+    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
      
     # 2.a.ii)  String Methpd Overload 
-    #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
-    def __repr__(self):                                      #
-                                                             #
-        return(                                              # Overload of the
-            f"Name: {self.Name}\n" +                         # class's string 
-            f"Category: {self.Category}\n" +                 # method  
-            f"Domain: {self.SetDomain()}\n" +                # method  
-            f"Number of Employees: {self.EmployeeSize}\n" +  # 
-            f"City:  {self.City}\n" +                        # Customizes the 
-            f"State: {self.State}\n" +                       # output this 
-            f"Zip Code: {self.ZipCode}\n" +                  # object produces 
-                                                             #
-            "Departments: [\n"                               #
-            +                                                #
-            '\n'.join(                                       #
-                f"   '{ea}', " for ea in self.Departments    #
-            )                                                #
-            +                                                #
-            "\n]\n" +                                        #
-                                                             #
-            "Employee Attributes: [\n"                       #
-            +                                                #
-            '\n'.join(                                       #
-                f"   '{ea}', " for ea in self.MakeFakeEmployees(#
-                )['As_OrderedDict'].keys()                   #
-            )                                                #
-            +                                                #
-            "\n]\n" +                                        #
-                                                             #
-            "Customer Attributes: [\n"                       #
-            +                                                #
-            '\n'.join(                                       #
-                f"   '{ea}', " for ea in self.MakeFakeCustomers(#
-                )['As_OrderedDict'].keys()                   #
-            )                                                #
-            +                                                #
-            "\n]\n" +                                        #
-                                                             #
-            "Inventory Attributes: [\n"                      #
-            +                                                #
-            '\n '.join(                                      #
-                f"   '{ea}', " for ea in self.MakeFakeInventory(#
-                )['As_OrderedDict'].keys()                   #
-            )                                                #
-            +                                                #
-            "\n]\n"                                          #
-                                                             #
-        )                                                    # 
-    ############################################################################
+    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
+    def __repr__(self):                                       #
+                                                              #
+        return(                                               # Overload of the
+            f"Name: {self.Name}\n" +                          # class's string 
+            f"Category: {self.Category}\n" +                  # method  
+            f"Domain: {self.SetDomain()}\n" +                 # method  
+            f"Number of Employees: {self.EmployeeSize}\n" +   # 
+            f"City:  {self.City}\n" +                         # Customizes the 
+            f"State: {self.State}\n" +                        # output this 
+            f"Zip Code: {self.ZipCode}\n" +                   # object produces 
+                                                              #
+            "Departments: [\n"                                #
+            +                                                 #
+            '\n'.join(                                        #
+                f"   '{ea}', "                                #
+                for ea in self.Departments                    #
+            )                                                 #
+            +                                                 #
+            "\n]\n" +                                         #
+                                                              #
+            "Employee Attributes: [\n"                        #
+            +                                                 #
+            '\n'.join(                                        #
+                f"   '{ea}', "                                #
+                for ea in self.MakeFakeEmployees(             #
+                )['As_OrderedDict'].keys()                    #
+            )                                                 #
+            +                                                 #
+            "\n]\n" +                                         #
+                                                              #
+            "Customer Attributes: [\n"                        #
+            +                                                 #
+            '\n'.join(                                        #
+                f"   '{ea}', "                                #
+                for ea in self.MakeFakeCustomers(             #
+                )['As_OrderedDict'].keys()                    #
+            )                                                 #
+            +                                                 #
+            "\n]\n" +                                         #
+                                                              #
+            "Inventory Attributes: [\n"                       #
+            +                                                 #
+            '\n '.join(                                       #
+                f"   '{ea}', "                                #
+                for ea in self.MakeFakeInventory(             #
+                )['As_OrderedDict'].keys()                    #
+            )                                                 #
+            +                                                 #
+            "\n]\n"                                           #
+                                                              #
+        )                                                     # 
+    ##########################################################################
         
 
     # 2.b) State Methods
@@ -881,7 +886,16 @@ class FakeCompany:
                     5000                             # from 1 to 5000 dollars, 
                 )                                    # for each of the   
                 for _ in range(inventory_size)       # inventory_size many rows
+            ],                                       #
+                                                     #
+            'Quantity':[                             # 
+                phony.Numeric().integer_number(      # A phony, randomized  
+                    0,                               # monetary value ranging  
+                    70                               # from 1 to 5000 dollars, 
+                )                                    # for each of the   
+                for _ in range(inventory_size)       # inventory_size many rows
             ]                                        #
+                                                     #
         })                                           #
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
 
