@@ -24,6 +24,7 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
+from mimesis import Finance
 import initialize_fake_data_providers, re, collections         # Brings in all neccessary modules and  
                                                                # classes: 
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
@@ -749,24 +750,61 @@ class FakeCompany:
         #            object's inherited  CustomerSize  attribute. 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
         fake_inventory = collections.OrderedDict({   #
+                                                     #
             'Stock Number':[                         #
                 fake.iban()                          #
                 for _ in range(inventory_size)       #
             ],                                       #
-            'Make':[                                 #
-                fake.machine_make()                  #
+                                                     #
+            'Product':[                              #
+                phony.Choice()([                     #   
+                                                     #
+                    f'{fake.machine_make_model()}',  #
+                                                     #
+                    f'{fake.machine_make_model()}'   #
+                    +                                #
+                    f' ({fake.machine_category()})', #
+                                                     #
+                    phony.Hardware().phone_model(),  #
+                                                     #
+                    phony.Hardware().manufacturer()  #
+                    +                                #
+                    ' '                              #
+                    +                                #
+                    ' '.join(                        #
+                        phony.Text().words(          #
+                            1                        #
+                        )                            #
+                    ).title(),                       #
+                                                     #
+                    fake.machine_make()              #
+                    +                                #
+                    ' '                              #
+                    +                                #
+                    ' '.join(                        #
+                        phony.Text().words(          #
+                            2                        #
+                        )                            #
+                    ).title()                        #
+                    +                                #
+                    f' ({fake.machine_category()})', #
+                                                     #
+                    phony.Hardware().graphics()      #
+                ])                                   #
+                                                     #
                 for _ in range(inventory_size)       #
             ],                                       #
-            'Model':[                                #
-                fake.machine_model()                 #
-                for _ in range(inventory_size)       #
-            ],                                       #
-            'Category':[                             #
-                fake.machine_category()              #
-                for _ in range(inventory_size)       #
-            ],                                       #
+                                                     #
             'Year':[                                 #
                 fake.machine_year()                  #
+                for _ in range(inventory_size)       #
+            ],                                       #
+                                                     #
+            'Price':[                                #
+                phony.Finance().price(               #
+                    1,                               #
+                    5000                             #
+                )                                    #
                 for _ in range(inventory_size)       #
             ]                                        #
         })                                           #
