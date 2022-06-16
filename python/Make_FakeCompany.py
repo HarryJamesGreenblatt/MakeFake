@@ -272,7 +272,7 @@ class FakeCompany:
                 collection of data to be used as "Employees Attributes".\n 
 
             #2.c.iii) 
-                Initialize a  dict of lists  whose  keys  represent\n  
+                Initialize an   ordered dict   whose  keys  represent\n  
                 Column Names for these "Employees Attributes", and whose\n 
                 values represent fake employee "records" for as many rows\n 
                 specified by the object's EmployeeSize attribute.\n
@@ -283,7 +283,7 @@ class FakeCompany:
                 to complete the Employees attribute profile.\n
                  
             #2.c.v)
-                Export the  Fake Employees,  which is now a   dict of lists.    
+                Export the  Fake Employees,  which is now an  ordered dict of lists.    
 
 
         INPUTS
@@ -295,7 +295,7 @@ class FakeCompany:
 
         
         OUTPUT
-            a  <dict>  whose  keys  correspond to the  Employees's  Column Names\n
+            a  <OrderedDict>  whose  keys  correspond to the  Employees's  Column Names\n
             amd whose  values  correspond to "rows" or "records" of  Employees
             
 
@@ -385,7 +385,7 @@ class FakeCompany:
             }                                            #
         ]                                                #
 
-        # 2.c.iii) Initialize a  dict of lists  whose keys represent  column 
+        # 2.c.iii) Initialize an  ordered dict  whose keys represent  column 
         #          names for "Employees" attributes, and whose values represent   
         #          fake employee "records"  for as many rows specified by the 
         #          object's EmployeeSize attribute.
@@ -508,7 +508,7 @@ class FakeCompany:
         ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
-        # 2.c.v)    Export the  Fake Employees,  which is now a   dict of lists.     
+        # 2.c.v)  Export fake_employees, which is now an  ordered dict of lists.     
         #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
         return fake_employees # so it can be used as input to a Pandas DataFrame                                        
         #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
@@ -556,7 +556,7 @@ class FakeCompany:
                 Membership Plan.
 
             #2.d.iv) 
-                Export the  Fake Customers,  which is now a   dict of lists.    
+                Export the  Fake Customers,  which is now an  ordered dict of lists.    
 
 
         INPUTS
@@ -567,7 +567,7 @@ class FakeCompany:
                                          DEFAULT VALUE:  0\n
         
         OUTPUT
-            a  <dict>  whose  keys  correspond to  Column Attribute Names\n
+            a  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
             amd whose  values  correspond to "rows" or "records" of  Customers.
         '''
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
@@ -681,7 +681,7 @@ class FakeCompany:
         ]                                                # 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.d.i.5)   Export the  Fake Customers,  which is now a   dict of lists.     
+        # 2.d.i.5)  Export fake_customers, which is now an ordered dict of lists.     
         #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         return fake_customers            # for use as input in a Pandas DataFrame
         #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
@@ -689,7 +689,7 @@ class FakeCompany:
     
     
     # 2.e) A Method To Generate A Fake, Randomized "Inventory" Dictionary
-    ############################################################################
+    #############################################################################
     def MakeFakeInventory(self, has_custom_size = False, custom_size = 0):
         '''
         NAME
@@ -697,46 +697,52 @@ class FakeCompany:
 
 
         SYNOPSIS
-            Creates a  dictionary of lists  consisting of randomly\n 
+            Creates an  ordered dictionary of lists  consisting of randomly\n 
             generated  fake data,  specifically modeled to resemble an\n
             "Inventory" of  products.
 
 
         DESCRIPTION
-
-
+            Using the  OrderedDict  class from the python collections module,
+            creates an  ordered dictionary  whose  keys  correspond to 
+            Attribute Names  relating to a generic "Inventory",  and whose 
+            values each correspond to an  Inventory Record consisting of a
+            List of random values, the  size  of which is defined either 
+            by the object's InventorySize Attribute, or else by an optionally
+            specified  custom_size.        
 
         PROCESS
             #2.e.i) 
-                Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
-                the superclass's  MakeFakeEmployees  Method  to simplify code\n
-                refactoring efforts.      
+                Initialize a local  inventory_size,  which can be optionally 
+                bound either to the specified  custom_size,  or to the
+                object's inherited  InventorySize  attribute. 
 
             #2.e.ii) 
-                Filter out any  Coulumn Attributes which are not consistant\n
-                with a  Athletic Company Inventory  Data Context.  
-            
+                Define an  ordered dict  representing a  randomized 
+                collection of  Attributes  which simulate a generic   
+                Inventory.
+                 
             #2.e.iii) 
-                Export the  Fake Inventory,  which is now a   dict of lists.    
+                Export fake_inventory, which is now an ordered dict of lists.     
 
 
         INPUTS
-            <bool>  has_custom_size  -   Indicates if a custom value is to be used\n
-                                         DEFAULT VALUE:  False\n
+            <bool>  has_custom_size  -  Indicates if a custom value is to be used\n
+                                        DEFAULT VALUE:  False\n
             
-            <int>   custom_size      -   Sets the value of the optional Custom Size\n
-                                         DEFAULT VALUE:  0\n
+            <int>   custom_size      -  Sets the value of the optional Custom Size\n
+                                        DEFAULT VALUE:  0\n
         
         OUTPUT
-            a  <dict>  whose  keys  correspond to  Column Attribute Names\n
+            An  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
             amd whose  values  correspond to "rows" or "records" of  Inventory.
         '''
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        # 2.e.i)   Initialize a local  customer_size,  which can be optionally 
-        #            bound either to the specified  custom_size,  or to the
-        #            object's inherited  CustomerSize  attribute. 
+        # 2.e.i)   Initialize a local  inventory_size,  which can be optionally 
+        #          bound either to the specified  custom_size,  or to the
+        #          object's inherited  InventorySize  attribute. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        inventory_size = (                               # if MakeFakeCustomers 
+        inventory_size = (                               # if MakeFakeInventory 
                                                          # is called with the
             self.InventorySize  if not has_custom_size   # has_custom_size flag,
             else                custom_size              # a custom_size is used
@@ -744,73 +750,74 @@ class FakeCompany:
         )                                                # records to generate
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
 
-
-        # 2.e.ii)   Initialize a local  customer_size,  which can be optionally 
-        #            bound either to the specified  custom_size,  or to the
-        #            object's inherited  CustomerSize  attribute. 
+        # 2.e.ii)   Define an  ordered dict  representing a  randomized 
+        #           collection of  Attributes  which simulate a generic   
+        #           Inventory.
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        fake_inventory = collections.OrderedDict({   #
+        fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
+                                                     # OrderedDict consisting of:  
+            'Stock Number':[                         #  
+                fake.iban()                          # A random "Stock Number"       
+                for _ in range(inventory_size)       # for each of the      
+            ],                                       # inventory_size  many rows   
+                                                     # 
+            'Product':[                              # A randomly selected 
+                phony.Choice()                       # choice between:
+                ([                                   #   
                                                      #
-            'Stock Number':[                         #
-                fake.iban()                          #
-                for _ in range(inventory_size)       #
-            ],                                       #
+                    f'{fake.machine_make_model()}',  #  a fake machine make/model  
                                                      #
-            'Product':[                              #
-                phony.Choice()([                     #   
+                    f'{fake.machine_make_model()}'   #  or a similar one that  
+                    +                                #  that also features a  
+                    f' ({fake.machine_category()})', #  Categorical Description 
                                                      #
-                    f'{fake.machine_make_model()}',  #
+                    phony.Hardware().phone_model(),  #  or a random Phone Model
                                                      #
-                    f'{fake.machine_make_model()}'   #
-                    +                                #
-                    f' ({fake.machine_category()})', #
-                                                     #
-                    phony.Hardware().phone_model(),  #
-                                                     #
-                    phony.Hardware().manufacturer()  #
-                    +                                #
-                    ' '                              #
-                    +                                #
-                    ' '.join(                        #
-                        phony.Text().words(          #
-                            1                        #
+                    phony.Hardware().manufacturer()  #  or a concatenation of:
+                    +                                #  
+                    ' '                              #   a random Electronics 
+                    +                                #   Manufacturer Name
+                    ' '.join(                        #  
+                        phony.Text().words(          #   and 1 random word,   
+                            1                        #   converted to Title Case   
                         )                            #
                     ).title(),                       #
                                                      #
-                    fake.machine_make()              #
-                    +                                #
-                    ' '                              #
-                    +                                #
-                    ' '.join(                        #
-                        phony.Text().words(          #
-                            2                        #
-                        )                            #
-                    ).title()                        #
-                    +                                #
+                    fake.machine_make()              #  or a concatenation of:
+                    +                                #                    
+                    ' '                              #   a fake machine make/model
+                    +                                #   Manufacturer Name
+                    ' '.join(                        #         
+                        phony.Text().words(          #   2 random words converted    
+                            2                        #   to Title Case    
+                        )                            #   
+                    ).title()                        #   and a Categorical
+                    +                                #   Description
                     f' ({fake.machine_category()})', #
                                                      #
-                    phony.Hardware().graphics()      #
-                ])                                   #
+                    phony.Hardware().graphics()      #  or a some random Computer 
+                                                     #  Graphics card name,
+                ])                                   #  
+                                                     #  for each of the 
+                for _ in range(inventory_size)       #  inventory_size many rows 
+            ],                                       # 
                                                      #
-                for _ in range(inventory_size)       #
-            ],                                       #
+            'Year':[                                 # 
+                fake.machine_year()                  # A fake machine Manufacture 
+                for _ in range(inventory_size)       # Date for each of the  
+            ],                                       # inventory_size many rows
                                                      #
-            'Year':[                                 #
-                fake.machine_year()                  #
-                for _ in range(inventory_size)       #
-            ],                                       #
-                                                     #
-            'Price':[                                #
-                phony.Finance().price(               #
-                    1,                               #
-                    5000                             #
-                )                                    #
-                for _ in range(inventory_size)       #
+            'Price':[                                # 
+                phony.Finance().price(               # A phony, randomized  
+                    1,                               # monetary value ranging  
+                    5000                             # from 1 to 5000 dollars, 
+                )                                    # for each of the   
+                for _ in range(inventory_size)       # inventory_size many rows
             ]                                        #
         })                                           #
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
 
-        # 2.e.iii)   Export the  Fake Inventory,  which is now a   dict of lists.     
+        # 2.e.iii)  Export fake_inventory, which is now an ordered dict of lists.     
         #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         return fake_inventory            # for use as input in a Pandas DataFrame
         #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
