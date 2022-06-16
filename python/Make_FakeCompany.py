@@ -18,14 +18,16 @@ DEPENDENCIES
     Project File:
         initialize_fake_data_providers.py\n
 
-    Standard Library Module:
-        re
+    Standard Library Module:\n
+        re\n
+
+    Third Party Module:\n
+        pandas\n
 '''
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
-from mimesis import Finance
-import initialize_fake_data_providers, re, collections         # Brings in all neccessary modules and  
+import initialize_fake_data_providers, re, collections, pandas # Brings in all neccessary modules and 
                                                                # classes: 
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
 phony = initialize_fake_data_providers.load_all_providers()[1] # --> the full  mimesis  module
@@ -295,9 +297,12 @@ class FakeCompany:
 
         
         OUTPUT
-            a  <OrderedDict>  whose  keys  correspond to the  Employees's  Column Names\n
-            amd whose  values  correspond to "rows" or "records" of  Employees
-            
+            <Tuple>
+                A  pandas  <DataFrame>  object
+
+                An  <OrderedDict>  whose  keys  correspond to the  Employees's  Column Names\n
+                amd whose  values  correspond to "rows" or "records" of  Employees
+
 
         PARENT:
             Make_FakeCompany.FakeCompany
@@ -508,10 +513,16 @@ class FakeCompany:
         ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
-        # 2.c.v)  Export fake_employees, which is now an  ordered dict of lists.     
-        #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
-        return fake_employees # so it can be used as input to a Pandas DataFrame                                        
-        #|||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||||#
+        # 2.c.v)  Export fake_employees, which is now an  ordered dict of lists,
+        #         as a  pandas  Dataframe object.     
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
+        return {                                #
+            "As_OrderedDict": fake_employees,   #  a Pandas DataFrame  
+            "As_DataFrame"  : pandas.DataFrame( #
+                fake_employees                  #
+            )                                   #
+        }                                       #
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     ############################################################################
 
 
@@ -567,11 +578,18 @@ class FakeCompany:
                                          DEFAULT VALUE:  0\n
         
         OUTPUT
-            a  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
-            amd whose  values  correspond to "rows" or "records" of  Customers.
+            <Tuple>
+                A  pandas  <DataFrame>  object
+
+                A  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
+                amd whose  values  correspond to "rows" or "records" of  Customers.
+
+
+        PARENT:
+            Make_FakeCompany.FakeCompany
         '''
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        # 2.d.i.1)   Initialize a local  customer_size,  which can be optionally 
+        # 2.d.i)   Initialize a local  customer_size,  which can be optionally 
         #            bound either to the specified  custom_size,  or to the
         #            object's inherited  CustomerSize  attribute. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
@@ -582,17 +600,18 @@ class FakeCompany:
                                                          # to determine how many
         )                                                # records to generate
 
-        # 2.d.i.2)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
+        # 2.d.ii)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
         #            by the superclass's  MakeFakeEmployees  Method  to simplify 
         #            code refactoring efforts. 
         #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        fake_customers  = self.MakeFakeEmployees(     # the has_custom_size  
+        fake_customers  =  self.MakeFakeEmployees(    # the has_custom_size  
             has_custom_size = True,                   # switch indicates  
-            custom_size     = customer_size           # the dict's length will 
-        )                                             # match the  CustomerSize
+            custom_size     = customer_size           # the dict's length will
+        )['As_OrderedDict']                              #
+        # )                                             # match the  CustomerSize
         #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
-        # 2.d.i.3)   Filter out any  Coulumn Attributes which are not consistant 
+        # 2.d.iii)   Filter out any  Coulumn Attributes which are not consistant 
         #            with a  Athletic Company Customers  Data Context. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
         del fake_customers['Salary']                     # Club Customers would 
@@ -603,7 +622,7 @@ class FakeCompany:
         del fake_customers['SSN']                        # or SSN  Attributes
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.d.i.4)   Add additional Columns Attributes to the Customer Data Context 
+        # 2.d.iv)   Add additional Columns Attributes to the Customer Data Context 
         #            representing  a  Customer's  ID,  Membership Date,  and  
         #            Membership Plan.
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
@@ -681,10 +700,16 @@ class FakeCompany:
         ]                                                # 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.d.i.5)  Export fake_customers, which is now an ordered dict of lists.     
-        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return fake_customers            # for use as input in a Pandas DataFrame
-        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+        # 2.d.v)  Export fake_customers, which is now an  ordered dict of lists,
+        #         as a  pandas  Dataframe object.     
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
+        return {                                #
+            "As_OrderedDict": fake_customers,   #  a Pandas DataFrame  
+            "As_DataFrame"  : pandas.DataFrame( #
+                fake_customers                  #
+            )                                   #
+        }                                       #
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
     
     
@@ -734,8 +759,15 @@ class FakeCompany:
                                         DEFAULT VALUE:  0\n
         
         OUTPUT
-            An  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
-            amd whose  values  correspond to "rows" or "records" of  Inventory.
+            <Tuple>
+                A  pandas  <DataFrame>  object
+
+                An  <OrderedDict>  whose  keys  correspond to  Column Attribute Names\n
+                amd whose  values  correspond to "rows" or "records" of  Inventory.
+
+
+        PARENT:
+            Make_FakeCompany.FakeCompany
         '''
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
         # 2.e.i)   Initialize a local  inventory_size,  which can be optionally 
@@ -817,10 +849,16 @@ class FakeCompany:
         })                                           #
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
 
-        # 2.e.iii)  Export fake_inventory, which is now an ordered dict of lists.     
-        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return fake_inventory            # for use as input in a Pandas DataFrame
-        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+        # 2.e.iii)  Export fake_inventory, which is now an  ordered dict of lists,
+        #         as a  pandas  Dataframe object.     
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
+        return {                                #
+            "As_OrderedDict": fake_inventory,   #  a Pandas DataFrame  
+            "As_DataFrame"  : pandas.DataFrame( #
+                fake_inventory                  #
+            )                                   #
+        }                                       #
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
 
 #####################################################################################################
