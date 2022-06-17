@@ -155,17 +155,17 @@ class FakeCompany:
         "IT"                                                   # a static list    
     ]                                                          # 
     ):                                                         # 
-        self.Name           =  name                            # 
-        self.Category       =  category                        # 
-        self.Domain         =  self.SetDomain()                # Once the     
-        self.EmployeeSize   =  employee_size                   # state 
-        self.CustomerSize   =  customer_size                   # param is   
-        self.InventorySize  =  inventory_size                  # accessible,
-        self.TransctionSize =  transction_size                 # accessible,
-        self.City           =  city                            # replace the 
-        self.State          =  state                           # zip_code  param
-        self.ZipCode        =  fake.zipcode_in_state(state)    # with one of  
-        self.Departments    =  departments                     # phony's methods. 
+        self.Name            =  name                           # 
+        self.Category        =  category                       # 
+        self.Domain          =  self.SetDomain()               # Once the     
+        self.EmployeeSize    =  employee_size                  # state 
+        self.CustomerSize    =  customer_size                  # param is   
+        self.InventorySize   =  inventory_size                 # accessible,
+        self.TransactionSize =  transction_size                # accessible,
+        self.City            =  city                           # replace the 
+        self.State           =  state                          # zip_code  param
+        self.ZipCode         =  fake.zipcode_in_state(state)   # with one of  
+        self.Departments     =  departments                    # phony's methods. 
     #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
      
     # 2.a.ii)  String Methpd Overload 
