@@ -919,9 +919,7 @@ class FakeCompany:
         }                                       #
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
-
-#####################################################################################################
-    
+        
     
     # 2.f) A Method To Generate A Fake, Randomized "Transactions" Dictionary
     #############################################################################
@@ -983,67 +981,62 @@ class FakeCompany:
                         fake.isbn10()               #
                         for _ in range(larger_size) # 
                     ],                              #
-                    name='Transaction ID'
-                ),
+                    name='Transaction ID'           #
+                ),                                  #
+                                                    #
+                fake_inventory['Product'],          #
+                fake_customers['Customer ID'],      #
+                                                    #
+                fake_customers['First Name']        #
+                +                                   #
+                ' '                                 #
+                +                                   #
+                fake_customers['Last Name'],        #
+                                                    #
+                fake_customers['Address']           #
+                +                                   #
+                ', '                                #
+                +                                   #
+                fake_customers['City']              #
+                +                                   #
+                ', '                                #
+                +                                   #
+                fake_customers['State']             #
+                +                                   #
+                ' '                                 #
+                +                                   #
+                fake_customers['Zip Code'],         #
+                                                    #
+                fake_customers['Card Number'],      #
+                fake_customers['Card Provider'],    #
+                fake_inventory['Price'],            #
+                                                    #
+                pandas.Series(                      #
+                    [                               #
+                        phony.Datetime().date(      # fake data method for
+                            2020,                   # a providing random 
+                            2022                    # dates between a 
+                        ).strftime('%m/%d/%Y')      #
+                                                    #
+                        for _ in range(larger_size) #
+                    ],                              #
+                    name='Payment Date'             #
+                ),                                  #
+                                                    #                                   
+            ],                                      #
+                                                    #
+            axis=1                                  #
+                                                    #
+        ).dropna().rename(                          #
+            columns={                               #
+                'Price':'Payment',                  #
+                'Product':'Product Sold',           #
+                0:'Customer Name',                  #
+                1:'Customer Address'                #
+            }                                       #
+        ).sort_values("Transaction ID")             #
+        #|||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||#
 
-                fake_inventory['Product'],
-                fake_customers['Customer ID'],
-
-                fake_customers['First Name']
-                +
-                ' '
-                +
-                fake_customers['Last Name'],
-
-                fake_customers['Address']
-                +
-                ', '
-                +
-                fake_customers['City']
-                +
-                ', '
-                +
-                fake_customers['State']
-                +
-                ' '
-                +
-                fake_customers['Zip Code'],
-
-                fake_customers['Card Number'],
-                fake_customers['Card Provider'],
-                fake_inventory['Price'],
-
-                pandas.Series(
-                    [
-                        phony.Datetime().date(                   # fake data method for
-                            2020,                                # a providing random 
-                            2022                                 # dates between a 
-                        ).strftime('%m/%d/%Y')
-
-                        for _ in range(larger_size)
-                    ], 
-                    name='Payment Date'
-                ),
-
-            ],
-
-            axis=1  
-
-        ).dropna().rename( 
-            columns={
-                'Price':'Payment',
-                'Product':'Product Sold',
-                0:'Customer Name',
-                1:'Customer Address'
-            } 
-        ).sort_values("Transaction ID")
-        #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
-
-        # 2.f.iii)  Export fake_transactions, which is now an  ordered dict of lists,
-        #         as a  pandas  Dataframe object.     
-        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
-
-        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
 
 #####################################################################################################
