@@ -73,58 +73,95 @@ class FakeCompany:
 
 
     ATTRIBUTE PARAMETERS
-        name           -   Defines the Fake Company's Name\n
-                           DEFAULT VALUE:  random fake company name\n 
+        name           -     Defines the Fake Company's Name\n
+                             DEFAULT VALUE:  random fake company name\n 
 
-        category       -   Defines what type of Fake Company it is\n
-                           DEFAULT VALUE:  random fake company type\n
+        category       -     Defines what type of Fake Company it is\n
+                             DEFAULT VALUE:  random fake company type\n
 
-        employee_size  -   Defines the number of records to be produced
-                           for Employees or Personnel oreiented reports\n
-                           DEFAULT VALUE:  random  integer  between  10  and  500\n
+        employee_size  -     Defines the number of records to be produced
+                             for Employees or Personnel oreiented reports\n
+                             DEFAULT VALUE:  random  integer  between  10  and  500\n
         
-        customer_size   -   Defines the number of records to be produced
-                            or Customer or Service oreiented reports\n
-                            DEFAULT VALUE:  random  integer  between  2  and  500\n
+        customer_size   -    Defines the number of records to be produced
+                             or Customer or Service oreiented reports\n
+                             DEFAULT VALUE:  random  integer  between  2  and  500\n
 
-        city            -   Defines the  US City  where the Company is located\n
-                            DEFAULT VALUE:  random  fake  or  existing  US City\n
+        city            -    Defines the  US City  where the Company is located\n
+                             DEFAULT VALUE:  random  fake  or  existing  US City\n
 
-        state           -   Defines the  2-letter US State Abbreviation  where the Company is 
-                            located\n
-                            DEFAULT VALUE:  random  existing   2-letter US State Abbreviation\n 
+        state           -    Defines the  2-letter US State Abbreviation  where the Company is 
+                             located\n
+                             DEFAULT VALUE:  random  existing   2-letter US State Abbreviation\n 
    
         zip_code        -    Defines the  US Zip Code  where the Company is located\n
                              DEFAULT VALUE:  random  fake  or  existing  US Zip Code\n
 
-        departments     -   Defines the list of possible departments to which employees at this 
-                            Company might belong\n
-                            DEFAULT VALUE:  Management, Accounting, Sales, Marketing, Security, IT\n  
+        departments     -    Defines the list of possible departments to which employees at this 
+                             Company might belong\n
+                             DEFAULT VALUE:  Management, Accounting, Sales, Marketing, Security, IT\n  
 
     
     EXAMPLE OUTPUT
-        Name: Malone Group\n
-        Category: Incorporated\n
-        Number of Employees: 341\n
-        City:  Reedbury\n
-        State: MT\n
-        Zip Code: 36398\n
-        Departments: ['Management', 'Accounting', 'Sales', 'Marketing', 'Security', 'IT']\n
-        Employees: dict_keys([
-            'Employee ID',
-            'First Name',
-            'Last Name',
-            'Date Of Birth',
-            'Phone Number',
-            'Address',
-            'City',
-            'State',
-            'Zip Code',
-            'Hire Date',
-            'Salary',
-            'Department'
-        ])\n
-
+        Name: Reynolds-Baird\n
+        Category: Limited Liability Limited Partnership\n
+        Domain: Reynolds-Baird.org\n
+        # of Employees: 868\n
+        # of Customers: 543\n
+        # of Inventory Items: 479\n
+        City:  Bruceville\n
+        State: OH\n
+        Zip Code: 45113\n
+        Departments: [
+            'Management', 
+            'Accounting', 
+            'Sales', 
+            'Marketing', 
+            'Security', 
+            'IT', 
+        ]\n
+        Employee Attributes: [
+            'Employee ID', 
+            'First Name', 
+            'Last Name', 
+            'Email', 
+            'Username', 
+            'Password', 
+            'Date Of Birth', 
+            'SSN', 
+            'Phone Number', 
+            'Address', 
+            'City', 
+            'State', 
+            'Zip Code', 
+            'Hire Date', 
+            'Salary', 
+            'Department', 
+        ]\n
+        Customer Attributes: [
+            'Customer ID', 
+            'First Name', 
+            'Last Name', 
+            'Email', 
+            'Username', 
+            'Password', 
+            'Phone Number', 
+            'Address', 
+            'City', 
+            'State', 
+            'Zip Code', 
+            'Card Provider', 
+            'Card Number', 
+            'CVV', 
+            'Expiration Date', 
+        ]\n
+        Inventory Attributes: [
+        'Stock ID', 
+            'Product', 
+            'Year', 
+            'Price', 
+            'Quantity', 
+        ]
 
     PARENT MODULE
         Make_FakeCompany.py
@@ -273,7 +310,6 @@ class FakeCompany:
                                                      #
         return   Domain                              # 
     #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||
-
     ############################################################################
 
 
@@ -332,7 +368,8 @@ class FakeCompany:
                 to complete the Employees attribute profile.\n
                  
             #2.c.v)
-                Export the  Fake Employees,  which is now an  ordered dict of lists.    
+                Export  fake_employees, as a  dictionary  containing versions\n
+                of itself in  multiple formats         
 
 
         INPUTS
@@ -345,11 +382,13 @@ class FakeCompany:
         
         OUTPUT
             <Dict>
-                'As_DataFrame'   -  pandas  <DataFrame>  object
+                KEY                  VALUE
+                ---------------      -----------------------------------------------
+                'As_DataFrame'    -  pandas  <DataFrame>  object
 
-                'As_OrdredDict'  -  <OrderedDict>  whose  keys  correspond to\n
-                                    the  Employees's  Column Names  and whose  values\n 
-                                    correspond to "rows" or "records" of  Employees
+                'As_OrdredDict'   -   <OrderedDict>  whose  keys  correspond to\n
+                                      the  Employees's  Column Names  and whose  values\n 
+                                      correspond to "rows" or "records" of  Employees
 
 
         PARENT:
@@ -437,6 +476,7 @@ class FakeCompany:
                 "column_name":"Zip Code"                 #
             }                                            #
         ]                                                #
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
 
         # 2.c.iii) Initialize an  ordered dict  whose keys represent  column 
         #          names for "Employees" attributes, and whose values represent   
@@ -561,14 +601,14 @@ class FakeCompany:
         ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
-        # 2.c.v)  Export fake_employees, which is now an  ordered dict of lists,
-        #         as a  pandas  Dataframe object.     
+        # 2.c.v)  Export  fake_employees, as a  dictionary  containing versions
+        #         of itself in  multiple formats     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
-        return {                                #
-            "As_OrderedDict": fake_employees,   #  a Pandas DataFrame  
-            "As_DataFrame"  : pandas.DataFrame( #
-                fake_employees                  #
-            )                                   #
+        return {                                # May be optionally accessed
+            "As_OrderedDict": fake_employees,   #as a python  OrdredDict  
+            "As_DataFrame"  : pandas.DataFrame( # or  as a  pandas  DataFrame, 
+                fake_employees                  # depending on the use case.  
+            )                                   #  
         }                                       #
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     ############################################################################
@@ -583,9 +623,10 @@ class FakeCompany:
 
 
         SYNOPSIS
-            Creates a  dictionary of lists  consisting of randomly\n 
-            generated  fake data,  specifically modeled to resemble a\n
-            collection of  "Customer" Clients.
+            Creates a  dict  composed  of both an  ordered dictionary\n     
+            of lists and  a   pandas  DataFrame  object, both consisting\n  
+            of randomly generated fake data,  specifically modeled to\n
+            resemble
 
 
         DESCRIPTION
@@ -615,7 +656,8 @@ class FakeCompany:
                 Membership Plan.
 
             #2.d.iv) 
-                Export the  Fake Customers,  which is now an  ordered dict of lists.    
+                Export  fake_customers, as a  dictionary  containing versions of\n 
+                itself in  multiple formats         
 
 
         INPUTS
@@ -626,12 +668,14 @@ class FakeCompany:
                                          DEFAULT VALUE:  0\n
         
         OUTPUT
-            <Dict>
-                'As_DataFrame'  -   pandas  <DataFrame>  object
+            <dict>
+                KEY                  VALUE
+                ---------------      -----------------------------------------------
+                'As_DataFrame'   -   pandas  <DataFrame>  object
 
-                'As_OrdredDict' -  <OrderedDict>  whose  keys  correspond to\n
-                                   Column Attribute Names  and whose  values\n 
-                                   correspond to "rows" or "records" of  Customers.
+                'As_OrdredDict'  -   <OrderedDict>  whose  keys  correspond to\n
+                                     Column Attribute Names  and whose  values\n 
+                                     correspond to "rows" or "records" of  Customers.
 
 
         PARENT:
@@ -652,12 +696,12 @@ class FakeCompany:
         # 2.d.ii)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
         #            by the superclass's  MakeFakeEmployees  Method  to simplify 
         #            code refactoring efforts. 
-        #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        fake_customers  =  self.MakeFakeEmployees(    # the has_custom_size  
-            has_custom_size = True,                   # switch indicates  
-            custom_size     = customer_size           # the dict's length will
-        )['As_OrderedDict']                           #  match the  CustomerSize
-        #|||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
+        #|||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||#
+        fake_customers  =  self.MakeFakeEmployees(      # the has_custom_size  
+            has_custom_size = True,                     # switch indicates  
+            custom_size     = customer_size             # the dict's length will
+        )['As_OrderedDict']                             # match the  CustomerSize
+        #|||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||#
 
         # 2.d.iii)   Filter out any  Coulumn Attributes which are not consistant 
         #            with a  Athletic Company Customers  Data Context. 
@@ -748,14 +792,14 @@ class FakeCompany:
         ]                                                # 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.d.v)  Export fake_customers, which is now an  ordered dict of lists,
-        #         as a  pandas  Dataframe object.     
+        # 2.d.iv)  Export  fake_customers, as a  dictionary  containing versions
+        #         of itself in  multiple formats     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
-        return {                                #
-            "As_OrderedDict": fake_customers,   #  a Pandas DataFrame  
-            "As_DataFrame"  : pandas.DataFrame( #
-                fake_customers                  #
-            )                                   #
+        return {                                # Returns a dict of dicts 
+            "As_OrderedDict": fake_customers,   # which makes accessible multiple  
+            "As_DataFrame"  : pandas.DataFrame( # output formats, including both
+                fake_customers                  # a python  OrdredDict  and  a  
+            )                                   # pandas  DataFrame.
         }                                       #
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
@@ -770,9 +814,10 @@ class FakeCompany:
 
 
         SYNOPSIS
-            Creates an  ordered dictionary of lists  consisting of randomly\n 
-            generated  fake data,  specifically modeled to resemble an\n
-            "Inventory" of  products.
+            Creates a  dict  composed  of both an  ordered dictionary\n     
+            of lists and  a   pandas  DataFrame  object, both consisting\n  
+            of randomly generated fake data,  specifically modeled to\n
+            resemble an "Inventory" of  products.
 
 
         DESCRIPTION
@@ -796,7 +841,8 @@ class FakeCompany:
                 Inventory.
                  
             #2.e.iii) 
-                Export fake_inventory, which is now an ordered dict of lists.     
+                Export  fake_inventory  as a  dictionary  containing  versions of\n 
+                itself in  multiple formats.    
 
 
         INPUTS
@@ -809,11 +855,13 @@ class FakeCompany:
 
         OUTPUT
             <dict>
-                'As_DataFrame'   -   pandas  <DataFrame>  object
+                KEY                  VALUE
+                ---------------      -----------------------------------------------
+                'As_DataFrame'    -   pandas  <DataFrame>  object
 
-                'As_OrdredDict'  -  <OrderedDict>  whose  keys  correspond to\n
-                                    Column Attribute Names  and whose  values\n 
-                                    correspond to "rows" or "records" of  Inventory.
+                'As_OrdredDict'   -   <OrderedDict>  whose  keys  correspond to\n
+                                      Column Attribute Names  and whose  values\n 
+                                      correspond to "rows" or "records" of  Inventory.
 
 
         PARENT:
@@ -839,9 +887,13 @@ class FakeCompany:
         fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
                                                      # OrderedDict consisting of:  
             'Stock ID':[                             #  
-                fake.iban()                          # A random "Stock Number"       
-                for _ in range(inventory_size)       # for each of the      
-            ],                                       # inventory_size  many rows   
+                phony.Choice()([                     # A random "Stock ID"       
+                    fake.iban()[:7],                 # for each of the      
+                    fake.iban()[1:8],                # inventory_size  many rows   
+                    fake.iban()[2:9],                #
+                ])                                   # 
+                for _ in range(inventory_size)       # 
+            ],                                       # 
                                                      # 
             'Product':[                              # A randomly selected 
                 phony.Choice()                       # choice between:
@@ -908,14 +960,14 @@ class FakeCompany:
         })                                           #
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
 
-        # 2.e.iii)  Export fake_inventory, which is now an  ordered dict of lists,
-        #         as a  pandas  Dataframe object.     
+        # 2.e.iii)  Export  fake_inventory  as a  dictionary  containing
+        #           versions of itself in  multiple formats.     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
-        return {                                #
-            "As_OrderedDict": fake_inventory,   #  a Pandas DataFrame  
-            "As_DataFrame"  : pandas.DataFrame( #
-                fake_inventory                  #
-            )                                   #
+        return {                                # Returns a dict of dicts 
+            "As_OrderedDict": fake_inventory,   # which makes accessible multiple  
+            "As_DataFrame"  : pandas.DataFrame( # output formats, including both
+                fake_inventory                  # a python  OrdredDict  and  a  
+            )                                   # pandas  DataFrame.
         }                                       #
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
@@ -930,49 +982,64 @@ class FakeCompany:
 
 
         SYNOPSIS
-
+            Creates a  dict  composed  of both an  ordered dictionary\n     
+            of lists and  a   pandas  DataFrame  object, both consisting\n  
+            of randomly generated fake data,  specifically modeled to\n
+            resemble an "Inventory" of  products.
 
 
         DESCRIPTION
     
 
         PROCESS
-            #2.f.i) 
+            #2.f.i)
+                Store the  larger_size  of the two  DataFrame  inputs.  
 
 
-            #2.f.ii) 
+            #2.f.ii)
+                Use the  pandas.concat()  method  to export a  new  pandas   
+                DataFrame  consisting  of  merged data  from both input  
+                sources.            
 
 
         INPUTS
+            <pandas.DataFrame> 
+            fake_inventory    -   The  DataFrame  produced by invoking\n 
+                                  FakeCompany().MakeFakeInventory['AsDataFrame']
 
-        
+            <pandas.DataFrame> 
+            fake_customers    -   The  DataFrame  produced by invoking\n 
+                                  FakeCompany().MakeFakeCustomers['AsDataFrame']
+
+
         OUTPUT
+            A  new  pandas  DataFrame  object representing a  Transaction\n
+            History  composed  of  concatenated  fake_inventory  and\n
+            fake_customers  data.    
 
 
         PARENT:
             Make_FakeCompany.FakeCompany
         '''
-        #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#
-        # 2.f.i)   Initialize a local  transactions_size,  which can be optionally 
-        #          bound either to the specified  custom_size,  or to the
-        #          object's inherited  TransactionsSize  attribute. 
+        # 2.f.i)    Store the  larger_size  of the two  DataFrame  inputs.  
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        larger_size = (                                  #
+        larger_size = (                                  # let  larger_size  be
+                                                         # the length of the 
+            len(fake_inventory)                          # fake_inventory input
+                                                         # if it is larger than
+            if                                           # the fake_customers
+                len(fake_inventory) > len(fake_customers)# input, 
                                                          #
-            len(fake_inventory)                          #
-            if  len(fake_inventory) > len(fake_customers)#
-                                                         #
-            else                                         #
-                len(fake_customers)                      #
-                                                         #
-        )                                                #
+            else                                         # otherwise,
+                len(fake_customers)                      # larger_size will be 
+                                                         # the length of
+        )                                                # fake_customers
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
 
-        # 2.f.ii)   Define an  ordered dict  representing a  randomized 
-        #           collection of  Attributes  which simulate a generic   
-        #           Transactions.
+        # 2.f.ii)    Use the  pandas.concat()  method  to export a  new  pandas   
+        #            DataFrame  consisting  of  merged data  from both input  
+        #            sources.           
         #|||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
-                                                    #
         return pandas.concat(                       #
             [                                       #
                                                     #
@@ -985,6 +1052,7 @@ class FakeCompany:
                 ),                                  #
                                                     #
                 fake_inventory['Product'],          #
+                fake_inventory['Stock ID'],         #
                 fake_customers['Customer ID'],      #
                                                     #
                 fake_customers['First Name']        #
@@ -1031,6 +1099,7 @@ class FakeCompany:
             columns={                               #
                 'Price':'Payment',                  #
                 'Product':'Product Sold',           #
+                'Stock ID':'Product ID',            #
                 0:'Customer Name',                  #
                 1:'Customer Address'                #
             }                                       #
