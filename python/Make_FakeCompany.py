@@ -65,6 +65,12 @@ class FakeCompany:
         #2.d  A Method To Generate A Fake, Randomized "Customers" Dictionary
             MakeFakeCustomers()   
 
+        #2.e  A Method To Generate A Fake, Randomized "Inventory" Dictionary
+            MakeFakeInventory()
+
+        #2.f  A Method To Generate A Fake, Randomized "Transactions" Dictionary
+            MakeFakeTransactions()   
+
 
     ATTRIBUTE PARAMETERS
         name           -   Defines the Fake Company's Name\n
@@ -128,37 +134,39 @@ class FakeCompany:
     ############################################################################
     
     # 2.a.i)   Constructor
-    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
-    def __init__(                                             # Contrsuctor                 
-    self,                                                     # whose params are                
-    name           =  fake.company(),                         # all optional.                 
-    category       =  phony.Finance().company_type(),         #
-    employee_size  =  phony.Numeric().integer_number(1,1000), # Failure to
-    customer_size  =  phony.Numeric().integer_number(1,1000), # provide these     
-    inventory_size =  phony.Numeric().integer_number(1,1000), #     
-    city           =  fake.city(),                            # in the caller  
-    state          =  fake.state_abbr(),                      # results in the   
-    zip_code       =  None,                                   # generation of   
-    departments    =  [                                       # a set of random   
-        "Management",                                         # values for each,  
-        "Accounting",                                         # except for   
-        "Sales",                                              # "departments",  
-        "Marketing",                                          # which is set to  
-        "Security",                                           # a static list  
-        "IT"                                                  # 
-    ]                                                         # 
-    ):                                                        # 
-        self.Name          =  name                            # 
-        self.Category      =  category                        # 
-        self.Domain        =  self.SetDomain()                # Once the     
-        self.EmployeeSize  =  employee_size                   # state 
-        self.CustomerSize  =  customer_size                   # param is   
-        self.InventorySize =  inventory_size                  # accessible,
-        self.City          =  city                            # replace the 
-        self.State         =  state                           # zip_code  param
-        self.ZipCode       =  fake.zipcode_in_state(state)    # with one of  
-        self.Departments   =  departments                     # phony's methods. 
-    #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
+    #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||
+    def __init__(                                              # Contrsuctor                 
+    self,                                                      # whose params                 
+    name            =  fake.company(),                         # are all                  
+    category        =  phony.Finance().company_type(),         # optional.
+    employee_size   =  phony.Numeric().integer_number(1,1000), # 
+    customer_size   =  phony.Numeric().integer_number(1,1000), # 
+    inventory_size  =  phony.Numeric().integer_number(1,1000), # 
+    transction_size =  phony.Numeric().integer_number(1,1000), # Failure to  
+    city            =  fake.city(),                            # provide these           
+    state           =  fake.state_abbr(),                      # in the caller        
+    zip_code        =  None,                                   # results in the     
+    departments     =  [                                       # generation of     
+        "Management",                                          # a set of random     
+        "Accounting",                                          # values for each,    
+        "Sales",                                               # except for     
+        "Marketing",                                           # "departments",    
+        "Security",                                            # which is set to    
+        "IT"                                                   # a static list    
+    ]                                                          # 
+    ):                                                         # 
+        self.Name           =  name                            # 
+        self.Category       =  category                        # 
+        self.Domain         =  self.SetDomain()                # Once the     
+        self.EmployeeSize   =  employee_size                   # state 
+        self.CustomerSize   =  customer_size                   # param is   
+        self.InventorySize  =  inventory_size                  # accessible,
+        self.TransctionSize =  transction_size                 # accessible,
+        self.City           =  city                            # replace the 
+        self.State          =  state                           # zip_code  param
+        self.ZipCode        =  fake.zipcode_in_state(state)    # with one of  
+        self.Departments    =  departments                     # phony's methods. 
+    #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
      
     # 2.a.ii)  String Methpd Overload 
     #|||||||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||
@@ -168,7 +176,10 @@ class FakeCompany:
             f"Name: {self.Name}\n" +                          # class's string 
             f"Category: {self.Category}\n" +                  # method  
             f"Domain: {self.SetDomain()}\n" +                 # method  
-            f"Number of Employees: {self.EmployeeSize}\n" +   # 
+            f"# of Employees: {self.EmployeeSize}\n" +        # 
+            f"# of Customers: {self.CustomerSize}\n" +        # 
+            f"# of Inventory Items: {self.InventorySize}\n" + # 
+            f"# of Transactions: {self.TransactionSize}\n" +  # 
             f"City:  {self.City}\n" +                         # Customizes the 
             f"State: {self.State}\n" +                        # output this 
             f"Zip Code: {self.ZipCode}\n" +                   # object produces 
@@ -900,6 +911,167 @@ class FakeCompany:
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
 
         # 2.e.iii)  Export fake_inventory, which is now an  ordered dict of lists,
+        #         as a  pandas  Dataframe object.     
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
+        return {                                #
+            "As_OrderedDict": fake_inventory,   #  a Pandas DataFrame  
+            "As_DataFrame"  : pandas.DataFrame( #
+                fake_inventory                  #
+            )                                   #
+        }                                       #
+        #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
+    #############################################################################
+
+#####################################################################################################
+    
+    
+    # 2.f) A Method To Generate A Fake, Randomized "Inventory" Dictionary
+    #############################################################################
+    def MakeFakeInventory(self, has_custom_size = False, custom_size = 0):
+        '''
+        NAME
+            MakeFakeInventory
+
+
+        SYNOPSIS
+            Creates an  ordered dictionary of lists  consisting of randomly\n 
+            generated  fake data,  specifically modeled to resemble an\n
+            "Inventory" of  products.
+
+
+        DESCRIPTION
+            Using the  OrderedDict  class from the python collections module,
+            creates an  ordered dictionary  whose  keys  correspond to 
+            Attribute Names  relating to a generic "Inventory",  and whose 
+            values each correspond to an  Inventory Record consisting of a
+            List of random values, the  size  of which is defined either 
+            by the object's InventorySize Attribute, or else by an optionally
+            specified  custom_size.        
+
+        PROCESS
+            #2.f.i) 
+                Initialize a local  inventory_size,  which can be optionally 
+                bound either to the specified  custom_size,  or to the
+                object's inherited  InventorySize  attribute. 
+
+            #2.f.ii) 
+                Define an  ordered dict  representing a  randomized 
+                collection of  Attributes  which simulate a generic   
+                Inventory.
+                 
+            #2.f.iii) 
+                Export fake_inventory, which is now an ordered dict of lists.     
+
+
+        INPUTS
+            <bool>  has_custom_size  -  Indicates if a custom value is to be used\n
+                                        DEFAULT VALUE:  False\n
+            
+            <int>   custom_size      -  Sets the value of the optional Custom Size\n
+                                        DEFAULT VALUE:  0\n
+        
+        OUTPUT
+            <dict>
+                'As_DataFrame'   -   pandas  <DataFrame>  object
+
+                'As_OrdredDict'  -  <OrderedDict>  whose  keys  correspond to\n
+                                    Column Attribute Names  and whose  values\n 
+                                    correspond to "rows" or "records" of  Inventory.
+
+
+        PARENT:
+            Make_FakeCompany.FakeCompany
+        '''
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+        # 2.f.i)   Initialize a local  inventory_size,  which can be optionally 
+        #          bound either to the specified  custom_size,  or to the
+        #          object's inherited  InventorySize  attribute. 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+        inventory_size = (                               # if MakeFakeInventory 
+                                                         # is called with the
+            self.InventorySize  if not has_custom_size   # has_custom_size flag,
+            else                custom_size              # a custom_size is used
+                                                         # to determine how many
+        )                                                # records to generate
+        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
+
+        # 2.f.ii)   Define an  ordered dict  representing a  randomized 
+        #           collection of  Attributes  which simulate a generic   
+        #           Inventory.
+        #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
+        fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
+                                                     # OrderedDict consisting of:  
+            'Stock ID':[                             #  
+                fake.iban()                          # A random "Stock Number"       
+                for _ in range(inventory_size)       # for each of the      
+            ],                                       # inventory_size  many rows   
+                                                     # 
+            'Product':[                              # A randomly selected 
+                phony.Choice()                       # choice between:
+                ([                                   #   
+                                                     #
+                    f'{fake.machine_make_model()}',  #  a fake machine make/model  
+                                                     #
+                    f'{fake.machine_make_model()}'   #  or a similar one that  
+                    +                                #  that also features a  
+                    f' ({fake.machine_category()})', #  Categorical Description 
+                                                     #
+                    phony.Hardware().phone_model(),  #  or a random Phone Model
+                                                     #
+                    phony.Hardware().manufacturer()  #  or a concatenation of:
+                    +                                #  
+                    ' '                              #   a random Electronics 
+                    +                                #   Manufacturer Name
+                    ' '.join(                        #  
+                        phony.Text().words(          #   and 1 random word,   
+                            1                        #   converted to Title Case   
+                        )                            #
+                    ).title(),                       #
+                                                     #
+                    fake.machine_make()              #  or a concatenation of:
+                    +                                #                    
+                    ' '                              #   a fake machine make/model
+                    +                                #   Manufacturer Name
+                    ' '.join(                        #         
+                        phony.Text().words(          #   2 random words converted    
+                            2                        #   to Title Case    
+                        )                            #   
+                    ).title()                        #   and a Categorical
+                    +                                #   Description
+                    f' ({fake.machine_category()})', #
+                                                     #
+                    phony.Hardware().graphics()      #  or a some random Computer 
+                                                     #  Graphics card name,
+                ])                                   #  
+                                                     #  for each of the 
+                for _ in range(inventory_size)       #  inventory_size many rows 
+            ],                                       # 
+                                                     #
+            'Year':[                                 # 
+                fake.machine_year()                  # A fake machine Manufacture 
+                for _ in range(inventory_size)       # Date for each of the  
+            ],                                       # inventory_size many rows
+                                                     #
+            'Price':[                                # 
+                phony.Finance().price(               # A phony, randomized  
+                    1,                               # monetary value ranging  
+                    5000                             # from 1 to 5000 dollars, 
+                )                                    # for each of the   
+                for _ in range(inventory_size)       # inventory_size many rows
+            ],                                       #
+                                                     #
+            'Quantity':[                             # 
+                phony.Numeric().integer_number(      # A phony, randomized  
+                    0,                               # monetary value ranging  
+                    70                               # from 1 to 5000 dollars, 
+                )                                    # for each of the   
+                for _ in range(inventory_size)       # inventory_size many rows
+            ]                                        #
+                                                     #
+        })                                           #
+        #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
+
+        # 2.f.iii)  Export fake_inventory, which is now an  ordered dict of lists,
         #         as a  pandas  Dataframe object.     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
         return {                                #
