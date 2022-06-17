@@ -142,7 +142,6 @@ class FakeCompany:
     employee_size   =  phony.Numeric().integer_number(1,1000), # 
     customer_size   =  phony.Numeric().integer_number(1,1000), # 
     inventory_size  =  phony.Numeric().integer_number(1,1000), # 
-    transction_size =  phony.Numeric().integer_number(1,1000), # Failure to  
     city            =  fake.city(),                            # provide these           
     state           =  fake.state_abbr(),                      # in the caller        
     zip_code        =  None,                                   # results in the     
@@ -161,7 +160,6 @@ class FakeCompany:
         self.EmployeeSize    =  employee_size                  # state 
         self.CustomerSize    =  customer_size                  # param is   
         self.InventorySize   =  inventory_size                 # accessible,
-        self.TransactionSize =  transction_size                # accessible,
         self.City            =  city                           # replace the 
         self.State           =  state                          # zip_code  param
         self.ZipCode         =  fake.zipcode_in_state(state)   # with one of  
@@ -179,7 +177,6 @@ class FakeCompany:
             f"# of Employees: {self.EmployeeSize}\n" +        # 
             f"# of Customers: {self.CustomerSize}\n" +        # 
             f"# of Inventory Items: {self.InventorySize}\n" + # 
-            f"# of Transactions: {self.TransactionSize}\n" +  # 
             f"City:  {self.City}\n" +                         # Customizes the 
             f"State: {self.State}\n" +                        # output this 
             f"Zip Code: {self.ZipCode}\n" +                   # object produces 
@@ -809,6 +806,7 @@ class FakeCompany:
             <int>   custom_size      -  Sets the value of the optional Custom Size\n
                                         DEFAULT VALUE:  0\n
         
+
         OUTPUT
             <dict>
                 'As_DataFrame'   -   pandas  <DataFrame>  object
@@ -925,161 +923,126 @@ class FakeCompany:
 #####################################################################################################
     
     
-    # 2.f) A Method To Generate A Fake, Randomized "Inventory" Dictionary
+    # 2.f) A Method To Generate A Fake, Randomized "Transactions" Dictionary
     #############################################################################
-    def MakeFakeInventory(self, has_custom_size = False, custom_size = 0):
+    def MakeFakeTransactions( self, fake_inventory, fake_customers ):
         '''
         NAME
-            MakeFakeInventory
+            MakeFakeTransactions
 
 
         SYNOPSIS
-            Creates an  ordered dictionary of lists  consisting of randomly\n 
-            generated  fake data,  specifically modeled to resemble an\n
-            "Inventory" of  products.
+
 
 
         DESCRIPTION
-            Using the  OrderedDict  class from the python collections module,
-            creates an  ordered dictionary  whose  keys  correspond to 
-            Attribute Names  relating to a generic "Inventory",  and whose 
-            values each correspond to an  Inventory Record consisting of a
-            List of random values, the  size  of which is defined either 
-            by the object's InventorySize Attribute, or else by an optionally
-            specified  custom_size.        
+    
 
         PROCESS
             #2.f.i) 
-                Initialize a local  inventory_size,  which can be optionally 
-                bound either to the specified  custom_size,  or to the
-                object's inherited  InventorySize  attribute. 
+
 
             #2.f.ii) 
-                Define an  ordered dict  representing a  randomized 
-                collection of  Attributes  which simulate a generic   
-                Inventory.
-                 
-            #2.f.iii) 
-                Export fake_inventory, which is now an ordered dict of lists.     
 
 
         INPUTS
-            <bool>  has_custom_size  -  Indicates if a custom value is to be used\n
-                                        DEFAULT VALUE:  False\n
-            
-            <int>   custom_size      -  Sets the value of the optional Custom Size\n
-                                        DEFAULT VALUE:  0\n
+
         
         OUTPUT
-            <dict>
-                'As_DataFrame'   -   pandas  <DataFrame>  object
-
-                'As_OrdredDict'  -  <OrderedDict>  whose  keys  correspond to\n
-                                    Column Attribute Names  and whose  values\n 
-                                    correspond to "rows" or "records" of  Inventory.
 
 
         PARENT:
             Make_FakeCompany.FakeCompany
         '''
-        #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        # 2.f.i)   Initialize a local  inventory_size,  which can be optionally 
+        #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#
+        # 2.f.i)   Initialize a local  transactions_size,  which can be optionally 
         #          bound either to the specified  custom_size,  or to the
-        #          object's inherited  InventorySize  attribute. 
+        #          object's inherited  TransactionsSize  attribute. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        inventory_size = (                               # if MakeFakeInventory 
-                                                         # is called with the
-            self.InventorySize  if not has_custom_size   # has_custom_size flag,
-            else                custom_size              # a custom_size is used
-                                                         # to determine how many
-        )                                                # records to generate
+        larger_size = (                                  #
+                                                         #
+            len(fake_inventory)                          #
+            if  len(fake_inventory) > len(fake_customers)#
+                                                         #
+            else                                         #
+                len(fake_customers)                      #
+                                                         #
+        )                                                #
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
 
         # 2.f.ii)   Define an  ordered dict  representing a  randomized 
         #           collection of  Attributes  which simulate a generic   
-        #           Inventory.
-        #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
-        fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
-                                                     # OrderedDict consisting of:  
-            'Stock ID':[                             #  
-                fake.iban()                          # A random "Stock Number"       
-                for _ in range(inventory_size)       # for each of the      
-            ],                                       # inventory_size  many rows   
-                                                     # 
-            'Product':[                              # A randomly selected 
-                phony.Choice()                       # choice between:
-                ([                                   #   
-                                                     #
-                    f'{fake.machine_make_model()}',  #  a fake machine make/model  
-                                                     #
-                    f'{fake.machine_make_model()}'   #  or a similar one that  
-                    +                                #  that also features a  
-                    f' ({fake.machine_category()})', #  Categorical Description 
-                                                     #
-                    phony.Hardware().phone_model(),  #  or a random Phone Model
-                                                     #
-                    phony.Hardware().manufacturer()  #  or a concatenation of:
-                    +                                #  
-                    ' '                              #   a random Electronics 
-                    +                                #   Manufacturer Name
-                    ' '.join(                        #  
-                        phony.Text().words(          #   and 1 random word,   
-                            1                        #   converted to Title Case   
-                        )                            #
-                    ).title(),                       #
-                                                     #
-                    fake.machine_make()              #  or a concatenation of:
-                    +                                #                    
-                    ' '                              #   a fake machine make/model
-                    +                                #   Manufacturer Name
-                    ' '.join(                        #         
-                        phony.Text().words(          #   2 random words converted    
-                            2                        #   to Title Case    
-                        )                            #   
-                    ).title()                        #   and a Categorical
-                    +                                #   Description
-                    f' ({fake.machine_category()})', #
-                                                     #
-                    phony.Hardware().graphics()      #  or a some random Computer 
-                                                     #  Graphics card name,
-                ])                                   #  
-                                                     #  for each of the 
-                for _ in range(inventory_size)       #  inventory_size many rows 
-            ],                                       # 
-                                                     #
-            'Year':[                                 # 
-                fake.machine_year()                  # A fake machine Manufacture 
-                for _ in range(inventory_size)       # Date for each of the  
-            ],                                       # inventory_size many rows
-                                                     #
-            'Price':[                                # 
-                phony.Finance().price(               # A phony, randomized  
-                    1,                               # monetary value ranging  
-                    5000                             # from 1 to 5000 dollars, 
-                )                                    # for each of the   
-                for _ in range(inventory_size)       # inventory_size many rows
-            ],                                       #
-                                                     #
-            'Quantity':[                             # 
-                phony.Numeric().integer_number(      # A phony, randomized  
-                    0,                               # monetary value ranging  
-                    70                               # from 1 to 5000 dollars, 
-                )                                    # for each of the   
-                for _ in range(inventory_size)       # inventory_size many rows
-            ]                                        #
-                                                     #
-        })                                           #
+        #           Transactions.
+        #|||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
+                                                    #
+        return pandas.concat(                       #
+            [                                       #
+                                                    #
+                pandas.Series(                      #
+                    [                               #
+                        fake.isbn10()               #
+                        for _ in range(larger_size) # 
+                    ],                              #
+                    name='Transaction ID'
+                ),
+
+                fake_inventory['Product'],
+                fake_customers['Customer ID'],
+
+                fake_customers['First Name']
+                +
+                ' '
+                +
+                fake_customers['Last Name'],
+
+                fake_customers['Address']
+                +
+                ', '
+                +
+                fake_customers['City']
+                +
+                ', '
+                +
+                fake_customers['State']
+                +
+                ' '
+                +
+                fake_customers['Zip Code'],
+
+                fake_customers['Card Number'],
+                fake_customers['Card Provider'],
+                fake_inventory['Price'],
+
+                pandas.Series(
+                    [
+                        phony.Datetime().date(                   # fake data method for
+                            2020,                                # a providing random 
+                            2022                                 # dates between a 
+                        ).strftime('%m/%d/%Y')
+
+                        for _ in range(larger_size)
+                    ], 
+                    name='Payment Date'
+                ),
+
+            ],
+
+            axis=1  
+
+        ).dropna().rename( 
+            columns={
+                'Price':'Payment',
+                'Product':'Product Sold',
+                0:'Customer Name',
+                1:'Customer Address'
+            } 
+        ).sort_values("Transaction ID")
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
 
-        # 2.f.iii)  Export fake_inventory, which is now an  ordered dict of lists,
+        # 2.f.iii)  Export fake_transactions, which is now an  ordered dict of lists,
         #         as a  pandas  Dataframe object.     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
-        return {                                #
-            "As_OrderedDict": fake_inventory,   #  a Pandas DataFrame  
-            "As_DataFrame"  : pandas.DataFrame( #
-                fake_inventory                  #
-            )                                   #
-        }                                       #
+
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
     #############################################################################
 
