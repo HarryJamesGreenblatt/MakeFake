@@ -172,7 +172,6 @@ class FakeCompany:
 
     # 2._) Constructor and Overloads
     ############################################################################
-    
     # 2._.i)   Constructor
     #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||
     def __init__(                                              # Contrsuctor                 
@@ -266,7 +265,7 @@ class FakeCompany:
 
     # 2.S) State Methods
     ############################################################################
-
+    
     # 2.S.i)   Getters
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
     def GetCity(self):           # retrieves the current value of the object's
@@ -278,7 +277,6 @@ class FakeCompany:
     def GetZipCode(self):        # retrieves the current value of the object's 
         return self.ZipCode      #             ZipCode  attribute
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
-
 
     # 2.S.ii)  Setters
     #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||
