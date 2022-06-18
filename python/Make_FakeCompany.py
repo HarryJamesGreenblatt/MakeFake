@@ -181,7 +181,7 @@ class FakeCompany:
     category        =  phony.Finance().company_type(),         # optional.
     employee_size   =  phony.Numeric().integer_number(1,1000), # 
     customer_size   =  phony.Numeric().integer_number(1,1000), # 
-    inventory_size  =  phony.Numeric().integer_number(1,1000), # 
+    inventory_size  =  phony.Numeric().integer_number(1,1000), # Failure to
     city            =  fake.city(),                            # provide these           
     state           =  fake.state_abbr(),                      # in the caller        
     zip_code        =  None,                                   # results in the     
