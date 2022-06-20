@@ -27,8 +27,9 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
-import initialize_fake_data_providers, re, collections, pandas # Brings in all neccessary modules and 
-                                                               # classes: 
+import initialize_fake_data_providers                          # Brings in all neccessary modules and
+import random, re, collections, pandas                         # classes:
+                                                               #  
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
 phony = initialize_fake_data_providers.load_all_providers()[1] # --> the full  mimesis  module
 #####################################################################################################
@@ -955,10 +956,10 @@ class FakeCompany:
                 for _ in range(inventory_size)       # inventory_size many rows
             ],                                       #
                                                      #
-            'Quantity':[                             # 
+            'Stock Quantity':[                       # 
                 phony.Numeric().integer_number(      # A phony, randomized  
-                    0,                               # monetary value ranging  
-                    70                               # from 1 to 5000 dollars, 
+                    0,                               # Quantity value ranging  
+                    70                               # from 1 to 70 units, 
                 )                                    # for each of the   
                 for _ in range(inventory_size)       # inventory_size many rows
             ]                                        #
@@ -1095,10 +1096,34 @@ class FakeCompany:
                 fake_customers['Card Number'],      #
                 fake_customers['Card Provider'],    # and 
                 fake_inventory['Price'],            #
+                                                    # 
+                pandas.Series(                      # A 'Quantity Sold' 
+                    [                               # derived from python's  
+                        random.choices(             # random module's 
+                            population=[            # 'choices' method, 
+                                1,                  # which assigns 
+                                2,                  # weighted 
+                                3,                  # probabilities
+                                4,                  # to a given 
+                                5                   # sequence.
+                            ],                      #
+                            weights=[               # where there will be a: 
+                                0.6,                #  60% chance of '1.0'
+                                0.2,                #  20% chance of '2.0'
+                                0.1,                #  10% chance of '3.0'
+                                0.07,               #   7% chance of '4.0'
+                                0.03                #   3% chance of '5.0'
+                            ],                      # being selected
+                        )[0]                        # 
+                                                    # 
+                        for _ in range(lesser_size) # and
+                    ],                              # 
+                    name='Quantity Sold'            # 
+                ),                                  # 
                                                     # A 'Payment Date'
                 pandas.Series(                      # derived from  phony's 
                     [                               # method for producing
-                        phony.Datetime().date(      # a dates between 
+                        phony.Datetime().date(      # select dates between 
                             2020,                   # specified ranges. 
                             2022                    # 
                         ).strftime('%m/%d/%Y')      #
