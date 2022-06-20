@@ -125,7 +125,7 @@ class FakeAthleticClub( FakeCompany ):
     name   =  ' '.join(phony.Text().words(1)).title()+" Fitness",# whose params 
     category      =  "Athletic Club",                            # may all be             
     employee_size =  phony.Numeric().integer_number(10,160),     # optionally                   
-    customer_size   =  phony.Numeric().integer_number(2, 500),   # priovided,                      
+    customer_size =  phony.Numeric().integer_number(2, 500),     # priovided,                      
     city          =  fake.city(),                                # with the   
     state         =  fake.state_abbr(),                          # exception of    
     zip_code      =  fake.zipcode(),                             # "departments",   
@@ -141,7 +141,7 @@ class FakeAthleticClub( FakeCompany ):
         self.Category     =  category                            # state
         self.Domain       =  self.SetDomain()                    #
         self.EmployeeSize =  employee_size                       # param is 
-        self.CustomerSize   =  customer_size                         # accessible, 
+        self.CustomerSize =  customer_size                         # accessible, 
         self.City         =  city                                # clobber
         self.State        =  state                               # the zip_code
         self.ZipCode      =  fake.zipcode_in_state(state)        # param with an  
@@ -217,7 +217,7 @@ class FakeAthleticClub( FakeCompany ):
             state           =   self.State,          # the  FakeAthleticClub 
             zip_code        =   self.ZipCode,        # (subclass) constructor 
             departments     =   self.Departments     # parameters
-        ).MakeFakeEmployees()                          #
+        ).MakeFakeEmployees()                        #
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
         
         # 2.b.i.2)   Replace any  Payroll Attributes  which are inconsistent 

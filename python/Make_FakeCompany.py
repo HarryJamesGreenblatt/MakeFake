@@ -178,9 +178,9 @@ class FakeCompany:
     self,                                                      # whose params                 
     name            =  fake.company(),                         # are all                  
     category        =  phony.Finance().company_type(),         # optional.
-    employee_size   =  phony.Numeric().integer_number(1,1000), # 
-    customer_size   =  phony.Numeric().integer_number(1,1000), # 
-    inventory_size  =  phony.Numeric().integer_number(1,1000), # Failure to
+    employee_size   =  phony.Numeric().integer_number(1,700), # 
+    customer_size   =  phony.Numeric().integer_number(1,700), # 
+    inventory_size  =  phony.Numeric().integer_number(1,700),  # Failure to
     city            =  fake.city(),                            # provide these           
     state           =  fake.state_abbr(),                      # in the caller        
     zip_code        =  None,                                   # results in the     
@@ -1038,17 +1038,17 @@ class FakeCompany:
         PARENT:
             Make_FakeCompany.FakeCompany
         '''
-        # 2.T.i)     Store the  larger_size  of the two  DataFrame  inputs.  
+        # 2.T.i)     Store the  lesser_size  of the two  DataFrame  inputs.  
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
-        larger_size = (                                  # let  larger_size  be
+        lesser_size = (                                  # let  lesser_size  be
                                                          # the length of the 
             len(fake_inventory)                          # fake_inventory input
                                                          # if it is larger than
             if                                           # the fake_customers
-                len(fake_inventory) > len(fake_customers)# input, 
+                len(fake_inventory) < len(fake_customers)# input, 
                                                          #
             else                                         # otherwise,
-                len(fake_customers)                      # larger_size will be 
+                len(fake_customers)                      # lesser_size will be 
                                                          # the length of
         )                                                # fake_customers
         #||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||#
@@ -1063,7 +1063,7 @@ class FakeCompany:
                 pandas.Series(                      # accessing one of their 
                     [                               # 'columns' returns a 
                         fake.isbn10()               # pandas  Series  object.
-                        for _ in range(larger_size) # 
+                        for _ in range(lesser_size) # 
                     ],                              # As such, concat() can 
                     name='Transaction ID'           # take a  list  consisting 
                 ),                                  # of a sequence of 
@@ -1103,7 +1103,7 @@ class FakeCompany:
                             2022                    # 
                         ).strftime('%m/%d/%Y')      #
                                                     #
-                        for _ in range(larger_size) # 
+                        for _ in range(lesser_size) # 
                     ],                              # 
                     name='Payment Date'             # passing the axis=1 option                                     
                 ),                                  # ensures the proper format  
