@@ -179,8 +179,8 @@ class FakeCompany:
     self,                                                      # whose params                 
     name            =  fake.company(),                         # are all                  
     category        =  phony.Finance().company_type(),         # optional.
-    employee_size   =  phony.Numeric().integer_number(1,700), # 
-    customer_size   =  phony.Numeric().integer_number(1,700), # 
+    employee_size   =  phony.Numeric().integer_number(1,700),  # 
+    customer_size   =  phony.Numeric().integer_number(1,700),  # 
     inventory_size  =  phony.Numeric().integer_number(1,700),  # Failure to
     city            =  fake.city(),                            # provide these           
     state           =  fake.state_abbr(),                      # in the caller        
@@ -191,8 +191,8 @@ class FakeCompany:
         "Sales",                                               # except for     
         "Marketing",                                           # "departments",    
         "Security",                                            # which is set to    
-        "IT"                                                   # a static list    
-    ]                                                          # 
+        "IT"                                                   # a statically      
+    ]                                                          # defined list
     ):                                                         # 
         self.Name            =  name                           # 
         self.Category        =  category                       # 
@@ -609,8 +609,8 @@ class FakeCompany:
         #         of itself in  multiple formats     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
         return {                                # May be optionally accessed
-            "As_OrderedDict": fake_employees,   # as a python  OrdredDict  
-            "As_DataFrame"  : pandas.DataFrame( # or  as a  pandas  DataFrame, 
+            'As_OrderedDict': fake_employees,   # as a python  OrdredDict  
+            'As_DataFrame'  : pandas.DataFrame( # or  as a  pandas  DataFrame, 
                 fake_employees                  # depending on the use case.  
             )                                   #  
         }                                       #
@@ -803,8 +803,8 @@ class FakeCompany:
         #         of itself in  multiple formats     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
         return {                                # Returns a dict of dicts 
-            "As_OrderedDict": fake_customers,   # which makes accessible multiple  
-            "As_DataFrame"  : pandas.DataFrame( # output formats, including both
+            'As_OrderedDict': fake_customers,   # which makes accessible multiple  
+            'As_DataFrame'  : pandas.DataFrame( # output formats, including both
                 fake_customers                  # a python  OrdredDict  and  a  
             )                                   # pandas  DataFrame.
         }                                       #
@@ -866,7 +866,7 @@ class FakeCompany:
                 ---------------       -----------------------------------------------
                 'As_DataFrame'    -   pandas  <DataFrame>  object
 
-                'As_OrdredDict'   -   <OrderedDict>  whose  keys  correspond to\n
+                'As_OrderedDict'   -   <OrderedDict>  whose  keys  correspond to\n
                                       Column Attribute Names  and whose  values\n 
                                       correspond to "rows" or "records" of  Inventory.
 
@@ -971,8 +971,8 @@ class FakeCompany:
         #           versions of itself in  multiple formats.     
         #|||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||#
         return {                                # Returns a dict of dicts 
-            "As_OrderedDict": fake_inventory,   # which makes accessible multiple  
-            "As_DataFrame"  : pandas.DataFrame( # output formats, including both
+            'As_OrderedDict': fake_inventory,   # which makes accessible multiple  
+            'As_DataFrame'  : pandas.DataFrame( # output formats, including both
                 fake_inventory                  # a python  OrdredDict  and  a  
             )                                   # pandas  DataFrame.
         }                                       #

@@ -9,12 +9,10 @@ PURPOSE
     superclass.
 
 
-FUNCTIONS
-    #1 Imports Data Providers As Global Variables Named  fake  And  phony 
-    
-    #2 Imports the  FakeCompany  superclass
+FUNCTIONS  
+    #1 Imports the  FakeCompany  superclass
 
-    #3 Defines The  FakeAthleticClub  subclass
+    #2 Defines The  FakeAthleticClub  subclass
 
 
 DEPENDENCIES
@@ -24,11 +22,14 @@ DEPENDENCIES
 '''
 
 
-from Make_FakeCompany import FakeCompany, phony, fake
+# 1) Defines The  FakeAthleticClub  subclass
+#####################################################################################################
+from Make_FakeCompany  import FakeCompany, phony, fake, pandas
+#####################################################################################################
 
 
 
-#  2) Defining The FakeAthleticClub Class
+# 2) Defines The  FakeAthleticClub  subclass
 #####################################################################################################
 class FakeAthleticClub( FakeCompany ):
     '''
@@ -42,15 +43,14 @@ class FakeAthleticClub( FakeCompany ):
 
 
     COMPONENTS
-        #2.a) Overload Of The FakeCompany  Constructor
+        #2._) Overload Of The  FakeCompany  Constructor
             i.  __init__()
 
-        #2.b) Overload  Of The FakeCompany  MakeFakeEmployees Method 
-            i.  MakeFakeEmployees()  
+        #2.E) Overload  Of The  FakeCompany  MakeFakeEmployees  Method 
+            MakeFakeEmployees()  
 
-
-        #2.c A Method To Generate A Fake, Randomized "Customers" Dictionary
-            i.  MakeFakeCustomers()  
+        #2.C) Overload  Of The  FakeCompany  MakeFakeCustomers  Method
+            MakeFakeCustomers()  
 
 
     ATTRIBUTE PARAMETERS
@@ -118,38 +118,40 @@ class FakeAthleticClub( FakeCompany ):
         FakeCompany.py
     '''
 
-    # 2.a) Overload Of The FakeCompany  Constructor  
+    # 2._) Overload Of The FakeCompany  Constructor  
     ############################################################################
     def __init__(                                                #
     self,                                                        # A Contrsuctor                 
     name   =  ' '.join(phony.Text().words(1)).title()+" Fitness",# whose params 
-    category      =  "Athletic Club",                            # may all be             
-    employee_size =  phony.Numeric().integer_number(10,160),     # optionally                   
-    customer_size =  phony.Numeric().integer_number(2, 500),     # priovided,                      
-    city          =  fake.city(),                                # with the   
-    state         =  fake.state_abbr(),                          # exception of    
-    zip_code      =  fake.zipcode(),                             # "departments",   
-    departments   =  [                                           # which     
-        "Management",                                            # initializes   
-        "Personal Training",                                     # as a static  
-        "Coaching Staff",                                        # list.  
-        "Sales and Merchandise",                                 #  
-        "Diet and Nutrition"                                     # 
-    ]                                                            #
-    ):                                                           #
-        self.Name         =  name                                # Once the   
-        self.Category     =  category                            # state
-        self.Domain       =  self.SetDomain()                    #
-        self.EmployeeSize =  employee_size                       # param is 
-        self.CustomerSize =  customer_size                         # accessible, 
-        self.City         =  city                                # clobber
-        self.State        =  state                               # the zip_code
-        self.ZipCode      =  fake.zipcode_in_state(state)        # param with an  
-        self.Departments  =  departments                         # improvement.
+    category      =  "Athletic Club",                            # are all              
+    employee_size   =  phony.Numeric().integer_number(1,700),    # optional.
+    customer_size   =  phony.Numeric().integer_number(1,700),    # 
+    inventory_size  =  phony.Numeric().integer_number(1,700),    # Failure to                   
+    city          =  fake.city(),                                # provide these            
+    state         =  fake.state_abbr(),                          # in the caller         
+    zip_code      =  fake.zipcode(),                             # results in the      
+    departments   =  [                                           # generation of      
+        "Management",                                            # a set of random      
+        "Personal Training",                                     # values for each,     
+        "Coaching Staff",                                        # except for      
+        "Sales and Merchandise",                                 # "departments",      
+        "Diet and Nutrition"                                     # which is set to     
+    ]                                                            # a statically     
+    ):                                                           # defined list
+        self.Name         =  name                                # 
+        self.Category     =  category                            # Once the     
+        self.Domain       =  self.SetDomain()                    # 'state' 
+        self.EmployeeSize =  employee_size                       # param becomes    
+        self.CustomerSize =  customer_size                       # accessible, 
+        self.InventorySize =  inventory_size                       # accessible, 
+        self.City         =  city                                # replace the  
+        self.State        =  state                               # zip_code  param 
+        self.ZipCode      =  fake.zipcode_in_state(state)        # with one of   
+        self.Departments  =  departments                         # phony's methods.  
     ############################################################################
 
 
-    # 2.b) Overload  Of The  FakeCompany  MakeFakeEmployees Method  
+    # 2.E) erload  Of The  FakeCompany  MakeFakeEmployees Method  
     ############################################################################
     def MakeFakeEmployees(self):
         '''
@@ -179,16 +181,16 @@ class FakeAthleticClub( FakeCompany ):
 
 
         PROCESS
-            #2.b.i.1 
+            #2.E.i 
                 Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
                 the superclass's  MakeFakeEmployees  Method  to simplify code\n
                 refactoring efforts.      
 
-            #2.b.i.2 
+            #2.E.i 
                 Replace any  Payroll Attributes  which are inconsistent\n 
                 with the  FakeAthleticClub's Profile  with  adjusted values. 
                  
-            #2.b.i.2 
+            #2.E.i 
                 Export the  Fake Payroll,  which is now a   dict of lists.    
 
 
@@ -205,25 +207,27 @@ class FakeAthleticClub( FakeCompany ):
             FakeCompany
         '''
 
-        # 2.b.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced by  
+        # 2.E.i)   Retrieve a copy of the  Fake Payroll Dictionary  produced by  
         #            the superclass's  MakeFakeEmployees  Method  to simplify code
         #            refactoring efforts      
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#       
-        FakeAthleticClubPayroll = FakeCompany(       # 
+        FakeAthleticClubEmployees = FakeCompany(       # 
             name            =   self.Name,           # The FakeCompany 
             category        =   self.Category,       # (superclass)  
             employee_size   =   self.EmployeeSize,   # MakeFakeEmployees Method 
+            inventory_size  =   self.InventorySize, # MakeFakeInventory Method 
+            customer_size   =   self.CustomerSize,   # MakeFakecustomers Method 
             city            =   self.City,           # is invoked using  
             state           =   self.State,          # the  FakeAthleticClub 
             zip_code        =   self.ZipCode,        # (subclass) constructor 
             departments     =   self.Departments     # parameters
-        ).MakeFakeEmployees()                        #
+        ).MakeFakeEmployees()['As_OrderedDict']      #
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
         
-        # 2.b.i.2)   Replace any  Payroll Attributes  which are inconsistent 
+        # 2.E.ii)   Replace any  Payroll Attributes  which are inconsistent 
         #            with the  FakeAthleticClub's Profile  with  adjusted values. 
         #||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||#
-        FakeAthleticClubPayroll["Date Of Birth"] = [ # 
+        FakeAthleticClubEmployees["Date Of Birth"] = [ # 
                                                      #  
             phony.Datetime().date(                   # Adjust the default range     
                 1985,                                # of Employee Birth Dates    
@@ -234,7 +238,7 @@ class FakeAthleticClub( FakeCompany ):
                                                      # 
         ]                                            #
                                                      #
-        FakeAthleticClubPayroll["Salary"]       =  [ # Adjust the default range    
+        FakeAthleticClubEmployees["Salary"]       =  [ # Adjust the default range    
                                                      # of Employee Salaries   
             phony.Finance().price(50000, 75500)      # to simulate low income  
                                                      # levels, 
@@ -242,7 +246,7 @@ class FakeAthleticClub( FakeCompany ):
                                                      # 'EmployeeSize' many rows    
         ]                                            # 
                                                      # 
-        FakeAthleticClubPayroll['Employee ID']  = [  # Adjust the default range      
+        FakeAthleticClubEmployees['Employee ID']  = [  # Adjust the default range      
                                                      # of Employee ID Numbers    
             fake.iana_id()[:5]                       # to not exceed 5 digits 
                                                      # in length,   
@@ -251,14 +255,19 @@ class FakeAthleticClub( FakeCompany ):
         ]                                            # 
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
 
-        # 2.b.i.3)   Export the  Fake Payroll,  which is now a   dict of lists.     
+        # 2.E.iii)   Export the  Fake Payroll,  which is now a   dict of lists.     
         #|||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return FakeAthleticClubPayroll  # for use as input in a Pandas DataFrame
+        return {                                # Returns a dict of dicts 
+            'As_OrderedDict': FakeAthleticClubEmployees,   # which makes accessible multiple  
+            'As_DataFrame'  : pandas.DataFrame( # output formats, including both
+                FakeAthleticClubEmployees                  # a python  OrdredDict  and  a  
+            )                                   # pandas  DataFrame.
+        }                                       #
         #|||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
     ############################################################################
 
 
-    # 2.c) A Method To Generate A Fake, Randomized "Customers" Dictionary
+    # 2.C) A Method To Generate A Fake, Randomized "Customers" Dictionary
     ############################################################################
     def MakeFakeCustomers(self):
         '''
@@ -288,21 +297,21 @@ class FakeAthleticClub( FakeCompany ):
 
 
         PROCESS
-            #2.c.i.1 
+            #2.C.i) 
                 Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
                 the superclass's  MakeFakeEmployees  Method  to simplify code\n
                 refactoring efforts.      
 
-            #2.c.i.2 
+            #2.C.ii) 
                 Filter out any  Coulumn Attributes which are not consistant\n
                 with a  Athletic Company Customers  Data Context.  
             
-            #2.c.i.3)   
+            #2.C.iii)   
                 Add  additional columns  to the  Customer Data Context\n 
                 representing  a  Customer's  ID,  Membership Date,  and\n  
                 Membership Plan.
 
-            #2.c.i.4) 
+            #2.C.iv) 
                 Export the  Fake Customers,  which is now a   dict of lists.    
 
 
@@ -315,14 +324,16 @@ class FakeAthleticClub( FakeCompany ):
             amd whose  values  correspond to "rows" or "records" of  Customers.
         '''
 
-        # 2.c.i.1)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
-        #            by the superclass's  MakeFakeEmployees  Method  to simplify 
-        #            code refactoring efforts. 
+        # 2.C.i)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
+        #          by the superclass's  MakeFakeEmployees  Method  to simplify 
+        #          code refactoring efforts. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
         FakeAthleticClubCustomers = FakeCompany(         # FakeCompany's 
             name            =   self.Name,               # (superclass)  
             category        =   self.Category,           # MakeFakeEmployees 
             employee_size   =   self.EmployeeSize,       # is invoked using  
+            customer_size   =   self.CustomerSize,       # is invoked using  
+            inventory_size  =   self.InventorySize,      # is invoked using  
             city            =   self.City,               # the  FakeAthleticClub 
             state           =   self.State,              # (subclass) constructor 
             zip_code        =   self.ZipCode,            # parameters
@@ -330,11 +341,11 @@ class FakeAthleticClub( FakeCompany ):
         ).MakeFakeEmployees(                             # the has_custom_size  
             has_custom_size =   True,                    # switch indicates  
             custom_size     =   self.CustomerSize        # the dict's length will 
-        )                                                # match the  CustomerSize
+        )['As_OrderedDict']                              # match the  CustomerSize
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.c.i.2)   Filter out any  Coulumn Attributes which are not consistant 
-        #            with a  Athletic Company Customers  Data Context. 
+        # 2.C.ii)   Filter out any  Coulumn Attributes which are not consistant 
+        #           with a  Athletic Company Customers  Data Context. 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
         del FakeAthleticClubCustomers['Salary']          # Club Customers would 
         del FakeAthleticClubCustomers['Department']      # not likely have 
@@ -344,7 +355,7 @@ class FakeAthleticClub( FakeCompany ):
         del FakeAthleticClubCustomers['SSN']             # or SSN  Attributes
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.c.i.3)   Add additional Columns Attributes to the Customer Data Context 
+        # 2.C.iii)   Add additional Columns Attributes to the Customer Data Context 
         #            representing  a  Customer's  ID,  Membership Date,  and  
         #            Membership Plan.
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
@@ -390,9 +401,15 @@ class FakeAthleticClub( FakeCompany ):
         ]                                                # 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.c.i.4)   Export the  Fake Customers,  which is now a   dict of lists.     
-        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return FakeAthleticClubCustomers # for use as input in a Pandas DataFrame
-        #||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
+        # 2.C.iv)  Export  FakeAthleticClubCustomers  as a  dictionary  
+        #           containing versions of itself in  multiple formats.     
+        #|||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+        return {                                        # Returns a dict of dicts 
+            'As_OrderedDict': FakeAthleticClubCustomers,# which makes accessible  
+            'As_DataFrame'  : pandas.DataFrame(         # multiple output formats,
+                FakeAthleticClubCustomers               # including both a python     
+            )                                           # OrdredDict  and a   
+        }                                               # pandas DataFrame.
+        #|||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||#
     #############################################################################
 #####################################################################################################
