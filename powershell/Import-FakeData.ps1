@@ -96,7 +96,7 @@ function Import-FakeData {
  
     param (
         [string] $Env = 'C:\Users\harry\python\thunderDome\Scripts\Activate.ps1',   
-        [string] $PythonScript = '..\python\client.py'
+        [string] $PythonScript = '..\python\Make_FakeCompany_Client.py'
     )
 
     begin {
