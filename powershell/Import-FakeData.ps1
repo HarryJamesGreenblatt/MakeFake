@@ -95,12 +95,12 @@ function Import-FakeData {
     [CmdletBinding()]
  
     param (
-        [string] $Env = 'C:\Users\harry\python\thunderDome\Scripts\Activate.ps1',   
+        [string] $VirtualEnv = 'C:\Users\harry\python\thunderDome\Scripts\Activate.ps1',   
         [string] $PythonScript = '..\python\Make_FakeCompany.py'
     )
 
     begin {
-        & $Env
+        & $VirtualEnv
     }
     
     process {

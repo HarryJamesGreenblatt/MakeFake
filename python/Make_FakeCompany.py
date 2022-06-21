@@ -27,6 +27,7 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
+from ast import Pass
 import initialize_fake_data_providers                          # Brings in all neccessary modules and
 import random, re, collections, pandas, subprocess             # classes:
                                                                #  
@@ -1152,15 +1153,15 @@ class FakeCompany:
     
 
     #############################################################################
-    def To_Excel(self, fake_data, data_categpry):
+    def To_Excel(self, company_data, company_name):
 
         csv_path   = '../python/to_powershell/data.csv'
         title_path = '../python/to_powershell/title.txt'
 
 
-        with open(csv_path, 'w+') as csv, open(title_path, 'w+') as cat:
-            csv.write(fake_data)
-            cat.write(data_categpry)
+        with open(csv_path, 'w+') as csv, open(title_path, 'w+') as title:
+            csv.write(company_data)
+            title.write(company_name)
 
 
         # 2 Call PowerShell To Invoke  Build-FakeSpreadsheets.ps1  As A Parallel Subprocess  
@@ -1169,7 +1170,6 @@ class FakeCompany:
             [                                                                      # store the 
                 'powershell.exe', # result of a
                 '..\\powershell\\Build-FakeSpreadsheets.ps1'      # system call,
-
             ],                                                                     # to PowerShell,
             stdout=subprocess.PIPE,                                                # which runs 
             stderr=subprocess.STDOUT,                                              # the dependency,  
