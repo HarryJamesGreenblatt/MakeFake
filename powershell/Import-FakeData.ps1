@@ -84,64 +84,33 @@
 .OUTPUTS
    A string representing the  community_providers  hash table converted to  JSON 
 
-      PS C:\Users\harry\powershell> (.\Import-FakerProviders.ps1).GetType()
+      PS C:\Users\harry\powershell> (.\Import-FakeData.ps1).GetType()
 
       IsPublic IsSerial Name                                     BaseType     
       -------- -------- ----                                     --------     
       True     True     String                                   System.Object
 #>
-function Import-FakerProviders {
+function Import-FakeData {
 
-   [CmdletBinding()]
+    [CmdletBinding()]
+ 
+    param (
+        [string] $Env = 'C:\Users\harry\python\thunderDome\Scripts\Activate.ps1',   
+        [string] $PythonScript = '..\python\client.py'
+    )
 
-   param (
+    begin {
+        & $Env
+    }
+    
+    process {
+       python $PythonScript
+    }
 
-      [Alias("FilePath")]
-      [string] 
-      $FilePathToCommunityProviderList = `
-      'C:\Users\harry\data\fake_data\community_providers.txt',
+   #  end{
 
-      [Alias("BaseNamesPerlCode")]
-      [string] 
-      $PerlCodeToNormalizeCommunityProviderBaseNames =`
-      's/fake\.(.+)\(.*\)/$1/g  and  s/\s+|\(.*//g;',
+   #  }
+ 
+ }
 
-      [Alias("NamesPerlCode")]
-      [string] 
-      $PerlCodeToNormalizeColumnHeaders = `
-      's/fake\.(.+)\(.*\)/$1/g  and  s/\s+|\(.*//g  and s/_/ /g;'
-
-   )
-   
-   process {   
-
-      $community_providers = @{
-
-         base_names = $(
-
-            Get-Content $FilePathToCommunityProviderList | 
-                  perl -wlpe  $PerlCodeToNormalizeCommunityProviderBaseNames
-
-         )
-     
-         column_titles = $( 
-
-            Get-Content $FilePathToCommunityProviderList | 
-                  perl -wlpe  $PerlCodeToNormalizeColumnHeaders
-
-         )  |  ForEach-Object {  (Get-Culture).TextInfo.ToTitleCase($_)  }
-     
-     }  
-
-   }
-   
-   end {
-
-      $community_providers | ConvertTo-Json
-      
-   }
-
-}
-
-
-Import-FakerProviders
+ Import-FakeData

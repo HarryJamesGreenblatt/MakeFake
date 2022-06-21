@@ -28,7 +28,7 @@ DEPENDENCIES
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
 import initialize_fake_data_providers                          # Brings in all neccessary modules and
-import random, re, collections, pandas                         # classes:
+import random, re, collections, pandas, subprocess             # classes:
                                                                #  
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
 phony = initialize_fake_data_providers.load_all_providers()[1] # --> the full  mimesis  module
@@ -179,9 +179,9 @@ class FakeCompany:
     self,                                                      # whose params                 
     name            =  fake.company(),                         # are all                  
     category        =  phony.Finance().company_type(),         # optional.
-    employee_size   =  phony.Numeric().integer_number(1,700),  # 
-    customer_size   =  phony.Numeric().integer_number(1,700),  # 
-    inventory_size  =  phony.Numeric().integer_number(1,700),  # Failure to
+    employee_size   =  phony.Numeric().integer_number(1,750),  # 
+    customer_size   =  phony.Numeric().integer_number(100,750),# 
+    inventory_size  =  phony.Numeric().integer_number(100,750),# Failure to
     city            =  fake.city(),                            # provide these           
     state           =  fake.state_abbr(),                      # in the caller        
     zip_code        =  None,                                   # results in the     
@@ -1149,5 +1149,29 @@ class FakeCompany:
         #|||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||#
 
     #############################################################################
-
 #####################################################################################################
+    
+    def To_Excel(self, fake_data, data_categpry):
+
+        csv_path   = '../python/to_powershell/data.csv'
+        title_path = '../python/to_powershell/title.txt'
+
+
+        with open(csv_path, 'w+') as csv, open(title_path, 'w+') as cat:
+            csv.write(fake_data)
+            cat.write(data_categpry)
+
+
+        # 2 Call PowerShell To Invoke  Import-FakeProviders.ps1  As A Parallel Subprocess  
+        ############################################################################################
+        subprocess.run(                                                  # subproc  will
+            [                                                                      # store the 
+                'powershell.exe', # result of a
+                '..\\powershell\\Build-FakeSpreadsheets.ps1'      # system call,
+
+            ],                                                                     # to PowerShell,
+            stdout=subprocess.PIPE,                                                # which runs 
+            stderr=subprocess.STDOUT,                                              # the dependency,  
+            shell=True                                                             # and returns
+        )                                                                          # a JSON string
+        ############################################################################################

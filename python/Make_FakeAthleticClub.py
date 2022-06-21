@@ -24,7 +24,8 @@ DEPENDENCIES
 
 # 1) Defines The  FakeAthleticClub  subclass
 #####################################################################################################
-from Make_FakeCompany  import FakeCompany, phony, fake, pandas
+from Make_FakeCompany  import FakeCompany, phony, fake
+from pandas import DataFrame
 #####################################################################################################
 
 
@@ -259,7 +260,7 @@ class FakeAthleticClub( FakeCompany ):
         #|||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         return {                                # Returns a dict of dicts 
             'As_OrderedDict': FakeAthleticClubEmployees,   # which makes accessible multiple  
-            'As_DataFrame'  : pandas.DataFrame( # output formats, including both
+            'As_DataFrame'  : DataFrame( # output formats, including both
                 FakeAthleticClubEmployees                  # a python  OrdredDict  and  a  
             )                                   # pandas  DataFrame.
         }                                       #
@@ -338,67 +339,39 @@ class FakeAthleticClub( FakeCompany ):
             state           =   self.State,              # (subclass) constructor 
             zip_code        =   self.ZipCode,            # parameters
             departments     =   self.Departments         #
-        ).MakeFakeEmployees(                             # the has_custom_size  
+        ).MakeFakeCustomers(                             # the has_custom_size  
             has_custom_size =   True,                    # switch indicates  
             custom_size     =   self.CustomerSize        # the dict's length will 
         )['As_OrderedDict']                              # match the  CustomerSize
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-        # 2.C.ii)   Filter out any  Coulumn Attributes which are not consistant 
-        #           with a  Athletic Company Customers  Data Context. 
-        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
-        del FakeAthleticClubCustomers['Salary']          # Club Customers would 
-        del FakeAthleticClubCustomers['Department']      # not likely have 
-        del FakeAthleticClubCustomers['Hire Date']       # Salary, Department,
-        del FakeAthleticClubCustomers['Date Of Birth']   # Hire Date, Date Of
-        del FakeAthleticClubCustomers['Employee ID']     # Birth, Employee ID
-        del FakeAthleticClubCustomers['SSN']             # or SSN  Attributes
-        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
         # 2.C.iii)   Add additional Columns Attributes to the Customer Data Context 
-        #            representing  a  Customer's  ID,  Membership Date,  and  
+        #            representing  a  Customer's   Membership Date,  and  
         #            Membership Plan.
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
-        FakeAthleticClubCustomers['Customer ID']  =  [   # Add a  Customer ID  
-                                                         # column using  fake's
-            fake.iana_id()[:4]                           # data method for      
-                                                         # providing random id 
-            for _ in range(self.CustomerSize)            # numbers, limiting the 
-                                                         # number of digits to 4,
-        ]                                                # for each of the    
-                                                         # 'CustomerSize' many rows
-                                                         #
-        FakeAthleticClubCustomers["Membership Date"] = [ # 
-                                                         # Add a  Membership Date   
-            phony.Datetime().date(                       # column using  phony's     
-                2018,                                    # method for random fake    
-                2022                                     # dates ranging between           
-            ).strftime('%m/%d/%Y')                       # 2018 and the 'current      
-                                                         # year', for each of the         
-            for _ in range(self.CustomerSize)            # 'CustomerSize' many rows 
+        FakeAthleticClubCustomers["Membership Date"] = [ # Add a  Membership Date    
+                                                         # column using  phony's      
+            phony.Datetime().date(                       # method for random fake     
+                2018,                                    # dates ranging between            
+                2022                                     # 2018 and the 'current       
+            ).strftime('%m/%d/%Y')                       # year', for each of the          
+                                                         # 'CustomerSize' many rows  
+            for _ in range(self.CustomerSize)            # 
                                                          # 
         ]                                                #
-        FakeAthleticClubCustomers['Membership Plan'] =  [# 
-                                                         # Add a  Membership Plan   
-            phony.Choice()([                             # column using  phony's    
-                "Silver",                                # method selecting      
-                "Gold",                                  # between random choices            
-                "Platinum"                               # of Silver, Gold, and       
-            ])                                           # Platinum  Membership,  
-                                                         # for each of the  
-            for _ in range(self.CustomerSize)            # 'CustomerSize' many rows
+                                                         #
+        FakeAthleticClubCustomers['Membership Plan'] =  [# Add a  Membership Plan    
+                                                         # column using  phony's     
+            phony.Choice()([                             # method selecting       
+                "Silver",                                # between random choices             
+                "Gold",                                  # of Silver, Gold, and        
+                "Platinum"                               # Platinum  Membership,   
+            ])                                           # for each of the   
+                                                         # 'CustomerSize' many rows 
+            for _ in range(self.CustomerSize)            # 
         ]                                                #
                                                          #
-        FakeAthleticClubCustomers['Email'] =  [          # 
-                                                         # Modify the  Email   
-            phony.Person().email([                       # to be randomly 
-                'gmail.com',                             # selcted from popular
-                'yahoo.com',                             # email domains, so that
-                'outlook.com'                            # it doesn't correspond    
-            ])                                           # to the object's Domain,  
-                                                         # for each of the     
-            for _ in range(self.CustomerSize)            # 'CustomerSize' many rows   
-        ]                                                # 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
         # 2.C.iv)  Export  FakeAthleticClubCustomers  as a  dictionary  
@@ -406,7 +379,7 @@ class FakeAthleticClub( FakeCompany ):
         #|||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
         return {                                        # Returns a dict of dicts 
             'As_OrderedDict': FakeAthleticClubCustomers,# which makes accessible  
-            'As_DataFrame'  : pandas.DataFrame(         # multiple output formats,
+            'As_DataFrame'  : DataFrame(                # multiple output formats,
                 FakeAthleticClubCustomers               # including both a python     
             )                                           # OrdredDict  and a   
         }                                               # pandas DataFrame.

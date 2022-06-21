@@ -84,64 +84,36 @@
 .OUTPUTS
    A string representing the  community_providers  hash table converted to  JSON 
 
-      PS C:\Users\harry\powershell> (.\Import-FakerProviders.ps1).GetType()
+      PS C:\Users\harry\powershell> (.\Build-FakeSpreadsheets.ps1).GetType()
 
       IsPublic IsSerial Name                                     BaseType     
       -------- -------- ----                                     --------     
       True     True     String                                   System.Object
 #>
-function Import-FakerProviders {
+function Build-FakeSpreadsheets {
 
-   [CmdletBinding()]
+    [CmdletBinding()]
+ 
+    param (
+        [string] $DataPath = '..\python\to_powershell\data.csv',
+        [string] $TitlePath = '..\python\to_powershell\title.txt',
+        [string] $DestinationPath = '.\to_excel'
+    )
 
-   param (
+    begin {
+        Import-Module ImportExcel
+        $Data = Get-Content $DataPath
+        $Title  = Get-Content $TitlePath
+    }
+    
+    process {
+       $data | ConvertFrom-Csv | Export-Excel "..\powershell\$DestinationPath\$Title.xlsx"
+    }
 
-      [Alias("FilePath")]
-      [string] 
-      $FilePathToCommunityProviderList = `
-      'C:\Users\harry\data\fake_data\community_providers.txt',
+    end{
+        remove-item $DataPath,$TitlePath
+    }
+ 
+ }
 
-      [Alias("BaseNamesPerlCode")]
-      [string] 
-      $PerlCodeToNormalizeCommunityProviderBaseNames =`
-      's/fake\.(.+)\(.*\)/$1/g  and  s/\s+|\(.*//g;',
-
-      [Alias("NamesPerlCode")]
-      [string] 
-      $PerlCodeToNormalizeColumnHeaders = `
-      's/fake\.(.+)\(.*\)/$1/g  and  s/\s+|\(.*//g  and s/_/ /g;'
-
-   )
-   
-   process {   
-
-      $community_providers = @{
-
-         base_names = $(
-
-            Get-Content $FilePathToCommunityProviderList | 
-                  perl -wlpe  $PerlCodeToNormalizeCommunityProviderBaseNames
-
-         )
-     
-         column_titles = $( 
-
-            Get-Content $FilePathToCommunityProviderList | 
-                  perl -wlpe  $PerlCodeToNormalizeColumnHeaders
-
-         )  |  ForEach-Object {  (Get-Culture).TextInfo.ToTitleCase($_)  }
-     
-     }  
-
-   }
-   
-   end {
-
-      $community_providers | ConvertTo-Json
-      
-   }
-
-}
-
-
-Import-FakerProviders
+ Build-FakeSpreadsheets
