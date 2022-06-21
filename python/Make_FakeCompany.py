@@ -1149,8 +1149,9 @@ class FakeCompany:
         #|||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||#
 
     #############################################################################
-#####################################################################################################
     
+
+    #############################################################################
     def To_Excel(self, fake_data, data_categpry):
 
         csv_path   = '../python/to_powershell/data.csv'
@@ -1162,7 +1163,7 @@ class FakeCompany:
             cat.write(data_categpry)
 
 
-        # 2 Call PowerShell To Invoke  Import-FakeProviders.ps1  As A Parallel Subprocess  
+        # 2 Call PowerShell To Invoke  Build-FakeSpreadsheets.ps1  As A Parallel Subprocess  
         ############################################################################################
         subprocess.run(                                                  # subproc  will
             [                                                                      # store the 
@@ -1175,3 +1176,43 @@ class FakeCompany:
             shell=True                                                             # and returns
         )                                                                          # a JSON string
         ############################################################################################
+#####################################################################################################
+
+
+if __name__ == "__main__":
+
+    fake_company = FakeCompany()
+
+
+    fake_company.To_Excel(
+
+        fake_company.MakeFakeEmployees()["As_DataFrame"].to_csv(),
+        f'{fake_company.Name} - Employees'
+
+    )
+
+    fake_company.To_Excel(
+
+        fake_company.MakeFakeCustomers()["As_DataFrame"].to_csv(),
+        f'{fake_company.Name} - Customers'
+
+    )
+
+    fake_company.To_Excel(
+
+        fake_company.MakeFakeInventory()["As_DataFrame"].to_csv(),
+        f'{fake_company.Name} - Inventory'
+
+    )
+
+    fake_company.To_Excel(
+
+        fake_company.MakeFakeTransactions(
+            fake_company.MakeFakeInventory()["As_DataFrame"],
+            fake_company.MakeFakeCustomers()["As_DataFrame"] 
+        ).to_csv(),
+        
+        f'{fake_company.Name} - Transactions'
+
+    )
+
