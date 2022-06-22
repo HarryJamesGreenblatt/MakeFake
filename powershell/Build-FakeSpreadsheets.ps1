@@ -8,11 +8,11 @@ function Build-FakeSpreadsheets {
    
    .NOTES   
    
-   .PARAMETER FilePathToCommunityProviderList
+   .PARAMETER DataPath
    
-   .PARAMETER PerlCodeToNormalizeCommunityProviderBaseNames
+   .PARAMETER TitlePath
    
-   .PARAMETER PerlCodeToNormalizeColumnHeaders
+   .PARAMETER DestinationPath
    
    .INPUTS
    
