@@ -1154,32 +1154,105 @@ class FakeCompany:
 
     #############################################################################
     def To_Excel(self, company_data, company_name):
-
-        csv_path   = '../python/to_powershell/data.csv'
-        title_path = '../python/to_powershell/title.txt'
-
-
-        with open(csv_path, 'w+') as csv, open(title_path, 'w+') as title:
-            csv.write(company_data)
-            title.write(company_name)
+        '''
+        NAME
+            To_Excel
 
 
-        # 2 Call PowerShell To Invoke  Build-FakeSpreadsheets.ps1  As A Parallel Subprocess  
-        ############################################################################################
-        subprocess.run(                                                  # subproc  will
-            [                                                                      # store the 
-                'powershell.exe', # result of a
-                '..\\powershell\\Build-FakeSpreadsheets.ps1'      # system call,
-            ],                                                                     # to PowerShell,
-            stdout=subprocess.PIPE,                                                # which runs 
-            stderr=subprocess.STDOUT,                                              # the dependency,  
-            shell=True                                                             # and returns
-        )                                                                          # a JSON string
-        ############################################################################################
+        SYNOPSIS
+            Stages a csv import of a given FakeCompany dataset in an external \n
+            file and calls a PowerShell script to collect, process, and then \n
+            delete it.\n
+
+
+        DESCRIPTION
+            Sets up file paths to facilitate the transmission of csv data \n
+            to temporary files, and then writes that data, which is provided\n
+            on the caller side, to those files.\n
+
+            A subproccess allowing parallel communications the host shell\n
+            then invokes  Build-Spreadsheets.ps1,  which is purposed to  \n
+            identify these files, process their contents, convert those \n
+            contents to Excel Spreadsheets, and then delete the temporary\n
+            file upon completion\n
+
+        PROCESS
+            #2.^.i)
+                Define  respective paths to temporary  'staging files'  used\n
+                for capturing each dataset in csv format, to be collected in\n 
+                a  powershell script  operating in  parallel.\n   
+
+            #2.^.ii)
+                Open a file handle to the provided  paths  and  write  the\n 
+                comnpany_data  and the  company_title  to them.\n
+
+            #2.^.iii)
+                Call PowerShell to invoke  Build-FakeSpreadsheets.ps1\n 
+                as a  parallel  subprocess\n  
+
+
+        INPUTS
+
+            <str>
+            company_data  -   A  csv formatted  version of a FakeCompany datset
+
+            <str>
+            company_name  -   The  FakeCompany.Name  property  
+                              
+
+        OUTPUT
+            None
+
+        
+        DEPENDENCIES
+            PowerShell Script
+                Build-FakeSpreadsheets.ps1
+  
+
+        PARENT:
+            Make_FakeCompany.FakeCompany
+        '''
+        # 2.^.i   Define  respective paths to temporary  'staging files'  used
+        #         for capturing each dataset in csv format, to be collected in 
+        #         a powershell script operating in parallel.   
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+        csv_path   = '../python/to_powershell/data.csv'  # Stores the csv path
+        title_path = '../python/to_powershell/title.txt' # and the dataset title 
+        #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
+
+
+        # 2.^.ii   Open a file handle to the provided  paths  and  write  the 
+        #          comnpany_data  and the  company_title  to them.
+        #|||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||||||#
+        with open( csv_path, 'w+'               # csv  and  title  will 
+        ) as csv,       open( title_path, 'w+'  # reference  the file handles
+                        ) as title:             # specified by the  csv_path  and 
+                                                # title_path. The  company_data
+            csv.write(company_data)             # and  company_name  are then
+            title.write(company_name)           # written to those files.
+        #|||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||||||#
+
+
+        # 2.^.iii   Call PowerShell to invoke  Build-FakeSpreadsheets.ps1 
+        #           as a  parallel  subprocess  
+        #|||||||||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||#
+        subprocess.run(                                       # Executes a 
+            [                                                 # powershell
+                'powershell.exe',                             # script which 
+                '..\\powershell\\Build-FakeSpreadsheets.ps1'  # collects,
+            ],                                                # converts, and 
+            stdout=subprocess.PIPE,                           # then deletes the
+            stderr=subprocess.STDOUT,                         # 'staging' files
+            shell=True                                        # containing the
+        )                                                     # fake company data
+        #|||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||
+        #########################################################################
 #####################################################################################################
 
 
+
 if __name__ == "__main__":
+
 
     fake_company = FakeCompany()
 
