@@ -1222,7 +1222,6 @@ class FakeCompany:
         title_path = '../python/to_powershell/title.txt' # and the dataset title 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
-
         # 2.^.ii   Open a file handle to the provided  paths  and  write  the 
         #          comnpany_data  and the  company_title  to them.
         #|||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||||||#
@@ -1233,7 +1232,6 @@ class FakeCompany:
             csv.write(company_data)             # and  company_name  are then
             title.write(company_name)           # written to those files.
         #|||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||||||||#
-
 
         # 2.^.iii   Call PowerShell to invoke  Build-FakeSpreadsheets.ps1 
         #           as a  parallel  subprocess  
