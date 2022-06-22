@@ -768,8 +768,8 @@ class FakeCompany:
         fake_customers["Expiration Date"] = [            # Add a  Membership Date    
                                                          # 2018 and the 'current       
             phony.Payment().credit_card_expiration_date( # year', for each of the          
-                22, 28                                   #
-            )                                            # 'CustomerSize' many rows  
+                22, 28                                   # 'CustomerSize' many rows  
+            )                                            # 
             for _ in range(customer_size)                # 
                                                          # 
         ]                                                #
@@ -779,9 +779,10 @@ class FakeCompany:
             phony.Person().email([                       # selcted from popular 
                 'gmail.com',                             # email domains, so that 
                 'yahoo.com',                             # it doesn't correspond     
-                'outlook.com'                            # to the object's Domain,   
-            ])                                           # for each of the      
-                                                         # 'CustomerSize' many rows    
+                'outlook.com',                           # to the object's Domain
+                'hotmail.com'                            # for each of the           
+            ])                                           # 'CustomerSize' many rows     
+                                                         # 
             for _ in range(customer_size)                # 
         ]                                                # 
                                                          #
