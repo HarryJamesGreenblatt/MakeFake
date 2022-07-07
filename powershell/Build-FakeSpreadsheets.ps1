@@ -44,22 +44,30 @@ Make_FakeCompany  data.
     [CmdletBinding()]
  
     param (
-        [string] $DataPath = 'C:\Users\harry\projects\Make_Fake\python\to_powershell\data.csv',
-        [string] $TitlePath = 'C:\Users\harry\projects\Make_Fake\python\to_powershell\title.txt'
+        [string] $DestinationPath1 = 'C:\Users\harry\projects\Make_Fake\python\to_powershell',
+        [string] $DestinationPath2 = 'C:\Users\harry\projects\Make_Fake\powershell\to_excel',
+        [string] $DestinationPath3 = 'C:\Users\harry\OneDrive - Service-Centric Solutions\Make_Fake Data'
     )
 
     begin {
         Import-Module ImportExcel
+
+        $DataPath = "$DestinationPath1\data.csv"
+        $TitlePath = "$DestinationPath1\title.txt"
+
         $Data = Get-Content $DataPath
         $Title  = Get-Content $TitlePath
     }
     
     process {
-       $data | ConvertFrom-Csv | Export-Excel "C:\Users\harry\projects\Make_Fake\powershell\to_excel\$Title.xlsx"
+        $Data | ConvertFrom-Csv | Export-Excel "$DestinationPath2\$Title.xlsx"
     }
 
     end{
         remove-item $DataPath,$TitlePath
+        Copy-Item `
+            "$DestinationPath2\$Title.xlsx" `
+            "$DestinationPath3\$Title.xlsx"
     }
  
 }
