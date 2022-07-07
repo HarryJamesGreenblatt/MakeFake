@@ -27,9 +27,8 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
-from ast import Pass
 import initialize_fake_data_providers                          # Brings in all neccessary modules and
-import random, re, collections, pandas, subprocess             # classes:
+import random, re, collections, pandas, subprocess, sys        # classes:
                                                                #  
 fake  = initialize_fake_data_providers.load_all_providers()[0] # --> faker's Fake() Class + Community
 phony = initialize_fake_data_providers.load_all_providers()[1] # --> the full  mimesis  module
@@ -496,7 +495,7 @@ class FakeCompany:
                     fake_employees_base[i]["provider_source"],# is used to
                     fake_employees_base[i]["provider_method"] # iteratively store
                 )()                                           # 'EmployeeSize' 
-                for _ in range( employee_size )               # many rows
+                for _ in range( int(employee_size) )          # many rows
             ]                                                 # of fake data
                                                               # produced by 
             for i in range( len(fake_employees_base) )        # invoking the 
@@ -512,7 +511,7 @@ class FakeCompany:
                                                      # fake data method from  
             phony.Person().telephone()               # from  fake's  to  phony's 
                                                      # for each of the   
-            for _ in range( employee_size )          # 'employee_size' many rows
+            for _ in range( int(employee_size) )     # 'employee_size' many rows
                                                      # 
         ]                                            #
                                                      # 
@@ -524,7 +523,7 @@ class FakeCompany:
                 fake.city()                          # random one from  fake,    
             ])                                       # or one from  phony,  
                                                      # for each of the   
-            for _ in range( employee_size )          # 'employee_size' many rows  
+            for _ in range( int(employee_size) )     # 'employee_size' many rows  
         ]                                            # 
                                                      # 
         fake_employees["Zip Code"]      =  [         # Replace the  Zip Code         
@@ -535,7 +534,7 @@ class FakeCompany:
                 fake.zipcode_in_state(self.State)    # other random ones from    
             ])                                       # fake  within  the same   
                                                      # State as the object's   
-            for _ in range( employee_size )          # for each of the    
+            for _ in range( int(employee_size) )     # for each of the    
         ]                                            # 'employee_size' many rows   
                                                      #
         fake_employees["Date Of Birth"]  =  [        # Add a  Date Of Birth 
@@ -545,7 +544,7 @@ class FakeCompany:
                 1995                                 # dates between a 
             ).strftime('%m/%d/%Y')                   # specified min and max,
                                                      # for each of the    
-            for _ in range( employee_size )          # 'employee_size' many rows  
+            for _ in range( int(employee_size) )     # 'employee_size' many rows  
                                                      #
         ]                                            # 
                                                      # 
@@ -553,7 +552,7 @@ class FakeCompany:
                                                      # column using  phony's    
             phony.Datetime().formatted_date()        # method for random fake    
                                                      # dates ranging between           
-            for _ in range( employee_size )          # 2000 and the 'current      
+            for _ in range( int(employee_size) )     # 2000 and the 'current      
                                                      # year', for each of the         
         ]                                            # 'employee_size' many rows   
                                                      # 
@@ -561,7 +560,7 @@ class FakeCompany:
                                                      # using  phony's fake data   
             phony.Finance().price( 50000, 125000 )   # method for random price    
                                                      # values, ranging         
-            for _ in range( employee_size )          # from $50000 through    
+            for _ in range( int(employee_size) )     # from $50000 through    
                                                      # $125000, for each of the    
         ]                                            # 'employee_size' many rows    
                                                      # 
@@ -569,7 +568,7 @@ class FakeCompany:
                                                      # column using a
             phony.Choice()(self.Departments)         # randomly selected    
                                                      # choice from the
-            for _ in range( employee_size )          # object's 'Departments'
+            for _ in range( int(employee_size) )     # object's 'Departments'
                                                      # attribute, for each of
         ]                                            # 'employee_size' many rows
                                                      #
@@ -730,7 +729,7 @@ class FakeCompany:
                                                          # column using  fake's
             fake.iana_id()[:4]                           # data method for      
                                                          # random id numbers, 
-            for _ in range(customer_size)                # limiting the number of
+            for _ in range( int(customer_size) )         # limiting the number of
                                                          # digits to 4,  for each 
         ]                                                # of 'CustomerSize'rows   
                                                          # 
@@ -745,7 +744,7 @@ class FakeCompany:
                                                          # 2018 and the 'current       
             phony.Payment().credit_card_network()        # year', for each of the          
                                                          # 'CustomerSize' many rows  
-            for _ in range(customer_size)                # 
+            for _ in range( int(customer_size) )         # 
                                                          # 
         ]                                                #
                                                          #
@@ -753,7 +752,7 @@ class FakeCompany:
                                                          # 2018 and the 'current       
             phony.Payment().credit_card_number()         # year', for each of the          
                                                          # 'CustomerSize' many rows  
-            for _ in range(customer_size)                # 
+            for _ in range( int(customer_size) )         # 
                                                          # 
         ]                                                #
                                                          #
@@ -761,7 +760,7 @@ class FakeCompany:
                                                          # 2018 and the 'current       
             phony.Payment().cvv()                        # year', for each of the          
                                                          # 'CustomerSize' many rows  
-            for _ in range(customer_size)                # 
+            for _ in range( int(customer_size) )         # 
                                                          # 
         ]                                                #
                                                          #
@@ -770,7 +769,7 @@ class FakeCompany:
             phony.Payment().credit_card_expiration_date( # year', for each of the          
                 22, 28                                   # 'CustomerSize' many rows  
             )                                            # 
-            for _ in range(customer_size)                # 
+            for _ in range( int(customer_size) )         # 
                                                          # 
         ]                                                #
                                                          #
@@ -783,7 +782,7 @@ class FakeCompany:
                 'hotmail.com'                            # for each of the           
             ])                                           # 'CustomerSize' many rows     
                                                          # 
-            for _ in range(customer_size)                # 
+            for _ in range( int(customer_size) )         # 
         ]                                                # 
                                                          #
         fake_customers['Password'] =  [                  # Replace the default       
@@ -796,7 +795,7 @@ class FakeCompany:
                 phony.Person().password()                # impression of  
             ])                                           # passwords), or a far  
                                                          # more randomized  phony 
-            for _ in range(customer_size)                # password, for each of 
+            for _ in range( int(customer_size) )         # password, for each of 
                                                          # the 'employee_size'     
         ]                                                #  many rows 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
@@ -901,7 +900,7 @@ class FakeCompany:
                     fake.iban()[1:8],                # inventory_size  many rows   
                     fake.iban()[2:9],                #
                 ])                                   # 
-                for _ in range(inventory_size)       # 
+                for _ in range( int(inventory_size) )       # 
             ],                                       # 
                                                      # 
             'Product':[                              # A randomly selected 
@@ -942,12 +941,12 @@ class FakeCompany:
                                                      #  Graphics card name,
                 ])                                   #  
                                                      #  for each of the 
-                for _ in range(inventory_size)       #  inventory_size many rows 
+                for _ in range( int(inventory_size) )       #  inventory_size many rows 
             ],                                       # 
                                                      #
             'Year':[                                 # 
                 fake.machine_year()                  # A fake machine Manufacture 
-                for _ in range(inventory_size)       # Date for each of the  
+                for _ in range( int(inventory_size) )       # Date for each of the  
             ],                                       # inventory_size many rows
                                                      #
             'Price':[                                # 
@@ -955,7 +954,7 @@ class FakeCompany:
                     1,                               # monetary value ranging  
                     1111                             # from $1 to $1111 dollars, 
                 )                                    # for each of the   
-                for _ in range(inventory_size)       # inventory_size many rows
+                for _ in range( int(inventory_size) )       # inventory_size many rows
             ],                                       #
                                                      #
             'Stock Quantity':[                       # 
@@ -963,7 +962,7 @@ class FakeCompany:
                     0,                               # Quantity value ranging  
                     70                               # from 1 to 70 units, 
                 )                                    # for each of the   
-                for _ in range(inventory_size)       # inventory_size many rows
+                for _ in range( int(inventory_size) )       # inventory_size many rows
             ]                                        #
                                                      #
         })                                           #
@@ -1218,8 +1217,8 @@ class FakeCompany:
         #         for capturing each dataset in csv format, to be collected in 
         #         a powershell script operating in parallel.   
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
-        csv_path   = '../python/to_powershell/data.csv'  # Stores the csv path
-        title_path = '../python/to_powershell/title.txt' # and the dataset title 
+        csv_path   = 'C:/Users/harry/projects/Make_Fake/python/to_powershell/data.csv'  # Stores the csv path
+        title_path = 'C:/Users/harry/projects/Make_Fake/python/to_powershell/title.txt' # and the dataset title 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
         # 2.^.ii   Open a file handle to the provided  paths  and  write  the 
@@ -1239,7 +1238,7 @@ class FakeCompany:
         subprocess.run(                                       # Executes a 
             [                                                 # powershell
                 'powershell.exe',                             # script which 
-                '..\\powershell\\Build-FakeSpreadsheets.ps1'  # collects,
+                'C:/Users/harry/projects/Make_Fake/powershell/Build-FakeSpreadsheets.ps1'  # collects,
             ],                                                # converts, and 
             stdout=subprocess.PIPE,                           # then deletes the
             stderr=subprocess.STDOUT,                         # 'staging' files
@@ -1254,7 +1253,32 @@ class FakeCompany:
 if __name__ == "__main__":
 
 
-    fake_company = FakeCompany()
+    params = {
+
+        ea[0] : ea[1]
+         
+        for ea in zip(
+
+            [
+                'name',
+                'category',
+                'employee_size',
+                'customer_size',
+                'inventory_size',
+                'city',
+                'state'
+            ],
+
+            sys.argv[1:]
+
+        )
+        
+        if ea[1] != '0'
+
+    }
+    
+
+    fake_company = FakeCompany(**params)
 
 
     fake_company.To_Excel(
