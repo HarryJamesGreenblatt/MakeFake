@@ -1,45 +1,57 @@
 function Build-FakeSpreadsheets {
 <#
-.SYNOPSIS
-Reads a csv file produced by an external script, converts the data it contains
-into a PowerShell object, and then exports that object as an Excel Spreadsheet
-named after the data contained in a text file which is also produced by the 
-same external script.   
+    .SYNOPSIS
+    Reads a csv file produced by an external script, converts the data it contains
+    into a PowerShell object, and then exports that object as an Excel Spreadsheet
+    named after the data contained in a text file which is also produced by the 
+    same external script.   
 
-.DESCRIPTION
-Utilizing the Import-Excel module, it is possible to convert a powershell object
-directly to Excel format. 
+    .DESCRIPTION
+    Utilizing the Import-Excel module, it is possible to convert a powershell object
+    directly to Excel format. 
 
-The Make_FakeCompany class's  To_Excel  method produces two files:
+    The Make_FakeCompany class's  To_Excel  method produces two files:
 
-    One is a csv file containing the data produced by the   Make_FakeCompany
-    MakeFakeEmployees,  MakeFakeCustomers,  MakeFakeInventory,   and   
-    MakeFakeTransactions  methods.  
+        One is a csv file containing the data produced by the   Make_FakeCompany
+        MakeFakeEmployees,  MakeFakeCustomers,  MakeFakeInventory,   and   
+        MakeFakeTransactions  methods.  
 
-    The other is a text file containing the  Fake Company Name  and  the  
-    Data Category   of the  Excel Spreadsheet  which is to be generated.
+        The other is a text file containing the  Fake Company Name  and  the  
+        Data Category   of the  Excel Spreadsheet  which is to be generated.
 
-Build_FakeSpreadsheets accesses these files, converts the csv content to 
-a powershell object, and then invokes the Export-Excel cmdlet to convert
-the object to a Excel Spreadsheet having a name matching what is written in   
-the text file 
+    Build_FakeSpreadsheets accesses these files, converts the csv content to 
+    a powershell object, and then invokes the Export-Excel cmdlet to convert
+    the object to a Excel Spreadsheet having a name matching what is written in   
+    the text file 
 
-.PARAMETER DataPath
-The file path to_powershell's csv data which will be converted and exported.
+    .PARAMETER DestinationPath1
+    The file path containing the csv data which will be converted and exported
+    and the text file bearing the title, category, and report type of the csv data.
 
-.PARAMETER TitlePath
-The file path to_powershell's text file containing the title and category of the
-csv data.
+    .PARAMETER DestinationPath2
+    The destination file path within the project repository where the Excel Spreadsheets 
+    are sent.
 
-.PARAMETER DestinationPath
-The destination file path where the resulting Excel Spreasheets will be generated. 
+    .PARAMETER DestinationPath3
+    The file path to Service-Centric OneDrive, where the Spreadsheets are copied, which 
+    triggers a Power Automate Cloud Flow that copies the Spreadsheets to the Service-Centric
+    Solutions Sharepoint.
 
-.INPUTS
-None
-
-.OUTPUTS
-Does not produce output, but causes a side effect of generating 4 Excel Spreadsheets a capturing all  
-Make_FakeCompany  data.
+    .INPUTS
+    Power Automate Desktop Flow
+        'Create A New-FakeCompany With The Make_Fake Form' Outputs
+            Name           
+            Category       
+            EmployeeSize   
+            CustomerSize     
+            InventorySize  
+            City           
+            State          
+            
+    .OUTPUTS
+    Does not produce output, but causes a side effect of generating 4 Excel Spreadsheets a capturing all  
+    Make_FakeCompany  data and initiates Power Automate Cloud Flow triggered by the creation of OneDrive
+    files that copies those files to the Service-Centric Solutions SharePoint.
 #>
     [CmdletBinding()]
  
@@ -64,7 +76,7 @@ Make_FakeCompany  data.
     }
 
     end{
-        remove-item $DataPath,$TitlePath
+        Remove-Item $DataPath,$TitlePath
         Copy-Item `
             "$DestinationPath2\$Title.xlsx" `
             "$DestinationPath3\$Title.xlsx"

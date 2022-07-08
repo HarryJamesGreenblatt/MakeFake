@@ -1255,9 +1255,9 @@ if __name__ == "__main__":
 
     params = {
 
-        ea[0] : ea[1]
+        key_value_pair[0] : key_value_pair[1]
          
-        for ea in zip(
+        for key_value_pair in zip(
 
             [
                 'name',
@@ -1273,10 +1273,10 @@ if __name__ == "__main__":
 
         )
         
-        if ea[1] != '0'
+        if key_value_pair[1] != '0'
 
     }
-    
+
 
     fake_company = FakeCompany(**params)
 
