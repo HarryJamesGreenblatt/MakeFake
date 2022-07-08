@@ -12,6 +12,28 @@ function New-FakeCompany {
     data produced by the  Make_FakeCompany Class's  MakeFakeEmployees,  MakeFakeCustomers,  
     MakeFakeInventory,  and  MakeFakeTransactions  methods.
 
+    .PARAMETER Name
+    Defines the Name of the Fake Company to which each of the Reports reffer. 
+
+    .PARAMETER Category
+    Selects which  Category Profile  will be used to generate each of the the Fake Company Reports.
+
+    .PARAMETER EmployeeSize
+    Defines the number of Employee Records that are procuded in the Fake Company's Employee Report.
+
+    .PARAMETER CustomerSize
+    Defines the number of Customer Records that are procuded in the Fake Company's Customer Report.
+
+    .PARAMETER InventorySize
+    Defines the number of Inventory Records that are procuded in the Fake Company's Inventory Report.
+
+    .PARAMETER City
+    Defines which US City the Fake Company's Records will reflect.
+
+    .PARAMETER State
+    Defines which US State the Fake Company's Records will reflect. 
+    Must be a 2-letter State Abbreviaiton,  i.e.  California -> CA.
+
     .PARAMETER VirtualEnv
     The file path to the python Virtual Environment.
 
@@ -19,7 +41,15 @@ function New-FakeCompany {
     The filepath the Make_FakeConmpany.py
 
     .INPUTS
-    None.
+    Power Automate Desktop Flow
+        'Create A New-FakeCompany With The Make_Fake Form' Outputs
+            Name           
+            Category       
+            EmployeeSize   
+            CustomerSize     
+            InventorySize  
+            City           
+            State    
 
     .OUTPUTS
     Does not produce output, but causes a side effect of generating 4 Excel Spreadsheets a capturing all  

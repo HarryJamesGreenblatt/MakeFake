@@ -38,20 +38,15 @@ function Build-FakeSpreadsheets {
     Solutions Sharepoint.
 
     .INPUTS
-    Power Automate Desktop Flow
-        'Create A New-FakeCompany With The Make_Fake Form' Outputs
-            Name           
-            Category       
-            EmployeeSize   
-            CustomerSize     
-            InventorySize  
-            City           
-            State          
-            
+    None. 
+
     .OUTPUTS
     Does not produce output, but causes a side effect of generating 4 Excel Spreadsheets a capturing all  
     Make_FakeCompany  data and initiates Power Automate Cloud Flow triggered by the creation of OneDrive
     files that copies those files to the Service-Centric Solutions SharePoint.
+
+    .NOTES
+    Called in Parallel with a Make_Fake python script which creates the directories and files used.
 #>
     [CmdletBinding()]
  
