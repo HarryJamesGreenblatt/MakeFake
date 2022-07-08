@@ -43,7 +43,7 @@ function New-FakeCompany {
     )
 
     begin {
-        & $VirtualEnv
+        & $VitualEnv
     }
     
     process {

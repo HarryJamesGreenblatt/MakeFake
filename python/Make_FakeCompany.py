@@ -1284,21 +1284,21 @@ if __name__ == "__main__":
     fake_company.To_Excel(
 
         fake_company.MakeFakeEmployees()["As_DataFrame"].to_csv(),
-        f'{fake_company.Name} - Employees'
+        f'{fake_company.Name} - {fake_company.Category} - Employees'
 
     )
 
     fake_company.To_Excel(
 
         fake_company.MakeFakeCustomers()["As_DataFrame"].to_csv(),
-        f'{fake_company.Name} - Customers'
+        f'{fake_company.Name} - {fake_company.Category} - Customers'
 
     )
 
     fake_company.To_Excel(
 
         fake_company.MakeFakeInventory()["As_DataFrame"].to_csv(),
-        f'{fake_company.Name} - Inventory'
+        f'{fake_company.Name} - {fake_company.Category} - Inventory'
 
     )
 
@@ -1309,7 +1309,7 @@ if __name__ == "__main__":
             fake_company.MakeFakeCustomers()["As_DataFrame"] 
         ).to_csv(),
         
-        f'{fake_company.Name} - Transactions'
+        f'{fake_company.Name} - {fake_company.Category} - Transactions'
 
     )
 
