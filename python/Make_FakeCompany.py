@@ -190,7 +190,8 @@ class FakeCompany:
         "Accounting",                                          # values for each,    
         "Sales",                                               # except for     
         "Marketing",                                           # "departments",    
-        "Security",                                            # which is set to    
+        "Security",                                            # which is set to 
+        "Operations",                                          #
         "IT"                                                   # a statically      
     ]                                                          # defined list
     ):                                                         # 
@@ -558,10 +559,10 @@ class FakeCompany:
                                                      # 
         fake_employees["Salary"]       =  [          # Add a  Salary  column   
                                                      # using  phony's fake data   
-            phony.Finance().price( 50000, 125000 )   # method for random price    
+            phony.Finance().price( 50000, 115000 )   # method for random price    
                                                      # values, ranging         
             for _ in range( int(employee_size) )     # from $50000 through    
-                                                     # $125000, for each of the    
+                                                     # $115000, for each of the    
         ]                                            # 'employee_size' many rows    
                                                      # 
         fake_employees["Department"]   =  [          # Add a  Department  
@@ -727,7 +728,7 @@ class FakeCompany:
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
         fake_customers['Customer ID']  =  [              # Add a  Customer ID  
                                                          # column using  fake's
-            fake.iana_id()[:4]                           # data method for      
+            fake.iana_id()[:2] + fake.iana_id()[:4]      # data method for      
                                                          # random id numbers, 
             for _ in range( int(customer_size) )         # limiting the number of
                                                          # digits to 4,  for each 
@@ -894,8 +895,8 @@ class FakeCompany:
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
         fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
                                                      # OrderedDict consisting of:  
-            'Stock ID':[                             #  
-                phony.Choice()([                     # A random "Stock ID"       
+            'Product ID':[                             #  
+                phony.Choice()([                     # A random "Product ID"       
                     fake.iban()[:7],                 # for each of the      
                     fake.iban()[1:8],                # inventory_size  many rows   
                     fake.iban()[2:9],                #
@@ -949,20 +950,45 @@ class FakeCompany:
                 for _ in range( int(inventory_size) )       # Date for each of the  
             ],                                       # inventory_size many rows
                                                      #
-            'Price':[                                # 
-                phony.Finance().price(               # A phony, randomized  
-                    1,                               # monetary value ranging  
-                    1111                             # from $1 to $1111 dollars, 
-                )                                    # for each of the   
-                for _ in range( int(inventory_size) )       # inventory_size many rows
+            'Price': 
+            [ 
+                                                     # derived from python's  
+                random.choices(                      # random module's 
+                    population=[                     # 'choices' method, 
+                        phony.Finance().price(       # A phony, randomized  
+                            1,                       # monetary value ranging  
+                            1111                     # from $1 to $1111 dollars, 
+                        ),                           # 
+                        phony.Finance().price(       # 
+                            1112,                    # 
+                            3500                     # 
+                        ),                           # 
+                        phony.Finance().price(       # 
+                            3501,                    # 
+                            7500                     # 
+                        ),                           # 
+                        phony.Finance().price(       # 
+                            7501,                    # 
+                            10000                    # 
+                        )                            # 
+                    ],                               #
+                    weights=[                        # where there will be a: 
+                        0.65,                        #    65% chance of $1 - $1111
+                        0.25,                        #    20% chance of $1112 - $35000
+                        0.06,                        #     6% chance of $3501 - $7500
+                        0.04,                        #     4% chance of $7501 - $1000
+                    ],                               # being selected
+                )[0]                                 # 
+                                                     # 
+                for _ in range(int(inventory_size))  # and
             ],                                       #
                                                      #
-            'Stock Quantity':[                       # 
+            'Product Quantity':[                     # 
                 phony.Numeric().integer_number(      # A phony, randomized  
                     0,                               # Quantity value ranging  
                     70                               # from 1 to 70 units, 
                 )                                    # for each of the   
-                for _ in range( int(inventory_size) )       # inventory_size many rows
+                for _ in range( int(inventory_size) )# inventory_size many rows
             ]                                        #
                                                      #
         })                                           #
@@ -983,7 +1009,7 @@ class FakeCompany:
     
     # 2.T) A Method To Generate A Fake, Randomized "Transactions" Dictionary
     #############################################################################
-    def MakeFakeTransactions( self, fake_inventory, fake_customers ):
+    def MakeFakeTransactions( self, fake_inventory, fake_customers, fake_sales_employees ):
         '''
         NAME
             MakeFakeTransactions
@@ -1023,12 +1049,17 @@ class FakeCompany:
 
         INPUTS
             <pandas.DataFrame> 
-            fake_inventory    -   The  DataFrame  produced by invoking\n 
-                                  FakeCompany().MakeFakeInventory['AsDataFrame']
+            fake_inventory        -   The  DataFrame  produced by invoking\n 
+                                      FakeCompany().MakeFakeInventory['AsDataFrame']
 
             <pandas.DataFrame> 
-            fake_customers    -   The  DataFrame  produced by invoking\n 
-                                  FakeCompany().MakeFakeCustomers['AsDataFrame']
+            fake_customers        -   The  DataFrame  produced by invoking\n 
+                                      FakeCompany().MakeFakeCustomers['AsDataFrame']
+
+            <pandas.DataFrame> 
+            fake_sales_employees  -   The  DataFrame  produced by invoking\n 
+                                      FakeCompany().MakeFakeCustomers['AsDataFrame']
+                                      and then filtering by the "Sales" Department
 
 
         OUTPUT
@@ -1071,10 +1102,23 @@ class FakeCompany:
                 ),                                  # of a sequence of 
                                                     # Series-representated
                 fake_inventory['Product'],          # 'columns', in any order
-                fake_inventory['Stock ID'],         # specified, and then 
+                fake_inventory['Product ID'],       # specified, and then 
                 fake_customers['Customer ID'],      # combine those columns
-                                                    # into a new DataFrame 
-                fake_customers['First Name']        # object.
+                                                    # into a new DataFrame object. 
+                pandas.Series(                      # 
+                    [                               #
+                        phony.Choice()              #
+                        (                           #
+                            fake_sales_employees[   #
+                                'Employee ID'       #
+                            ].to_list()#            #
+                        )                           #
+                        for _ in range(lesser_size) #
+                    ],                              # 
+                    name='Employee ID'              #
+                ),                                  #
+                                                    # 
+                fake_customers['First Name']        # 
                 +                                   #
                 ' '                                 # To create a simple 
                 +                                   # Transaction history,
@@ -1082,7 +1126,7 @@ class FakeCompany:
                                                     # Inventory Attributes
                 fake_customers['Address']           # that are selected, 
                 +                                   # such as:
-                ', '                                # 'Product', 'Stock ID',
+                ', '                                # 'Product', 'Product ID',
                 +                                   # 'Customer ID', 'Address'
                 fake_customers['City']              # 'City', 'State', 'Zip Code'
                 +                                   # 'Card Number', and  
@@ -1099,26 +1143,17 @@ class FakeCompany:
                 fake_inventory['Price'],            #
                                                     # 
                 pandas.Series(                      # A 'Quantity Sold' 
-                    [                               # derived from python's  
-                        random.choices(             # random module's 
-                            population=[            # 'choices' method, 
-                                1,                  # which assigns 
-                                2,                  # weighted 
-                                3,                  # probabilities
-                                4,                  # to a given 
-                                5                   # sequence.
-                            ],                      #
-                            weights=[               # where there will be a: 
-                                0.6,                #  60% chance of '1.0'
-                                0.2,                #  20% chance of '2.0'
-                                0.1,                #  10% chance of '3.0'
-                                0.07,               #   7% chance of '4.0'
-                                0.03                #   3% chance of '5.0'
-                            ],                      # being selected
-                        )[0]                        # 
-                                                    # 
-                        for _ in range(lesser_size) # and
-                    ],                              # 
+                    [                               #
+                        phony.Choice()              #
+                        ([                          #
+                            phony.Numeric(                                    
+                            ).integer_number(
+                                1,
+                                111
+                            )
+                        ])                           #
+                        for _ in range(lesser_size) #
+                    ],                              #                        # 
                     name='Quantity Sold'            # 
                 ),                                  # 
                                                     # A 'Payment Date'
@@ -1132,7 +1167,7 @@ class FakeCompany:
                         for _ in range(lesser_size) # 
                     ],                              # 
                     name='Payment Date'             # passing the axis=1 option                                     
-                ),                                  # ensures the proper format  
+                )                                   # ensures the proper format  
                                                     # for the resulting   
             ],                                      # DataFrame object.   
                                                     # 
@@ -1140,10 +1175,8 @@ class FakeCompany:
                                                     # concatenated, the deltas  
         ).dropna().rename(                          # bewteen the datasets are
             columns={                               # accounted for simply by   
-                'Price':'Payment',                  # throwing away any 'na' (a.k.a  
-                'Product':'Product Sold',           # empty) values, renaming  
-                'Stock ID':'Product ID',            # some of the columns to suit  
-                0:'Customer Name',                  # the context better, and then   
+                'Price':'Payment',                  # throwing away any 'na',   
+                0:'Customer Name',                  # a.k.a empty values, then   
                 1:'Customer Address'                # 'shuffling' the  dataset by    
             }                                       # sorting the DataFrame by the   
         ).sort_values("Transaction ID")             # 'Transaction ID'.
@@ -1170,8 +1203,8 @@ class FakeCompany:
             to temporary files, and then writes that data, which is provided\n
             on the caller side, to those files.\n
 
-            A subproccess allowing parallel communications the host shell\n
-            then invokes  Build-Spreadsheets.ps1,  which is purposed to  \n
+            A subproccess allowing parallel communications with the host shell\n
+            that invokes  Build-Spreadsheets.ps1,  which is purposed to  \n
             identify these files, process their contents, convert those \n
             contents to Excel Spreadsheets, and then delete the temporary\n
             file upon completion\n
@@ -1281,23 +1314,28 @@ if __name__ == "__main__":
     fake_company = FakeCompany(**params)
 
 
+    fake_employees = fake_company.MakeFakeEmployees()["As_DataFrame"]
+    fake_customers = fake_company.MakeFakeCustomers()["As_DataFrame"]
+    fake_inventory = fake_company.MakeFakeInventory()["As_DataFrame"]
+
+
     fake_company.To_Excel(
 
-        fake_company.MakeFakeEmployees()["As_DataFrame"].to_csv(),
+        fake_employees.to_csv(),
         f'{fake_company.Name} - {fake_company.Category} - Employees'
 
     )
 
     fake_company.To_Excel(
 
-        fake_company.MakeFakeCustomers()["As_DataFrame"].to_csv(),
+        fake_customers.to_csv(),
         f'{fake_company.Name} - {fake_company.Category} - Customers'
 
     )
 
     fake_company.To_Excel(
 
-        fake_company.MakeFakeInventory()["As_DataFrame"].to_csv(),
+        fake_inventory.to_csv(),
         f'{fake_company.Name} - {fake_company.Category} - Inventory'
 
     )
@@ -1305,11 +1343,17 @@ if __name__ == "__main__":
     fake_company.To_Excel(
 
         fake_company.MakeFakeTransactions(
-            fake_company.MakeFakeInventory()["As_DataFrame"],
-            fake_company.MakeFakeCustomers()["As_DataFrame"] 
+            fake_inventory,
+            fake_customers, 
+            fake_employees.loc[
+                fake_employees["Department"] == "Sales"
+            ] 
         ).to_csv(),
         
         f'{fake_company.Name} - {fake_company.Category} - Transactions'
 
     )
+
+    with open(r'C:\Users\harry\OneDrive - Service-Centric Solutions\Make_Fake Data'+f'\{fake_company.Name}.txt', 'w') as To_OneDrive:
+        To_OneDrive.write(str(fake_company))
 

@@ -58,7 +58,6 @@ function New-FakeCompany {
     [CmdletBinding()]
  
     param (
-
         [string] $Name,
         [string] $Category,
         [Int32]  $EmployeeSize,
@@ -66,16 +65,9 @@ function New-FakeCompany {
         [Int32]  $InventorySize,
         [string] $City,
         [string] $State,
-
-        [string] $VirtualEnv = 'C:\Users\harry\python\thunderDome\Scripts\Activate.ps1',   
-
         [string] $PythonScript = 'C:\Users\harry\projects\Make_Fake\python\Make_FakeCompany.py'
     )
 
-    begin {
-        & $VitualEnv
-    }
-    
     process {
         python $PythonScript $Name $Category $EmployeeSize $CustomerSize $InventorySize $City $State
     }
