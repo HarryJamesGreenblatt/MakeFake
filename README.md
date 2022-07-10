@@ -5,7 +5,7 @@ $\\\,$
 Generates *Excel Spreadsheets* consisting of $\quad\text{randomized fake data} \quad$ modeled to simululate a Company's `Employee`, `Customer`,`Inventory`, and `Transaction` Reports.  
 $\\\,$   
 #### Usage
-##### <center>Ivocation Metods</center>
+##### <center>Invocation Metods</center>
 ###### Microsoft Form $\longrightarrow$ Power Automate Flow
 > May be invoked without parameters, providing randomly selected default attributes...
 > $\\\,$   
