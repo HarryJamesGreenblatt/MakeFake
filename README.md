@@ -6,7 +6,7 @@ Generates *Excel Spreadsheets* consisting of $\quad\text{randomized fake data} \
 $\\\,$   
 #### Usage     
 ##### Invocation Metods
-###### Microsoft Form $\longrightarrow$ Power Automate Flow
+###### Microsoft Form $\longrightarrow$ Power Automate Flow $\longrightarrow$ PowerShell $\longrightarrow$ Python
 > May be invoked without parameters, providing randomly selected default attributes...
 > $\\\,$   
 > ![fukkedup](/images/Make_Fake_Form_Without_Params.jpg)
@@ -17,7 +17,7 @@ $\\\,$
 > ![fukkedup](/images/Make_Fake_Form_With_Params.jpg)
 
 $\\\,$      
-###### PowerShell
+###### PowerShell $\longrightarrow$ Python
 ```powershell
 Import-Module New-FakeCompany.psm1
 
