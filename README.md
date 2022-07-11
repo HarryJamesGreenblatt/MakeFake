@@ -9,12 +9,12 @@ $\\\,$
 ###### Microsoft Form $\longrightarrow$ Power Automate Flow
 > May be invoked without parameters, providing randomly selected default attributes...
 > $\\\,$   
-> ![fukkedup](/images/Make_Fake_Form_Without_Params.jpg)
+> ![fukkedup](./images/Make_Fake_Form_Without_Params.jpg)
 > $\\\,$   
 > $\\\,$   
 > ...or may be alternatively invoked using custom parameters to define the attributes.
 > $\\\,$   
-> ![fukkedup](/images/Make_Fake_Form_With_Params.jpg)
+> ![fukkedup](./images/Make_Fake_Form_With_Params.jpg)
 
 $\\\,$      
 ###### PowerShell
@@ -124,7 +124,7 @@ $\\\,$
 
 $\\\,$
 ###### **4 Excel Speadsheets** detailing the Company's `Employees`,`Customers`,`Inventory`, and `Transaction` $Records$
-1. [Employee Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Employees.xlsx)
-2. [Customer Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Customers.xlsx)
-3. [Inventory Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Inventory.xlsx)
-4. [Transaction Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Transactions.xlsx)
+> 1. [Employee Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Employees.xlsx)
+> 2. [Customer Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Customers.xlsx)
+> 3. [Inventory Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Inventory.xlsx)
+> 4. [Transaction Records](powershell/to_excel/Western%20Widgets%20-%20Egregiously%20Overpriced%20Generic%20Widget%20Wholesaler%C2%A0%20-%20Transactions.xlsx)
