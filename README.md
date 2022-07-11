@@ -1,10 +1,12 @@
 # Make_Fake  
+
+$\\\,$   
 #### Overview
 Generates *Excel Spreadsheets* consisting of $\quad\text{randomized fake data} \quad$ modeled to simululate a Company's `Employee`, `Customer`,`Inventory`, and `Transaction` Reports.  
 $\\\,$   
 #### Usage     
 ##### Invocation Metods
-###### Microsoft Form $\rightarrow$ Power Automate Flow $\rightarrow$ PowerShell $\rightarrow$ Python
+###### Microsoft Form $\longrightarrow$ Power Automate Flow
 > May be invoked without parameters, providing randomly selected default attributes...
 > $\\\,$   
 > ![fukkedup](/images/Make_Fake_Form_Without_Params.jpg)
@@ -15,7 +17,7 @@ $\\\,$
 > ![fukkedup](/images/Make_Fake_Form_With_Params.jpg)
 
 $\\\,$      
-###### PowerShell $\longrightarrow$ Python
+###### PowerShell
 ```powershell
 Import-Module New-FakeCompany.psm1
 
