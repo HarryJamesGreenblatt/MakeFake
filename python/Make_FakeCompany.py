@@ -191,9 +191,9 @@ class FakeCompany:
         "Sales",                                               # except for     
         "Marketing",                                           # "departments",    
         "Security",                                            # which is set to 
-        "Operations",                                          #
-        "IT"                                                   # a statically      
-    ]                                                          # defined list
+        "Operations",                                          # a statically      
+        "IT"                                                   # defined list. 
+    ]                                                          # 
     ):                                                         # 
         self.Name            =  name                           # 
         self.Category        =  category                       # 
@@ -220,8 +220,8 @@ class FakeCompany:
             f"# of Inventory Items: {self.InventorySize}\n" + # is represented 
             f"City:  {self.City}\n" +                         # in  output.  
             f"State: {self.State}\n" +                        # 
-            f"Zip Code: {self.ZipCode}\n" +                   # When used in  
-                                                              # calls to 
+            f"Zip Code: {self.ZipCode}\n" +                   # When passed
+                                                              # as input to 
             "Departments: [\n"                                # print(), the 
             +                                                 # output will
             '\n'.join(                                        # reflect the 
@@ -270,13 +270,13 @@ class FakeCompany:
     
     # 2.S.i)   Getters
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
-    def GetCity(self):           # retrieves the current value of the object's
+    def GetCity(self):           # Retrieves the current value of the object's
         return self.City         #              City  attribute
                                  #
-    def GetState(self):          # retrieves the current value of the object's 
+    def GetState(self):          # Retrieves the current value of the object's 
         return self.State        #              State  attribute
                                  #
-    def GetZipCode(self):        # retrieves the current value of the object's 
+    def GetZipCode(self):        # Retrieves the current value of the object's 
         return self.ZipCode      #             ZipCode  attribute
     #||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -288,17 +288,17 @@ class FakeCompany:
             'com',                                   # basis for random  
             'net',                                   # selection. 
             'org'                                    # The company name will 
-        ]                                            # represent the domain name  
-                                                     # and a randomly selected 
+        ]                                            # represent the domain name,  
+                                                     # then a randomly selected 
         org_name          =  self.Name               # top-level domain will be 
         top_level_domain  =  phony.Choice()(domains) # provided.
                                                      # 
-        pattern = f'{org_name}.{top_level_domain}'   # This will represent a
-                                                     # pattern to be porcessed
-        Domain = re.sub(                             # by compounding string                                
-            '.+@',                                   # replacement operations 
-            '',                                      # via regular expression 
-            phony.Person().email([                   # sustitutions.
+        pattern = f'{org_name}.{top_level_domain}'   # This will represent a    
+                                                     # pattern to be processed  
+        Domain = re.sub(                             # by compounding string    
+            '.+@',                                   # replacement operations   
+            '',                                      # via regular expression   
+            phony.Person().email([                   # sustitutions.            
                 re.sub(                              # 
                     '--',                            # The regex expression
                     '-',                             # will replace empty
@@ -348,7 +348,7 @@ class FakeCompany:
             list, are then combined with the newly refreshed column data to \n
             produce a  dictionary,  itself containing 2 format versions of the\n
             refreshed data, enabling the ability to  export the data  as either an\n
-            ordered dictionary of lists,  or as  a  pandas  DataFrame object.          
+            Ordered Dictionary of lists,  or as  a  pandas  DataFrame object.          
 
 
         PROCESS
@@ -362,7 +362,7 @@ class FakeCompany:
                 collection of data to be used as "Employee Attributes".\n 
 
             #2.E.iii) 
-                Initialize an  ordered dictionary  whose  keys  represent\n
+                Initialize an  Ordered Dictionary  whose  keys  represent\n
                 column names  for  "Employee Attributes",  and whose values\n
                 represent fake employee "records"  for as many rows specified\n
                 by the  employee_size.\n
@@ -453,7 +453,7 @@ class FakeCompany:
             {                                          # and
                 "provider_source":fake,                # 
                 "provider_method":"ssn",               # 'column_name'
-                "column_name":"SSN"                    # represents the disired 
+                "column_name":"SSN"                    # represents the desired 
             },                                         # name for column in the
             {                                          # resultant data set. 
                 "provider_source":fake,                # 
@@ -474,8 +474,8 @@ class FakeCompany:
                 "provider_source":self,                # This 
                 "provider_method":"GetState",          # fake_employees_base
                 "column_name":"State"                  # will be used to 
-            },                                         # generate an ordered 
-            {                                          # dicitonary.
+            },                                         # generate an Ordered 
+            {                                          # Dicitonary.
                 "provider_source":self,                # 
                 "provider_method":"GetZipCode",        #    
                 "column_name":"Zip Code"               #
@@ -483,7 +483,7 @@ class FakeCompany:
         ]                                              #
         #||||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||#
 
-        # 2.E.iii)  Initialize an  ordered dictionary  whose  keys  represent   
+        # 2.E.iii)  Initialize an  Ordered Dictionary  whose  keys  represent   
         #           column names  for  "Employee Attributes",  and whose values    
         #           represent fake employee "records"  for as many rows specified  
         #           by the  employee_size.
@@ -628,7 +628,7 @@ class FakeCompany:
 
 
         SYNOPSIS
-            Creates a  Dictionary  composed  of both an  ordered dictionary     
+            Creates a  Dictionary  composed  of both an  Ordered Dictionary     
             of lists   and a   pandas  DataFrame  object, each consisting\n  
             of randomly generated fake data.
 
@@ -823,7 +823,7 @@ class FakeCompany:
 
 
         SYNOPSIS
-            Creates a  dict  composed  of both an  ordered dictionary\n     
+            Creates a  dict  composed  of both an  Ordered Dictionary\n     
             of lists and  a   pandas  DataFrame  object, both consisting\n  
             of randomly generated fake data,  specifically modeled to\n
             resemble an "Inventory" of  products.
@@ -831,7 +831,7 @@ class FakeCompany:
 
         DESCRIPTION
             Using the  OrderedDict  class from the python collections module,
-            creates an  ordered dictionary  whose  keys  correspond to 
+            creates an  Ordered Dictionary  whose  keys  correspond to 
             Attribute Names  relating to a generic "Inventory",  and whose 
             values each correspond to an  Inventory Record consisting of a
             List of random values, the  size  of which is defined either 
@@ -895,17 +895,17 @@ class FakeCompany:
         #||||||||||||||||||||||||||||||||||||||||||||#|||||||||||||||||||||||||#
         fake_inventory = collections.OrderedDict({   # Let fake_inventory be an
                                                      # OrderedDict consisting of:  
-            'Product ID':[                             #  
+            'Product ID':[                           #  
                 phony.Choice()([                     # A random "Product ID"       
                     fake.iban()[:7],                 # for each of the      
                     fake.iban()[1:8],                # inventory_size  many rows   
                     fake.iban()[2:9],                #
                 ])                                   # 
-                for _ in range( int(inventory_size) )       # 
+                for _ in range( int(inventory_size) )# 
             ],                                       # 
                                                      # 
             'Product':[                              # A randomly selected 
-                phony.Choice()                       # choice between:
+                phony.Choice()                       # "Product" choice between:
                 ([                                   #   
                                                      #
                     f'{fake.machine_make_model()}',  #  a fake machine make/model  
@@ -942,50 +942,50 @@ class FakeCompany:
                                                      #  Graphics card name,
                 ])                                   #  
                                                      #  for each of the 
-                for _ in range( int(inventory_size) )       #  inventory_size many rows 
+                for _ in range( int(inventory_size) )#  inventory_size many rows 
             ],                                       # 
                                                      #
             'Year':[                                 # 
                 fake.machine_year()                  # A fake machine Manufacture 
-                for _ in range( int(inventory_size) )       # Date for each of the  
+                for _ in range( int(inventory_size) )# Date for each of the  
             ],                                       # inventory_size many rows
                                                      #
-            'Price': 
-            [ 
-                                                     # derived from python's  
-                random.choices(                      # random module's 
-                    population=[                     # 'choices' method, 
-                        phony.Finance().price(       # A phony, randomized  
-                            1,                       # monetary value ranging  
-                            1111                     # from $1 to $1111 dollars, 
-                        ),                           # 
-                        phony.Finance().price(       # 
-                            1112,                    # 
-                            3500                     # 
-                        ),                           # 
-                        phony.Finance().price(       # 
-                            3501,                    # 
-                            7500                     # 
-                        ),                           # 
-                        phony.Finance().price(       # 
-                            7501,                    # 
-                            10000                    # 
-                        )                            # 
-                    ],                               #
-                    weights=[                        # where there will be a: 
-                        0.65,                        #    65% chance of $1 - $1111
-                        0.25,                        #    20% chance of $1112 - $35000
-                        0.06,                        #     6% chance of $3501 - $7500
-                        0.04,                        #     4% chance of $7501 - $1000
-                    ],                               # being selected
-                )[0]                                 # 
-                                                     # 
-                for _ in range(int(inventory_size))  # and
-            ],                                       #
-                                                     #
+            'Price':                                 #
+            [                                        # A "Price" derived from 
+                                                     # python's random module's  
+                random.choices(                      # 'choices' method,  
+                    population=[                     # giving a random selection  
+                        phony.Finance().price(       # between: 
+                            1,                       #  
+                            1111                     #  A phony, randomized     
+                        ),                           #  monetary value ranging     
+                        phony.Finance().price(       #  from $1 to $1111 dollars,    
+                            1112,                    #  
+                            3500                     #  A phony, randomized     
+                        ),                           #  monetary value ranging     
+                        phony.Finance().price(       #  from $1112 to $3500 dollars,    
+                            3501,                    #  
+                            7500                     #  A phony, randomized     
+                        ),                           #  monetary value ranging     
+                        phony.Finance().price(       #  from $3501 to $7500 dollars,    
+                            7501,                    #   and
+                            10000                    #  A phony, randomized       
+                        )                            #  monetary value ranging       
+                    ],                               #  from $3501 to $7500 dollars,    
+                    weights=[                        #  
+                        0.65,                        #  where there will be a:  
+                        0.25,                        #     65% chance of $1 - $1111 
+                        0.06,                        #     20% chance of $1112 - $35000 
+                        0.04,                        #      6% chance of $3501 - $7500 
+                    ],                               #      4% chance of $7501 - $1000 
+                )[0]                                 #  being selected 
+                                                     # for each of the     
+                for _ in range(int(inventory_size))  # inventory_size many rows 
+            ],                                       # 
+                                                     #  and
             'Product Quantity':[                     # 
                 phony.Numeric().integer_number(      # A phony, randomized  
-                    0,                               # Quantity value ranging  
+                    0,                               # "Product Quantity" ranging  
                     70                               # from 1 to 70 units, 
                 )                                    # for each of the   
                 for _ in range( int(inventory_size) )# inventory_size many rows
@@ -1100,69 +1100,69 @@ class FakeCompany:
                     ],                              # As such, concat() can 
                     name='Transaction ID'           # take a  list  consisting 
                 ),                                  # of a sequence of 
-                                                    # Series-representated
+                                                    # pandas Series represented
                 fake_inventory['Product'],          # 'columns', in any order
                 fake_inventory['Product ID'],       # specified, and then 
                 fake_customers['Customer ID'],      # combine those columns
-                                                    # into a new DataFrame object. 
+                                                    # into a new DataFrame object.
                 pandas.Series(                      # 
-                    [                               #
-                        phony.Choice()              #
-                        (                           #
-                            fake_sales_employees[   #
-                                'Employee ID'       #
-                            ].to_list()#            #
+                    [                               # The columns will consist of: 
+                        phony.Choice()              #   
+                        (                           #   A randomly selected 
+                            fake_sales_employees[   #       Employee's "Employee ID"
+                                'Employee ID'       #   for each of the lesser_size
+                            ].to_list()             #   many rows
                         )                           #
                         for _ in range(lesser_size) #
                     ],                              # 
-                    name='Employee ID'              #
+                    name='Employee ID'              #   and
                 ),                                  #
-                                                    # 
-                fake_customers['First Name']        # 
-                +                                   #
-                ' '                                 # To create a simple 
-                +                                   # Transaction history,
-                fake_customers['Last Name'],        # various Customer and 
-                                                    # Inventory Attributes
-                fake_customers['Address']           # that are selected, 
-                +                                   # such as:
-                ', '                                # 'Product', 'Product ID',
-                +                                   # 'Customer ID', 'Address'
-                fake_customers['City']              # 'City', 'State', 'Zip Code'
-                +                                   # 'Card Number', and  
-                ', '                                # 'Price'  
-                +                                   #
-                fake_customers['State']             # are are combined with 
-                +                                   #
-                ' '                                 # A 'Transaction ID' 
-                +                                   # derived by  fake's method
-                fake_customers['Zip Code'],         # for producing 10 digit
-                                                    # isbns.
-                fake_customers['Card Number'],      #
-                fake_customers['Card Provider'],    # and 
-                fake_inventory['Price'],            #
-                                                    # 
-                pandas.Series(                      # A 'Quantity Sold' 
-                    [                               #
+                                                    #   A column consisting of  
+                fake_customers['First Name']        #   fake Customer's "First Name"s   
+                +                                   #   concatenated with   
+                ' '                                 #      
+                +                                   #   A column consisting of      
+                fake_customers['Last Name'],        #   fake Customer's "Last Name"s    
+                                                    #   and
+                fake_customers['Address']           #   A column consisting of   
+                +                                   #   fake Customer's "Address"s   
+                ', '                                #    
+                +                                   #   concatenated with       
+                fake_customers['City']              #   
+                +                                   #   the fake Customer's "City"s 
+                ', '                                #   column   
+                +                                   #   concatenated with 
+                fake_customers['State']             #         
+                +                                   #   the fake Customer's "State"s 
+                ' '                                 #   column         
+                +                                   #   concatenated with
+                fake_customers['Zip Code'],         #     
+                                                    #   the fake Customer's  "Zip Code" 
+                fake_customers['Card Number'],      #   column
+                fake_customers['Card Provider'],    #   and 
+                fake_inventory['Price'],            # 
+                                                    #   the fake Customer's  "Card Number" column,
+                pandas.Series(                      #   along with the "Card Provider" column
+                    [                               #   and the corresponding "Price" column
                         phony.Choice()              #
-                        ([                          #
-                            phony.Numeric(                                    
-                            ).integer_number(
-                                1,
-                                111
-                            )
-                        ])                           #
-                        for _ in range(lesser_size) #
-                    ],                              #                        # 
-                    name='Quantity Sold'            # 
+                        ([                          # are then combined with 
+                            phony.Numeric(          #                            
+                            ).integer_number(       # A 'Transaction ID'  
+                                1,                  # derived by  fake's method 
+                                111                 # for producing 10 digit
+                            )                       # isbns.
+                        ])                          #
+                        for _ in range(lesser_size) # and 
+                    ],                              #                         
+                    name='Quantity Sold'            # A 'Quantity Sold' 
                 ),                                  # 
-                                                    # A 'Payment Date'
-                pandas.Series(                      # derived from  phony's 
-                    [                               # method for producing
-                        phony.Datetime().date(      # select dates between 
-                            2020,                   # specified ranges. 
-                            2022                    # 
-                        ).strftime('%m/%d/%Y')      #
+                                                    # and
+                pandas.Series(                      #  
+                    [                               # A 'Payment Date'  
+                        phony.Datetime().date(      # derived from  phony's   
+                            2020,                   # method for producing  
+                            2022                    # select dates between   
+                        ).strftime('%m/%d/%Y')      # specified ranges. 
                                                     #
                         for _ in range(lesser_size) # 
                     ],                              # 
