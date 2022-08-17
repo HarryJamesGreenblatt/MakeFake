@@ -27,6 +27,7 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
+from unicodedata import category
 import initialize_fake_data_providers                          # Brings in all neccessary modules and
 import random, re, collections, pandas, subprocess, sys        # classes:
                                                                #  
@@ -974,7 +975,7 @@ class FakeCompany:
                     ],                               #  from $3501 to $7500 dollars,    
                     weights=[                        #  
                         0.65,                        #  where there will be a:  
-                        0.25,                        #     65% chance of $1 - $1111 
+                        0.25,                        #     65% chance of $1    - $1111 
                         0.06,                        #     20% chance of $1112 - $35000 
                         0.04,                        #      6% chance of $3501 - $7500 
                     ],                               #      4% chance of $7501 - $1000 
@@ -1285,11 +1286,13 @@ class FakeCompany:
 
 if __name__ == "__main__":
 
+    from Make_Fake_Launcher import Launch_Make_Fake
+
 
     params = {
 
         key_value_pair[0] : key_value_pair[1]
-         
+        
         for key_value_pair in zip(
 
             [
@@ -1311,49 +1314,8 @@ if __name__ == "__main__":
     }
 
 
-    fake_company = FakeCompany(**params)
+    Launch_Make_Fake(params)
 
 
-    fake_employees = fake_company.MakeFakeEmployees()["As_DataFrame"]
-    fake_customers = fake_company.MakeFakeCustomers()["As_DataFrame"]
-    fake_inventory = fake_company.MakeFakeInventory()["As_DataFrame"]
-
-
-    fake_company.To_Excel(
-
-        fake_employees.to_csv(),
-        f'{fake_company.Name} - {fake_company.Category} - Employees'
-
-    )
-
-    fake_company.To_Excel(
-
-        fake_customers.to_csv(),
-        f'{fake_company.Name} - {fake_company.Category} - Customers'
-
-    )
-
-    fake_company.To_Excel(
-
-        fake_inventory.to_csv(),
-        f'{fake_company.Name} - {fake_company.Category} - Inventory'
-
-    )
-
-    fake_company.To_Excel(
-
-        fake_company.MakeFakeTransactions(
-            fake_inventory,
-            fake_customers, 
-            fake_employees.loc[
-                fake_employees["Department"] == "Sales"
-            ] 
-        ).to_csv(),
-        
-        f'{fake_company.Name} - {fake_company.Category} - Transactions'
-
-    )
-
-    with open(r'C:\Users\harry\OneDrive - Service-Centric Solutions\Make_Fake Data'+f'\{fake_company.Name}.txt', 'w') as To_OneDrive:
-        To_OneDrive.write(str(fake_company))
+   
 
