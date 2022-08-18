@@ -27,7 +27,6 @@ DEPENDENCIES
 
 # 1) Stores Data Providers As Global Variables Named  fake  And  phony 
 #####################################################################################################                             
-from unicodedata import category
 import initialize_fake_data_providers                          # Brings in all neccessary modules and
 import random, re, collections, pandas, subprocess, sys        # classes:
                                                                #  
