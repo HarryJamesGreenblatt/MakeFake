@@ -4,15 +4,11 @@ NAME
 
 
 PURPOSE
-    Instantiates a new Make_Fake Class based on a given category profile,\n
-    writes 4 Excel files representing a Fake Company's Employee, Customer,\n
-    Inventory, and Transaction Data and Summarizes and uploads to OneDrive a\n
-    a list of the attributes related to the Class.
+    A client script to facilitate the invocation of the  Launch_Make_Fake  function.
 
 
 FUNCTION
-
-    #1 Defines  Launch_Make_Fake()  
+    # 1 Defines  Launch_Make_Fake()  
 
 
 DEPENDENCIES
