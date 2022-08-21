@@ -369,24 +369,18 @@ class FakeRestaurant( FakeCompany ):
 
 
         SYNOPSIS
-            Creates a  dictionary of lists  consisting of randomly\n 
-            generated  fake data,  specifically modeled to resemble a\n
-            collection of  "Customer" Clients  belonging to a company\n 
-            specializing in  Fitness  and  Nutrition  Services.
-
+            Creates a  dictionary of lists  consisting of randomly generated fake data,\n 
+            specifically modeled to resemble a collection of Restaurant "Customers". 
+            
 
         DESCRIPTION
-            Utililizes the  FakeRestaurant.MakeFakeEmployees() Method\n
-            Overload,  which modifies a  copy  of the  supclass method's\n
-            resultant dictionary of lists  in a way that more closely\n 
-            simulates a dataset that specifically ressembles an Athletic Club. 
+            Utililizes the  FakeRestaurant.MakeFakeEmployees() Method Overload,  which modifies\n
+            a  copy  of the  supclass method's resultant dictionary of lists in a way that more \n
+            closely simulates a "Restaurant" dataset and specifically ressembles Customer Data.\n 
 
-            Once the  copy  of the  Payroll Dictionary  has been adapted to\n
-            the specificity of the "Athletic Club" profile, the  copy\n
-            is then re-modified in a process where the FakeRestaurant's\n
-            adjusted attriubutes are filtered to simulate a data context\n
-            resembling  Athletic Club Clients,  a.k.a. "Customers",  rather\n
-            than  Athletic Club Employees. 
+            Once the  copy  of the  Customer Dictionary  has been adapted to the specificity of the\n 
+            "Restaurant" profile, the  copy is then re-modified in a process where the FakeRestaurant's\n
+            adjusted attriubutes are filtered to simulate a data context resembling "Customers".
 
 
         PROCESS
@@ -413,50 +407,49 @@ class FakeRestaurant( FakeCompany ):
             amd whose  values  correspond to "rows" or "records" of  Customers.
         '''
 
-        # 2.C.i)   Retrieve a copy of the  Fake Payroll Dictionary  produced   
-        #          by the superclass's  MakeFakeEmployees  Method  to simplify 
-        #          code refactoring efforts. 
+        # 2.C.i)   Retrieve a copy of the  Fake Payroll Dictionary  produced by the superclass's  
+        #          MakeFakeEmployees  Method  to simplify code refactoring efforts. 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        FakeRestaurantCustomers = FakeCompany(               # FakeCompany's 
-            name                =   self.Name,               # (superclass)  
-            category            =   self.Category,           # MakeFakeEmployees 
-            employee_size       =   self.EmployeeSize,       # is invoked using  
-            customer_size       =   self.CustomerSize,       # is invoked using  
-            inventory_size      =   self.InventorySize,      # is invoked using  
-            city                =   self.City,               # the  FakeRestaurant 
-            state               =   self.State,              # (subclass) constructor 
-            zip_code            =   self.ZipCode,            # parameters
-            departments         =   self.Departments         #
-        ).MakeFakeCustomers(                                 # the has_custom_size  
-            has_custom_size =   True,                        # switch indicates  
-            custom_size     =   self.CustomerSize            # the dict's length will 
-        )['As_OrderedDict']                                  # match the  CustomerSize
+        FakeRestaurantCustomers = FakeCompany(               # 
+            name                =   self.Name,               # 
+            category            =   self.Category,           # The FakeCompany (superclass)   
+            employee_size       =   self.EmployeeSize,       # MakeFakeInventory Method is invoked 
+            customer_size       =   self.CustomerSize,       # using the FakeRestaurant (subclass)     
+            inventory_size      =   self.InventorySize,      # constructor parameters.    
+            city                =   self.City,               # 
+            state               =   self.State,              # 
+            zip_code            =   self.ZipCode,            # the has_custom_size  switch indicates  
+            departments         =   self.Departments         # the dict's length will match the  
+        ).MakeFakeCustomers(                                 # CustomerSize  
+            has_custom_size =   True,                        # 
+            custom_size     =   self.CustomerSize            # 
+        )['As_OrderedDict']                                  # 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
 
-        # 2.C.ii)  Filter out any  Coulumn Attributes which are inconsistent
-        #          with a  Restaurant Customers  Data Context.  
+        # 2.C.ii)  Filter out any  Coulumn Attributes which are inconsistent with a Restaurant's
+        #          Customers  Data Context.  
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        del(                                                 #
-            FakeRestaurantCustomers["Username"],             #
-            FakeRestaurantCustomers["Password"],             #
-            FakeRestaurantCustomers["Email"],                #
-            FakeRestaurantCustomers["Phone Number"],         #
-            FakeRestaurantCustomers["Address"],              #
-            FakeRestaurantCustomers["City"],                 #
-            FakeRestaurantCustomers["State"],                #
-            FakeRestaurantCustomers["Zip Code"]              #
+        del(                                                 # 
+            FakeRestaurantCustomers["Username"],             # Restaurant Customers aren't likely to  
+            FakeRestaurantCustomers["Password"],             # have their 'Username', 'Password',    
+            FakeRestaurantCustomers["Email"],                # 'Email', 'Phone Number', 'Address',   
+            FakeRestaurantCustomers["Phone Number"],         #  'State', 'City', or  'Zip Code' 
+            FakeRestaurantCustomers["Address"],              # collected.      
+            FakeRestaurantCustomers["City"],                 # 
+            FakeRestaurantCustomers["State"],                # As such, these attributes are     
+            FakeRestaurantCustomers["Zip Code"]              # deleted.    
         )                                                    #
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
 
-        # 2.C.iii)  Export  FakeRestaurantCustomers  as a  dictionary  
-        #           containing versions of itself in  multiple formats.     
+        # 2.C.iii)  Export  FakeRestaurantCustomers  as a  dictionary  containing versions 
+        #           of itself in  multiple formats.     
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return {                                             # Returns a dict of dicts 
-            'As_OrderedDict': FakeRestaurantCustomers,       # which makes accessible  
-            'As_DataFrame'  : DataFrame(                     # multiple output formats,
-                FakeRestaurantCustomers                      # including both a python     
-            )                                                # OrdredDict  and a   
-        }                                                    # pandas DataFrame.
+        return {                                             # 
+            'As_OrderedDict': FakeRestaurantCustomers,       # Returns a dict of dicts which makes 
+            'As_DataFrame'  : DataFrame(                     # accessible multiple output formats, 
+                FakeRestaurantCustomers                      # including both a python OrdredDict 
+            )                                                # and a pandas DataFrame.         
+        }                                                    # 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
     #################################################################################################
 
@@ -485,17 +478,21 @@ class FakeRestaurant( FakeCompany ):
 
 
         PROCESS
-            #2.E.i 
-                Retrieve a copy of the  Fake Payroll Dictionary  produced by\n  
+            #2.I.i) 
+                Retrieve a copy of the  Fake Inventory Dictionary  produced by\n  
                 the superclass's  MakeFakeInventory  Method  to simplify code\n
                 refactoring efforts.      
 
-            #2.E.ii 
-                Replace any  Payroll Attributes  which are inconsistent\n 
+            #2.I.ii) 
+                Replace any  Inventory Attributes  which are inconsistent\n 
                 with the  FakeRestaurant's Profile  with  adjusted values. 
                  
-            #2.E.iii
-                Export the  Fake Payroll,  which is now a   dict of lists.    
+            #2.I.iii)
+                Export the  Fake Inventory,  which is now a   dict of lists.
+
+            #2.I.iv)   
+                Exports  FakeRestaurantInventory  as a  dictionary  containing versions of 
+                itself in  multiple formats.         
 
 
         INPUTS
@@ -503,7 +500,7 @@ class FakeRestaurant( FakeCompany ):
 
         
         OUTPUT
-            a  <dict>  whose  keys  correspond to the  Payroll's  Column Names\n
+            a  <dict>  whose  keys  correspond to the  Inventory's  Column Names\n
             amd whose  values  correspond to "rows" or "records" of  Employees
             
 
@@ -511,9 +508,9 @@ class FakeRestaurant( FakeCompany ):
             FakeCompany
         '''
 
-        # 2.I.i)   Retrieve a copy of the  Fake Payroll Dictionary  produced by  
+        # 2.I.i)   Retrieve a copy of the  Fake Inventory Dictionary  produced by  
         #          the superclass's  MakeFakeInventory  Method  to simplify code
-        #          refactoring efforts      
+        #          refactoring efforts.      
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         FakeRestaurantInventory = FakeCompany(               # 
             name                =   self.Name,               # 
@@ -521,53 +518,53 @@ class FakeRestaurant( FakeCompany ):
             employee_size       =   self.EmployeeSize,       #   The FakeCompany (superclass)   
             inventory_size      =   self.InventorySize,      #   MakeFakeInventory Method is invoked 
             customer_size       =   self.CustomerSize,       #   using the FakeRestaurant (subclass)     
-            city                =   self.City,               #   constructor parameters     
+            city                =   self.City,               #   constructor parameters.    
             state               =   self.State,              #  
             zip_code            =   self.ZipCode,            # 
             departments         =   self.Departments         # 
         ).MakeFakeInventory()['As_OrderedDict']              #
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         
-        # 2.I.ii)   Replace any  Payroll Attributes  which are inconsistent with the  
+        # 2.I.ii)   Replace any  Inventory Attributes  which are inconsistent with the  
         #           FakeRestaurant's Profile  with  adjusted values. 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         FakeRestaurantInventory["Product ID"] = [            # 
-            phony.Choice()                                   #
+            phony.Choice()                                   # 
             ([                                               # 
-                fake.iban()[3:7],                            # 
-                fake.iban()[4:5]                             #
-                +                                            # 
-                fake.iban()[1:4]                             #
-            ])                                               # 
-            for _ in range( int(self.InventorySize) )        #                                        
-        ]                                                    #
-                                                             #
-        FakeRestaurantInventory["Product"] = [               # 
-            phony.Choice()                                   #
-            ([                                               #       
-                phony.Food().spices(),                       #
-                phony.Food().vegetable(),                    #
-                phony.Food().fruit()                         #
-            ])                                               # 
-            for _ in range( int(self.InventorySize) )        #      
-                                                             #    
-        ]                                                    # 
-                                                             #
-        FakeRestaurantInventory["Unit"] =   [                #                                 
-                                                             # 
-            "Lbs."                                           #
-                                                             #
+                fake.iban()[3:7],                            # Adjust the "Product ID" attribute  
+                fake.iban()[4:5]                             # to provide a Randomized Choice  
+                +                                            # between different sliced ranges within 
+                fake.iban()[1:4]                             # a random serialized 'iban' number. 
+            ])                                               # for each of the InventorySize many  
+            for _ in range( int(self.InventorySize) )        # rows. 
+        ]                                                    #  
+                                                             # and  
+        FakeRestaurantInventory["Product"] = [               #                                        
+            phony.Choice()                                   # Adjust the "Product" attribute to 
+            ([                                               # provide a Randomized Choice between 
+                phony.Food().spices(),                       # a random Spice, Vegetable, or Fruit 
+                phony.Food().vegetable(),                    # for each of the InventorySize many  
+                phony.Food().fruit()                         # rows.        
+            ])                                               #  
+            for _ in range( int(self.InventorySize) )        # and  
+                                                             #                                        
+        ]                                                    # Provide a "Unit" attribute representing 
+                                                             # a static Weight Unit, 'Lbs.', helping    
+        FakeRestaurantInventory["Unit"] =   [                # to establish some additional context     
+                                                             # to other attributes, 
+            "Lbs."                                           # for each of the InventorySize many        
+                                                             # rows                                   
             for _ in range(int(self.InventorySize))          #  
-        ]                                                    #     
-                                                             #
-        FakeRestaurantInventory["Cost Per Unit"] = [         #                                      
-                                                             #   
-             phony.Finance().price(                          # 
-                1,                                           #  
-                8                                            #    
+        ]                                                    # and 
+                                                             #                                           
+        FakeRestaurantInventory["Cost Per Unit"] = [         # Provide a "Cost Per Unit" attribute    
+                                                             # giving a randomized Price ranging from        
+             phony.Finance().price(                          #  $1 to  $8 dollars         
+                1,                                           # for each of the InventorySize many                                                     
+                8                                            # rows.                                         
             )                                                #
                                                              #
-            for _ in range(int(self.InventorySize))          # 
+            for _ in range( int(self.InventorySize) )        # 
         ]                                                    #     
                                                              #    
                                                              #                                           
@@ -576,10 +573,10 @@ class FakeRestaurant( FakeCompany ):
         # 2.I.iii)  Filter out any  Coulumn Attributes which are inconsistent with a  Restaurant's 
         #           Inventory  Data Context.  
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        del (                                                #
-            FakeRestaurantInventory['Year'],                 #
-            FakeRestaurantInventory['Price']                 #
-        )                                                    #
+        del (                                                # The "Year" and "Price" attributes 
+            FakeRestaurantInventory['Year'],                 # native to the base Class's 
+            FakeRestaurantInventory['Price']                 # implmenentation of this method aren't
+        )                                                    # consistent with a Restaurant context.
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
 
         # 2.I.iv)   Exports  FakeRestaurantInventory  as a  dictionary  containing versions of 
@@ -773,7 +770,7 @@ class FakeRestaurant( FakeCompany ):
                             phony.Numeric(                   #                             
                             ).integer_number(                #  
                                 1,                           #  
-                                4                            #  
+                                4                            #  After all that,
                             )                                #  
                         ])                                   #  
                         for _ in range(greater_size)         #  
