@@ -470,27 +470,27 @@ class FakeRestaurant( FakeCompany ):
         #          refactoring efforts      
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         FakeRestaurantInventory = FakeCompany(               # 
-            name                =   self.Name,               # The FakeCompany 
-            category            =   self.Category,           # (superclass)  
-            employee_size       =   self.EmployeeSize,       # MakeFakeInventory Method 
-            inventory_size      =   self.InventorySize,      # MakeFakeInventory Method 
-            customer_size       =   self.CustomerSize,       # MakeFakecustomers Method 
-            city                =   self.City,               # is invoked using  
-            state               =   self.State,              # the  FakeRestaurant 
-            zip_code            =   self.ZipCode,            # (subclass) constructor 
-            departments         =   self.Departments         # parameters
+            name                =   self.Name,               # 
+            category            =   self.Category,           # 
+            employee_size       =   self.EmployeeSize,       #   The FakeCompany (superclass)   
+            inventory_size      =   self.InventorySize,      #   MakeFakeInventory Method is invoked 
+            customer_size       =   self.CustomerSize,       #   using the FakeRestaurant (subclass)     
+            city                =   self.City,               #   constructor parameters     
+            state               =   self.State,              #  
+            zip_code            =   self.ZipCode,            # 
+            departments         =   self.Departments         # 
         ).MakeFakeInventory()['As_OrderedDict']              #
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         
-        # 2.I.ii)   Replace any  Payroll Attributes  which are inconsistent 
-        #           with the  FakeRestaurant's Profile  with  adjusted values. 
+        # 2.I.ii)   Replace any  Payroll Attributes  which are inconsistent with the  
+        #           FakeRestaurant's Profile  with  adjusted values. 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         FakeRestaurantInventory["Product ID"] = [            # 
             phony.Choice()                                   #
-            ([                                               # A random "Product ID"       
-                fake.iban()[3:7],                            # for each of the      
+            ([                                               # 
+                fake.iban()[3:7],                            # 
                 fake.iban()[4:5]                             #
-                +                                            # inventory_size  many rows   
+                +                                            # 
                 fake.iban()[1:4]                             #
             ])                                               # 
             for _ in range( int(self.InventorySize) )        #                                        
@@ -498,32 +498,32 @@ class FakeRestaurant( FakeCompany ):
                                                              #
         FakeRestaurantInventory["Product"] = [               # 
             phony.Choice()                                   #
-            ([                                               # A random "Product ID"       
+            ([                                               #       
                 phony.Food().spices(),                       #
                 phony.Food().vegetable(),                    #
                 phony.Food().fruit()                         #
             ])                                               # 
             for _ in range( int(self.InventorySize) )        #      
-                                                             # 'EmployeeSize' many rows    
+                                                             #    
         ]                                                    # 
                                                              #
         FakeRestaurantInventory["Unit"] =   [                #                                 
-                                                             # python's random module's  
+                                                             # 
             "Lbs."                                           #
                                                              #
-            for _ in range(int(self.InventorySize))          # inventory_size many rows 
+            for _ in range(int(self.InventorySize))          #  
         ]                                                    #     
                                                              #
         FakeRestaurantInventory["Cost Per Unit"] = [         #                                      
-                                                             # python's random module's  
-             phony.Finance().price(                          # between: 
+                                                             #   
+             phony.Finance().price(                          # 
                 1,                                           #  
-                8                                            #  A phony, randomized     
+                8                                            #    
             )                                                #
                                                              #
-            for _ in range(int(self.InventorySize))          # inventory_size many rows 
+            for _ in range(int(self.InventorySize))          # 
         ]                                                    #     
-                                                             # 'EmployeeSize' many rows    
+                                                             #    
                                                              #                                           
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
 
