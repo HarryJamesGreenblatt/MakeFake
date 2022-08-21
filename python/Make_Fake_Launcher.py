@@ -12,9 +12,10 @@ FUNCTION
 
 
 DEPENDENCIES
+    Project File:
         Make_FakeCompany.py\n
 '''
-def Launch_Make_Fake( params : dict ):
+def Launch_Make_Fake( params : dict ) -> None:
     '''
     NAME
         Launch_Make_Fake
@@ -32,14 +33,17 @@ def Launch_Make_Fake( params : dict ):
     PROCESS
         # 1.i   Instantiate a new Make_Fake Class based on a given category profile.\n
 
-        # 1.ii  Write 4 Excel files representing a Fake Company's Employee, Customer,\n
+        # 1.ii  Generate  Employee, Customer, and Inventory, data using the selected Make_Fake
+                Class's Methods and produce a Pandas Series 'loc' input corresponding only to 
+                the Fake Employees belonging to the Class's designated 'Sales' Department.
+
+        # 1.iii Write 4 Excel files representing a Fake Company's Employee, Customer,\n
                 Inventory, and Transaction  Data\n
 
-        # 1.iii Summarize and upload to OneDrive a list of the attributes related to the Class.
+        # 1.iv  Summarize and upload to OneDrive a list of the attributes related to the Class.
 
 
     INPUTS
-
         <dict>
         params  -  contains the parameterized inputs for the Class constructor.
 
@@ -49,21 +53,38 @@ def Launch_Make_Fake( params : dict ):
     '''
     # 1.i  Instantiate a new Make_Fake Class based on a given category profile.
     ###########################################################################################
-    if params['category'] == 'Egregiously Overpriced Generic Widget Wholesaler': # if the 
-        from Make_FakeCompany import FakeCompany      #'category' parameter matches a Widget
-        fake_company = FakeCompany(**params)          # Wholesaler, instantiate the FakeCompany
-        fake_sales_employees = "Sales"                # class, which has 'Sales' employees.
+    if params['category'] == 'Widget Wholesaler':      # if the 'category' parameter matches a
+        from Make_FakeCompany import FakeCompany       # Widget Wholesaler, instantiate a
+        fake_company = FakeCompany(**params)           # FakeCompany
+                                                       #
+    elif params['category'] == 'Restaurant':           # if the 'category' parameter matches
+        from Make_FakeRestaurant import FakeRestaurant # a Resaurant, instantiate a FakeRestaunt
+        fake_company = FakeRestaurant(**params)        # 
     ###########################################################################################
 
+    # 1.ii  Generate  Employee, Customer, and Inventory, data using the selected Make_Fake
+    #       Class's Methods and produce a Pandas Series 'loc' input corresponding only to 
+    #       the Fake Employees belonging to the Class's designated 'Sales' Department.  
+    ###########################################################################################
+    fake_employees = fake_company.MakeFakeEmployees()["As_DataFrame"]  #  
+                                                                       #
+    if params['category'] == 'Widget Wholesaler':                      #
+        fake_sales_employees = fake_employees['Department'] == 'Sales' #
+                                                                       #
+    elif params['category'] == 'Restaurant':                           #
+        fake_sales_employees = (                                       #
+            fake_employees['Department'] == 'Wait Staff'               #
+        ) | (                                                          #
+            fake_employees['Department'] == 'Bar Staff'                #
+        )                                                              #
+                                                                       #
+    fake_customers = fake_company.MakeFakeCustomers()["As_DataFrame"]  # 
+    fake_inventory = fake_company.MakeFakeInventory()["As_DataFrame"]  # 
+    ###########################################################################################
 
-    # 1.ii  Write 4 Excel files representing a Fake Company's Employee, Customer,
+    # 1.iii  Write 4 Excel files representing a Fake Company's Employee, Customer,
     #       Inventory, and Transaction  Data
     ###########################################################################################
-    fake_employees = fake_company.MakeFakeEmployees()["As_DataFrame"]  # Store the results of 
-    fake_customers = fake_company.MakeFakeCustomers()["As_DataFrame"]  # each Make_Fake method
-    fake_inventory = fake_company.MakeFakeInventory()["As_DataFrame"]  # in variables 
-                                                                       # corresponding to 
-                                                                       # 
     fake_company.To_Excel(                                             # 
                                                                        # fake_employees 
         fake_employees.to_csv(),                                       # fake_customers  
@@ -91,7 +112,7 @@ def Launch_Make_Fake( params : dict ):
             fake_inventory,                                            # 
             fake_customers,                                            # 
             fake_employees.loc[                                        # invoke the Make_Fake    
-                fake_employees["Department"] == fake_sales_employees   # To_Excel method      
+                fake_sales_employees                                   # To_Excel method      
             ]                                                          # to export the      
         ).to_csv(),                                                    # Transaction data    
                                                                        # produced by the    

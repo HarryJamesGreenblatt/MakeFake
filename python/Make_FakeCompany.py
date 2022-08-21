@@ -1076,7 +1076,7 @@ class FakeCompany:
         lesser_size = (                                  # let  lesser_size  be
                                                          # the length of the 
             len(fake_inventory)                          # fake_inventory input
-                                                         # if it is larger than
+                                                         # if it is smaller than
             if                                           # the fake_customers
                 len(fake_inventory) < len(fake_customers)# input, 
                                                          #
@@ -1314,7 +1314,3 @@ if __name__ == "__main__":
 
 
     Launch_Make_Fake(params)
-
-
-   
-
