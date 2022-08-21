@@ -245,7 +245,7 @@ class FakeRestaurant( FakeCompany ):
                                                       # of Employee ID Numbers    
             fake.iana_id()[5:8]                       # to not exceed 5 digits
             +                                         #
-            fake.iana_id()[:2]                        #
+            fake.iana_id()[:3]                        #
                                                       # in length,   
             for _ in range(self.EmployeeSize)         # for each of the       
                                                       # 'EmployeeSize' many rows    
