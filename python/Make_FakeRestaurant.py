@@ -95,7 +95,53 @@ class FakeRestaurant( FakeCompany ):
 
     
     EXAMPLE OUTPUT
-
+        Name: The Driver Knife\n
+        Category: Restaurant\n
+        Domain: The-Driver-Knife.net\n
+        # of Employees: 72\n
+        # of Customers: 116\n
+        # of Inventory Items: 692\n
+        City:  Webstermouth\n
+        State: RI\n
+        Zip Code: 02893\n
+        Departments: [\n
+        'Management',
+        'Bar Staff',
+        'Wait Staff',
+        'Kitchen Staff',
+        ]\n
+        Employee Attributes: [\n
+        'Employee ID',
+        'First Name',
+        'Last Name',
+        'Email',
+        'Date Of Birth',
+        'SSN',
+        'Phone Number',
+        'Address',
+        'City',
+        'State',
+        'Zip Code',
+        'Hire Date',
+        'Salary',
+        'Department',
+        ]\n
+        Customer Attributes: [\n
+        'Customer ID',
+        'First Name',
+        'Last Name',
+        'Card Provider',
+        'Card Number',
+        'CVV',
+        'Expiration Date',
+        ]\n
+        Inventory Attributes: [\n
+        'Product ID',
+            'Product',
+            'Product Quantity',
+            'Unit',
+            'Cost Per Unit',
+        ]\n
 
     PARENT MODULE
         FakeCompany.py
