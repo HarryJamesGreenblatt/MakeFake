@@ -15,6 +15,7 @@ DEPENDENCIES
     Project File:
         Make_FakeCompany.py\n
 '''
+
 def Launch_Make_Fake( params : dict ) -> None:
     '''
     NAME
@@ -51,6 +52,7 @@ def Launch_Make_Fake( params : dict ) -> None:
     DEPENDENCIES
         Make_FakeCompany.py
     '''
+    
     # 1.i  Instantiate a new Make_Fake Class based on a given category profile.
     ###########################################################################################
     if params['category'] == 'Widget Wholesaler':      # if the 'category' parameter matches a
