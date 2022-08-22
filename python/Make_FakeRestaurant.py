@@ -64,8 +64,8 @@ class FakeRestaurant( FakeCompany ):
         name           -     Defines the Fake Restaurant's Name\n
                              DEFAULT VALUE:  random fake restaurant name\n 
 
-        category       -     Defines what type of Fake Restaurant it is\n
-                             DEFAULT VALUE:  random fake restaurant type\n
+        category       -     Defines what type of Fake Company it is\n
+                             STATIC VALUE:  "Restaurant"\n
 
         employee_size  -     Defines the number of records to be produced for "Employee"
                              or Personnel reports\n
@@ -149,43 +149,43 @@ class FakeRestaurant( FakeCompany ):
 
     # 2._) Overload Of The FakeCompany  Constructor  
     #################################################################################################
-    def __init__(                                                 # 
-    self,                                                         # 
-    name = phony.Choice()                                         #
+    def __init__(                                                 # By default, the FakeRestaurant
+    self,                                                         # class will be invoked with 
+    name = phony.Choice()                                         # randomized parameters that:
     ([                                                            #
-        'A ' +                                                    #
-        phony.Choice()(['Taste', 'Pinch', 'Dash']) +              #
-        ' of ' +                                                  #
-        phony.Text().word().title(),                              #
-                                                                  #
-        'The ' +                                                  #
-        phony.Text().word().title() +                             #
-        ' ' +                                                     #
-        phony.Choice()(['Spoon', 'Fork', 'Knife', 'Plate'])       #
-    ]),                                                           #
+        'A ' +                                                    #   provide a randomized choice
+        phony.Choice()(['Taste', 'Pinch', 'Dash']) +              #   for a Name between: 
+        ' of ' +                                                  #   
+        phony.Text().word().title(),                              #      "A [Taste/Pinch/Dash] of 
+                                                                  #      [Blank]"
+        'The ' +                                                  #      
+        phony.Text().word().title() +                             #      and
+        ' ' +                                                     #     
+        phony.Choice()(['Spoon', 'Fork', 'Knife', 'Plate'])       #      "The [Blank] [Spoon/Fork/
+    ]),                                                           #       Knife/Plate]"
     category        =  "Restaurant",                              #
-    employee_size   =  phony.Numeric().integer_number(1,100),     #
+    employee_size   =  phony.Numeric().integer_number(1,100),     #   Set the Category to Restaurant
     customer_size   =  phony.Numeric().integer_number(100,1500),  #
-    inventory_size  =  phony.Numeric().integer_number(1,750),     #
-    city            =  fake.city(),                               #
-    state           =  fake.state_abbr(),                         #
-    zip_code        =  fake.zipcode(),                            #
+    inventory_size  =  phony.Numeric().integer_number(1,750),     #   Select Randomly Generated numbers:
+    city            =  fake.city(),                               #      
+    state           =  fake.state_abbr(),                         #       Employee Size ranging       
+    zip_code        =  fake.zipcode(),                            #       from 1 to 100
     departments     =  [                                          #
-        "Management",                                             #
-        "Bar Staff",                                              #
+        "Management",                                             #       Customer Size ranging
+        "Bar Staff",                                              #       from 100 to 1500
         "Wait Staff",                                             #
-        "Kitchen Staff",                                          #
-    ]                                                             #
+        "Kitchen Staff",                                          #       Inventory Size ranging
+    ]                                                             #       from 1 to 750
     ):                                                            #
-        self.Name          =  name                                #
-        self.Category      =  category                            #
-        self.EmployeeSize  =  employee_size                       #
-        self.CustomerSize  =  customer_size                       #
-        self.InventorySize =  inventory_size                      #
+        self.Name          =  name                                #    provide a Randomly Generated:
+        self.Category      =  category                            #   
+        self.EmployeeSize  =  employee_size                       #        City
+        self.CustomerSize  =  customer_size                       #        State
+        self.InventorySize =  inventory_size                      #        Zip Code
         self.City          =  city                                #
-        self.State         =  state                               #
-        self.ZipCode       =  fake.zipcode_in_state(state)        #
-        self.Departments   =  departments                         # 
+        self.State         =  state                               #    Defines the Departments as:
+        self.ZipCode       =  fake.zipcode_in_state(state)        #        Management, Bar Staff,      
+        self.Departments   =  departments                         #        Kitchen Staff, and Wait Staff
     #################################################################################################
 
 
@@ -198,23 +198,18 @@ class FakeRestaurant( FakeCompany ):
 
 
         SYNOPSIS
-            Creates a  dictionary of lists  consisting of randomly\n 
-            generated  fake data,  specifically modeled to ressemble a\n
-            simplified Payroll for a Restaurant.
+            Creates a  dictionary of lists  consisting of randomly generated  fake data,\n
+            specifically modeled to ressemble a simplified Payroll for a Restaurant.
 
 
         DESCRIPTION
-            An  Overload  for the  FakeCompany.MakeFakeEmployees() Method\n
-            which modifies a  copy  of the  superclass method's\n
-            resultant dictionary of lists  in a way that more closely\n 
-            simulates a dataset that specifically ressembles an\n
-            Restaurant.\n 
+            An  Overload  for the  FakeCompany.MakeFakeEmployees() Method, which modifies a copy\n 
+            of the  superclass method's resultant dictionary of lists  in a way that more\n 
+            closely simulates a dataset that specifically ressembles a Restaurant.\n 
 
-            Once the  copy  of the  Payroll Dictionary  has been adapted to\n
-            the specificity of the "Restaurant" profile, the  copy\n
-            is then returned as output, thereby replacing the\n
-            the original end value of the  superclass's MakeFakeEmployees() 
-            Method.   
+            Once the  copy  of the  Payroll Dictionary  has been adapted to the specificity of the\n
+            "Restaurant" profile, the  copy is then returned as output, thereby replacing the\n
+            original end value of the  superclass's MakeFakeEmployees() Method.   
 
 
         PROCESS
@@ -232,7 +227,8 @@ class FakeRestaurant( FakeCompany ):
                 inconsistent with a  Restaurant Customers  Data Context.  
                  
             #2.E.iv
-                Export the  Fake Payroll,  which is now a   dict of lists.    
+                Export  FakeRestaurantEmployees  as a  dictionary  containing versions\
+                of itself in  multiple formats.   
 
 
         INPUTS
@@ -240,7 +236,7 @@ class FakeRestaurant( FakeCompany ):
 
         
         OUTPUT
-            a  <dict>  whose  keys  correspond to the  Payroll's  Column Names\n
+            a  <dict>  whose  keys  correspond to the  Fake Employee Dictionary's  Column Names\n
             amd whose  values  correspond to "rows" or "records" of  Employees
             
 
@@ -248,114 +244,114 @@ class FakeRestaurant( FakeCompany ):
             FakeCompany
         '''
 
-        # 2.E.i)   Retrieve a copy of the  Fake Payroll Dictionary  produced by  
-        #            the superclass's  MakeFakeEmployees  Method  to simplify code
-        #            refactoring efforts      
+        # 2.E.i)   Retrieve a copy of the  Fake Employee Dictionary  produced by  the superclass's 
+        #          MakeFakeEmployees  Method  to simplify code refactoring efforts             
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         FakeRestaurantEmployees = FakeCompany(               # 
-            name                =   self.Name,               # The FakeCompany 
-            category            =   self.Category,           # (superclass)  
-            employee_size       =   self.EmployeeSize,       # MakeFakeEmployees Method 
-            inventory_size      =   self.InventorySize,      # MakeFakeInventory Method 
-            customer_size       =   self.CustomerSize,       # MakeFakecustomers Method 
-            city                =   self.City,               # is invoked using  
-            state               =   self.State,              # the  FakeRestaurant 
-            zip_code            =   self.ZipCode,            # (subclass) constructor 
-            departments         =   self.Departments         # parameters
+            name                =   self.Name,               # 
+            category            =   self.Category,           # 
+            employee_size       =   self.EmployeeSize,       # The FakeCompany (superclass)   
+            inventory_size      =   self.InventorySize,      # MakeFakeEmployees Method is invoked 
+            customer_size       =   self.CustomerSize,       # using the FakeRestaurant (subclass)     
+            city                =   self.City,               # constructor parameters.    
+            state               =   self.State,              # 
+            zip_code            =   self.ZipCode,            # 
+            departments         =   self.Departments         # 
         ).MakeFakeEmployees()['As_OrderedDict']              #
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         
-        # 2.E.ii)   Replace any  Payroll Attributes  which are inconsistent 
-        #            with the  FakeRestaurant's Profile  with  adjusted values. 
+        # 2.E.ii)   Replace any  Payroll Attributes  which are inconsistent with the 
+        #           FakeRestaurant's Profile  with  adjusted values. 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         FakeRestaurantEmployees["Date Of Birth"] = [         # 
                                                              #  
-            phony.Datetime().date(                           # Adjust the default range     
-                1985,                                        # of Employee Birth Dates    
-                2000                                         # to simulate a younger  
-            ).strftime('%m/%d/%Y')                           # demographic,  
-                                                             # for each of the        
-            for _ in range(self.EmployeeSize)                # 'EmployeeSize' many rows     
-                                                             # 
+            phony.Datetime().date(                           # Adjust the default range of Employee    
+                1985,                                        # Birth Dates to simulate a younger    
+                2000                                         # demographic, for each of the
+            ).strftime('%m/%d/%Y')                           #  'EmployeeSize' many rows 
+                                                             #         
+            for _ in range(self.EmployeeSize)                #  and  
+                                                             #   
+        ]                                                    # Adjust the default range of Employee      
+                                                             # Salaries to simulate low income    
+        FakeRestaurantEmployees["Salary"]       =  [         # levels, for each of the      
+                                                             # 'EmployeeSize' many rows        
+            phony.Finance().price(50000, 75500)              #        
+                                                             #  and
+            for _ in range(self.EmployeeSize)                # 
+                                                             # Adjust the default range of       
+        ]                                                    # Employee ID Numbers to not exceed    
+                                                             # 6 digits in length,  
+        FakeRestaurantEmployees['Employee ID']  = [          # for each of the   
+                                                             # 'EmployeeSize' many rows         
+            fake.iana_id()[5:8]                              # 
+            +                                                # and
+            fake.iana_id()[:3]                               # 
+                                                             # Adjust the default Employee  Email 
+            for _ in range(self.EmployeeSize)                # to provide a Randomozed Choice
+                                                             # between: 
         ]                                                    #
-                                                             #
-        FakeRestaurantEmployees["Salary"]       =  [         # Adjust the default range    
-                                                             # of Employee Salaries   
-            phony.Finance().price(50000, 75500)              # to simulate low income  
-                                                             # levels, 
-            for _ in range(self.EmployeeSize)                # for each of the       
-                                                             # 'EmployeeSize' many rows    
-        ]                                                    # 
-                                                             # 
-        FakeRestaurantEmployees['Employee ID']  = [          # Adjust the default range      
-                                                             # of Employee ID Numbers    
-            fake.iana_id()[5:8]                              # to not exceed 5 digits
-            +                                                #
-            fake.iana_id()[:3]                               #
-                                                             # in length,   
-            for _ in range(self.EmployeeSize)                # for each of the       
-                                                             # 'EmployeeSize' many rows    
-        ]                                                    #
-                                                             #
+                                                             #    a randomized phony email
         FakeRestaurantEmployees["Email"]   =  [              # 
-                                                             #
+                                                             #    or
             phony.Choice()                                   #
-            ([                                               #
-                                                             #
-                phony.Person().email(),                      #
-                                                             #
-                phony.Choice()([                             # '.', and appends the   
-                    record[0].lower(),                       #
-                    record[0][0],                            #
-                ])                                           # Replace the default          
-                +                                            # Email with a list      
-                phony.Choice()([                             # '.', and appends the   
+            ([                                               #    a randomized choice of:
+                                                             #    
+                phony.Person().email(),                      #        First Letter of Employee 
+                                                             #        First Name
+                phony.Choice()([                             #        
+                    record[0].lower(),                       #        or
+                    record[0][0],                            #        
+                ])                                           #        Full EMployee First Name
+                +                                            #      
+                phony.Choice()([                             #    concatenated with 
                     '.',                                     #
-                    '_',                                     #
-                    '',                                      #
-                ])                                           # produced via a      
-                +                                            # comprehension that     
-                phony.Choice()([                             # '.', and appends the   
+                    '_',                                     #        a randomized choice of:
+                    '',                                      #        
+                ])                                           #            a  '.'
+                +                                            #     
+                phony.Choice()([                             #            or
                     record[1].lower(),                       #
-                    record[1][0],                            #
-                ])                                           # concatenates each    
-                +                                            # Employee Record's    
-                '@'                                          # First and Last Name,     
-                +                                            # deliminates them with a      
-                phony.Choice()([                             # '.', and appends the   
-                    'google',                                #
-                    'yahoo',                                 #
-                    'outlook'                                #
+                    record[1][0],                            #            a '_'
                 ])                                           #
-                +                                            #
-                '.com'                                       #
-            ])                                               #
-                                                             # result with the object's  
-            for record in zip(                               # Domain Attribute,thereby     
-                FakeRestaurantEmployees["First Name"],       # simulating a   
-                FakeRestaurantEmployees["Last Name"]         # Domain-joined Email   
-            )                                                # Address,  
-                                                             # for each of the                                     
-        ]                                                    # 'employee_size' many rows 
+                +                                            #    contactenated with
+                '@'                                          #
+                +                                            #        First Letter of Employee       
+                phony.Choice()([                             #        Last Name         
+                    'google',                                #                 
+                    'yahoo',                                 #        or        
+                    'outlook'                                #                
+                ])                                           #        Full Employee Last Name        
+                +                                            #        
+                '.com'                                       #    concatenated with
+            ])                                               #   
+                                                             #        an '@'
+            for record in zip(                               #        
+                FakeRestaurantEmployees["First Name"],       #    concatenated with
+                FakeRestaurantEmployees["Last Name"]         # 
+            )                                                #        'google' or 'yahoo' or 'outlook'  
+                                                             #         and  '.com'
+        ]                                                    #        
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
 
-        # 2.E.iii)  Filter out any  Coulumn Attributes which are inconsistent
-        #           with a  Restaurant Customers  Data Context.  
+        # 2.E.iii)  Filter out any  Coulumn Attributes which are inconsistent with a  Restaurant
+        #            Customers  Data Context.  
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        del (                                                #
-            FakeRestaurantEmployees['Username'],             #
-            FakeRestaurantEmployees['Password']              #
-        )                                                    #
+        del (                                                # The "Username" and "Password"  
+            FakeRestaurantEmployees['Username'],             # attributes native to the base Class's 
+            FakeRestaurantEmployees['Password']              # implmenentation of this method aren't
+        )                                                    # consistent with a Restaurant context.
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
 
-        # 2.E.iv)   Export the  Fake Payroll,  which is now a   dict of lists.     
+        # 2.E.iv)   Export  FakeRestaurantEmployees  as a  dictionary  containing versions\
+        #           of itself in  multiple formats. 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
-        return {                                             # Returns a dict of dicts 
-            'As_OrderedDict': FakeRestaurantEmployees,       # which makes accessible   
-            'As_DataFrame'  : DataFrame(                     # multiple output formats, 
-                FakeRestaurantEmployees                      # including both a python    
-            )                                                # OrdredDict  and  a pandas  
-        }                                                    # DataFrame.
+        return {                                             # 
+            'As_OrderedDict': FakeRestaurantEmployees,       # Returns a dict of dicts which makes  
+            'As_DataFrame'  : DataFrame(                     # accessible multiple output formats,  
+                FakeRestaurantEmployees                      # including both a python OrdredDict  
+            )                                                # and a pandas DataFrame.          
+        }                                                    # 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
     #################################################################################################
 
@@ -515,10 +511,10 @@ class FakeRestaurant( FakeCompany ):
         FakeRestaurantInventory = FakeCompany(               # 
             name                =   self.Name,               # 
             category            =   self.Category,           # 
-            employee_size       =   self.EmployeeSize,       #   The FakeCompany (superclass)   
-            inventory_size      =   self.InventorySize,      #   MakeFakeInventory Method is invoked 
-            customer_size       =   self.CustomerSize,       #   using the FakeRestaurant (subclass)     
-            city                =   self.City,               #   constructor parameters.    
+            employee_size       =   self.EmployeeSize,       # The FakeCompany (superclass)   
+            inventory_size      =   self.InventorySize,      # MakeFakeInventory Method is invoked 
+            customer_size       =   self.CustomerSize,       # using the FakeRestaurant (subclass)     
+            city                =   self.City,               # constructor parameters.    
             state               =   self.State,              #  
             zip_code            =   self.ZipCode,            # 
             departments         =   self.Departments         # 
