@@ -399,6 +399,7 @@ class FakeCompany:
         PARENT:
             Make_FakeCompany.FakeCompany
         '''
+        
         # 2.E.i)   Initialize a local  employee_size,  which can be optionally 
         #          bound either to the specified  custom_size,  or to the
         #          object's inherited  EmployeeSize  attribute. 

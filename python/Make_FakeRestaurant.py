@@ -255,9 +255,12 @@ class FakeRestaurant( FakeCompany ):
             customer_size       =   self.CustomerSize,       # using the FakeRestaurant (subclass)     
             city                =   self.City,               # constructor parameters.    
             state               =   self.State,              # 
-            zip_code            =   self.ZipCode,            # 
-            departments         =   self.Departments         # 
-        ).MakeFakeEmployees()['As_OrderedDict']              #
+            zip_code            =   self.ZipCode,            # the  has_custom_size  switch indicates  
+            departments         =   self.Departments         # the dict's length will match the  
+        ).MakeFakeEmployees(                                 # EmployeeSize provided as input.
+            has_custom_size =   True,                        # 
+            custom_size     =   self.EmployeeSize            # 
+        )['As_OrderedDict']                                  # 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         
         # 2.E.ii)   Replace any  Payroll Attributes  which are inconsistent with the 
@@ -516,9 +519,12 @@ class FakeRestaurant( FakeCompany ):
             customer_size       =   self.CustomerSize,       # using the FakeRestaurant (subclass)     
             city                =   self.City,               # constructor parameters.    
             state               =   self.State,              #  
-            zip_code            =   self.ZipCode,            # 
-            departments         =   self.Departments         # 
-        ).MakeFakeInventory()['As_OrderedDict']              #
+            zip_code            =   self.ZipCode,            # the  has_custom_size  switch indicates  
+            departments         =   self.Departments         # the dict's length will match the  
+        ).MakeFakeInventory(                                 # InventorySize provided as input.
+            has_custom_size     =   True,                    # 
+            custom_size         =   self.InventorySize       # 
+        )['As_OrderedDict']                                  # 
         #||||||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||||||||||||||||||#
         
         # 2.I.ii)   Replace any  Inventory Attributes  which are inconsistent with the  
