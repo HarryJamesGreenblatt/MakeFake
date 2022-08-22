@@ -52,7 +52,7 @@ def Launch_Make_Fake( params : dict ) -> None:
     DEPENDENCIES
         Make_FakeCompany.py
     '''
-    
+
     # 1.i  Instantiate a new Make_Fake Class based on a given category profile.
     ###########################################################################################
     if params['category'] == 'Widget Wholesaler':      # if the 'category' parameter matches a
@@ -68,20 +68,20 @@ def Launch_Make_Fake( params : dict ) -> None:
     #       Class's Methods and produce a Pandas Series 'loc' input corresponding only to 
     #       the Fake Employees belonging to the Class's designated 'Sales' Department.  
     ###########################################################################################
-    fake_employees = fake_company.MakeFakeEmployees()["As_DataFrame"]  #  
-                                                                       #
-    if params['category'] == 'Widget Wholesaler':                      #
-        fake_sales_employees = fake_employees['Department'] == 'Sales' #
-                                                                       #
-    elif params['category'] == 'Restaurant':                           #
-        fake_sales_employees = (                                       #
-            fake_employees['Department'] == 'Wait Staff'               #
-        ) | (                                                          #
-            fake_employees['Department'] == 'Bar Staff'                #
-        )                                                              #
-                                                                       #
-    fake_customers = fake_company.MakeFakeCustomers()["As_DataFrame"]  # 
-    fake_inventory = fake_company.MakeFakeInventory()["As_DataFrame"]  # 
+    fake_employees = fake_company.MakeFakeEmployees()["As_DataFrame"]  # After generating the  
+                                                                       # fake_employees
+    if params['category'] == 'Widget Wholesaler':                      # DataFrame, select a 
+        fake_sales_employees = fake_employees['Department'] == 'Sales' # 'loc' query based on  
+                                                                       # the Category Profile
+    elif params['category'] == 'Restaurant':                           # provided as input.
+        fake_sales_employees = (                                       # Store the result of
+            fake_employees['Department'] == 'Wait Staff'               # this 'loc' query,
+        ) | (                                                          # a pandas Series object,
+            fake_employees['Department'] == 'Bar Staff'                # as fake_sales_employees.
+        )                                                              # Also similarly store
+                                                                       # results corresponding
+    fake_customers = fake_company.MakeFakeCustomers()["As_DataFrame"]  # to the fake_customers
+    fake_inventory = fake_company.MakeFakeInventory()["As_DataFrame"]  # and fake_inventory
     ###########################################################################################
 
     # 1.iii  Write 4 Excel files representing a Fake Company's Employee, Customer,
