@@ -273,7 +273,7 @@ class FakeRestaurant( FakeCompany ):
                 2000                                         # demographic, for each of the
             ).strftime('%m/%d/%Y')                           #  'EmployeeSize' many rows 
                                                              #         
-            for _ in range(self.EmployeeSize)                #  and  
+            for _ in range( int(self.EmployeeSize) )         #  and  
                                                              #   
         ]                                                    # Adjust the default range of Employee      
                                                              # Salaries to simulate low income    
@@ -281,7 +281,7 @@ class FakeRestaurant( FakeCompany ):
                                                              # 'EmployeeSize' many rows        
             phony.Finance().price(50000, 75500)              #        
                                                              #  and
-            for _ in range(self.EmployeeSize)                # 
+            for _ in range( int(self.EmployeeSize) )         # 
                                                              # Adjust the default range of       
         ]                                                    # Employee ID Numbers to not exceed    
                                                              # 6 digits in length,  
@@ -291,7 +291,7 @@ class FakeRestaurant( FakeCompany ):
             +                                                # and
             fake.iana_id()[:3]                               # 
                                                              # Adjust the default Employee  Email 
-            for _ in range(self.EmployeeSize)                # to provide a Randomozed Choice
+            for _ in range( int(self.EmployeeSize) )         # to provide a Randomozed Choice
                                                              # between: 
         ]                                                    #
                                                              #    a randomized phony email
