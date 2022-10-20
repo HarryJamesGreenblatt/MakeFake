@@ -9,12 +9,12 @@ $\\\,$
 ###### Microsoft Form $\longrightarrow$ Power Automate Flow
 > May be invoked without parameters, providing randomly selected default attributes...
 > $\\\,$   
-> <img src="./img/Make_Fake_Form_Without_Params.jpg" alt="ufukkedup"></img>
+> <img src="https://github.com/HarryJamesGreenblatt/Make_Fake/blob/main/img/Make_Fake_Form_Without_Params.jpg" alt="ufukkedup"></img>
 > $\\\,$   
 > $\\\,$   
 > ...or may be alternatively invoked using custom parameters to define the attributes.
 > $\\\,$   
-> <img src="./img/Make_Fake_Form_With_Params.jpg" alt="ufukkedup"></img>
+> <img src="https://github.com/HarryJamesGreenblatt/Make_Fake/blob/main/img/Make_Fake_Form_With_Params.jpg" alt="ufukkedup"></img>
 
 $\\\,$      
 ###### PowerShell
