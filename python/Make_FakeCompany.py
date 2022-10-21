@@ -1251,8 +1251,8 @@ class FakeCompany:
         #         for capturing each dataset in csv format, to be collected in 
         #         a powershell script operating in parallel.   
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
-        csv_path   = 'C:/Users/harry/projects/Make_Fake/python/to_powershell/data.csv'  # Stores the csv path
-        title_path = 'C:/Users/harry/projects/Make_Fake/python/to_powershell/title.txt' # and the dataset title 
+        csv_path   = 'C:/Users/harry/dev/projects/Make_Fake/python/to_powershell/data.csv'  # Stores the csv path
+        title_path = 'C:/Users/harry/dev/projects/Make_Fake/python/to_powershell/title.txt' # and the dataset title 
         #||||||||||||||||||||||||||||||||||||||||||||||||#||||||||||||||||||||||#
 
         # 2.^.ii   Open a file handle to the provided  paths  and  write  the 
@@ -1272,7 +1272,7 @@ class FakeCompany:
         subprocess.run(                                       # Executes a 
             [                                                 # powershell
                 'powershell.exe',                             # script which 
-                'C:/Users/harry/projects/Make_Fake/powershell/Build-FakeSpreadsheets.ps1'  # collects,
+                'C:/Users/harry/dev/projects/Make_Fake/powershell/Build-FakeSpreadsheets.ps1'  # collects,
             ],                                                # converts, and 
             stdout=subprocess.PIPE,                           # then deletes the
             stderr=subprocess.STDOUT,                         # 'staging' files
