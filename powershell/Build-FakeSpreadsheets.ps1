@@ -51,8 +51,8 @@ function Build-FakeSpreadsheets {
     [CmdletBinding()]
  
     param (
-        [string] $DestinationPath1 = 'C:\Users\harry\projects\Make_Fake\python\to_powershell',
-        [string] $DestinationPath2 = 'C:\Users\harry\projects\Make_Fake\powershell\to_excel',
+        [string] $DestinationPath1 = 'C:\Users\harry\dev\projects\Make_Fake\python\to_powershell',
+        [string] $DestinationPath2 = 'C:\Users\harry\dev\projects\Make_Fake\powershell\to_excel',
         [string] $DestinationPath3 = 'C:\Users\harry\OneDrive - Service-Centric Solutions\Make_Fake Data'
     )
 

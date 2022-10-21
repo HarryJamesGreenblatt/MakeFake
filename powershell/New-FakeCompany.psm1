@@ -65,7 +65,7 @@ function New-FakeCompany {
         [Int32]  $InventorySize,
         [string] $City,
         [string] $State,
-        [string] $PythonScript = 'C:\Users\harry\projects\Make_Fake\python\Make_FakeCompany.py'
+        [string] $PythonScript = 'C:\Users\harry\dev\projects\Make_Fake\python\Make_FakeCompany.py'
     )
 
     process {
